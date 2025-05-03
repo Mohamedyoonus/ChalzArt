@@ -122,7 +122,7 @@ const Banner = () => {
             flexWrap: "wrap",
           }}
         >
-          {[{ label: "Discover More", to: "/myworks" }, { label: "Custom Your Art", to: "/customize" }].map(
+          {[{ label: "Discover More", to: "/myworks" }, { label: "Customize Your Art", to: "/customize" }].map(
             ({ label, to }) => (
               <Button
                 key={label}
