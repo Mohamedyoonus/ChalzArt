@@ -24,7 +24,6 @@ const mediaItems = [
     id: index + 2,
     type: "image",
     src: `/assets/mural/img${index + 1}.jpg`,
-    title: `Mural ${index + 1}`,
   })),
 ];
 
@@ -33,6 +32,7 @@ const Mural = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width:900px)");
+  const isTablet = useMediaQuery("(min-width:600px)");
 
   const handleShowMore = () => navigate("/myworks#muralpaintings");
 
@@ -46,59 +46,84 @@ const Mural = () => {
     setSelectedItem(null);
   };
 
-  const topItems = isDesktop ? mediaItems.slice(0, 4) : mediaItems.slice(0, 2);
-  const bottomItems = isDesktop
-    ? mediaItems.slice(4, 8)
-    : mediaItems.slice(2, 4);
+  // Adjust items display based on screen size
+  const getVisibleItems = () => {
+    if (isDesktop) return { top: mediaItems.slice(0, 4), bottom: mediaItems.slice(4, 8) };
+    if (isTablet) return { top: mediaItems.slice(0, 3), bottom: mediaItems.slice(3, 6) };
+    return { top: mediaItems.slice(0, 2), bottom: mediaItems.slice(2, 4) };
+  };
+
+  const { top, bottom } = getVisibleItems();
 
   const renderCards = (items) =>
     items.map((item) => (
-      <Card
+      <motion.div 
         key={item.id}
-        onClick={() => handleOpen(item)}
-        sx={{
-          width: { xs: "45%", sm: "260px" },
-          maxWidth: "100%",
-          height: { xs: "180px", sm: "280px" },
-          cursor: "pointer",
-          boxShadow: "0px 6px 15px rgba(167, 109, 54, 0.8)",
-          borderRadius: "20px",
-          overflow: "hidden",
-          flexShrink: 0,
-          transition: "transform 0.3s, box-shadow 0.3s",
-          "&:hover": {
-            transform: "scale(1.05)",
-            boxShadow: "0px 8px 25px rgba(167, 109, 54, 1)",
-          },
-        }}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        style={{ width: isDesktop ? "260px" : isTablet ? "30%" : "45%" }}
       >
-        {item.type === "video" ? (
-          <CardMedia
-            component="video"
-            src={item.src}
-            title={item.title}
-            controls
-            loop
-            autoPlay
-            muted
-            sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        ) : (
-          <CardMedia
-            component="img"
-            image={item.src}
-            alt={item.title}
-            sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        )}
-      </Card>
+        <Card
+          onClick={() => handleOpen(item)}
+          sx={{
+            width: "100%",
+            height: isDesktop ? "280px" : isTablet ? "220px" : "160px",
+            cursor: "pointer",
+            boxShadow: "0px 4px 12px rgba(167, 109, 54, 0.6)",
+            borderRadius: "16px",
+            overflow: "hidden",
+            flexShrink: 0,
+            transition: "transform 0.3s, box-shadow 0.3s",
+            "&:hover": {
+              transform: "scale(1.03)",
+              boxShadow: "0px 6px 20px rgba(167, 109, 54, 0.9)",
+            },
+            mx: "auto",
+          }}
+        >
+          {item.type === "video" ? (
+            <CardMedia
+              component="video"
+              src={item.src}
+              title={item.title}
+              controls
+              loop
+              autoPlay
+              muted
+              sx={{ 
+                width: "100%", 
+                height: "100%", 
+                objectFit: "cover",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                }
+              }}
+            />
+          ) : (
+            <CardMedia
+              component="img"
+              image={item.src}
+              alt={item.title}
+              sx={{ 
+                width: "100%", 
+                height: "100%", 
+                objectFit: "cover",
+                transition: "transform 0.5s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                }
+              }}
+            />
+          )}
+        </Card>
+      </motion.div>
     ));
 
   return (
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pb: 5,
+        pb: 1,
         pt: 2,
         minHeight: "100vh",
         background:
@@ -115,9 +140,9 @@ const Mural = () => {
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant="h4"
+          variant={isDesktop ? "h4" : "h5"}
           fontWeight="700"
-          mb={6}
+          mb={{ xs: 4, sm: 6 }}
           sx={{
             color: "#B88746",
             letterSpacing: "1px",
@@ -127,7 +152,7 @@ const Mural = () => {
               content: '""',
               position: "absolute",
               width: "80px",
-              height: "4px",
+              height: "3px",
               backgroundColor: "#A8743D",
               bottom: -10,
               left: "50%",
@@ -144,9 +169,10 @@ const Mural = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: { xs: 2, sm: 4 },
+          gap: { xs: 2, sm: 3, md: 4 },
           alignItems: "center",
           width: "100%",
+          mb: 2,
         }}
       >
         {/* Top Row */}
@@ -156,22 +182,26 @@ const Mural = () => {
             gap: { xs: 2, sm: 3 },
             justifyContent: "center",
             flexWrap: "wrap",
+            width: "100%",
           }}
         >
-          {renderCards(topItems)}
+          {renderCards(top)}
         </Box>
 
         {/* Bottom Row */}
-        <Box
-          sx={{
-            display: "flex",
-            gap: { xs: 2, sm: 3 },
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          {renderCards(bottomItems)}
-        </Box>
+        {bottom.length > 0 && (
+          <Box
+            sx={{
+              display: "flex",
+              gap: { xs: 2, sm: 3 },
+              justifyContent: "center",
+              flexWrap: "wrap",
+              width: "100%",
+            }}
+          >
+            {renderCards(bottom)}
+          </Box>
+        )}
       </Box>
 
       {/* Buttons */}
@@ -179,36 +209,41 @@ const Mural = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        flexDirection="row"
-        flexWrap="nowrap"
+        flexDirection={{ xs: "column", sm: "row" }}
         gap={{ xs: 1.5, sm: 2 }}
-        mt={{ xs: 3, sm: 4 }}
+        mt={{ xs: 2, sm: 4 }}
+        mb={{ xs: 2, sm: 0 }}
         px={{ xs: 1.5, sm: 0 }}
         sx={{
           width: "100%",
           textAlign: "center",
         }}
       >
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div 
+          whileHover={{ scale: 1.05 }} 
+          whileTap={{ scale: 0.95 }}
+          style={{ width: isDesktop ? "auto" : "100%" }}
+        >
           <Button
             onClick={handleShowMore}
             variant="contained"
-            size="medium"
+            size={isDesktop ? "medium" : "small"}
             endIcon={<ArrowForwardIcon />}
             sx={{
               backgroundColor: "#B88746",
               color: "white",
-              px: { xs: 1.5, sm: 3 },
-              py: { xs: 0.8, sm: 1.5 },
+              px: { xs: 2, sm: 3 },
+              py: { xs: 1, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              minWidth: { xs: "110px", sm: "140px" },
+              width: { xs: "100%", sm: "auto" },
+              minWidth: { xs: "100%", sm: "140px" },
               whiteSpace: "nowrap",
-              boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
+              boxShadow: "0 4px 12px rgba(184, 135, 70, 0.4)",
               "&:hover": {
                 backgroundColor: "#A8743D",
-                boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
+                boxShadow: "0 8px 20px rgba(184, 135, 70, 0.6)",
               },
             }}
           >
@@ -216,22 +251,27 @@ const Mural = () => {
           </Button>
         </motion.div>
 
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div 
+          whileHover={{ scale: 1.05 }} 
+          whileTap={{ scale: 0.95 }}
+          style={{ width: isDesktop ? "auto" : "100%" }}
+        >
           <Button
             component={Link}
             to="/customize"
             variant="outlined"
-            size="medium"
+            size={isDesktop ? "medium" : "small"}
             startIcon={<BrushIcon />}
             sx={{
               borderColor: "#B88746",
               color: "#B88746",
-              px: { xs: 1.5, sm: 3 },
-              py: { xs: 0.8, sm: 1.5 },
+              px: { xs: 2, sm: 3 },
+              py: { xs: 1, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              minWidth: { xs: "110px", sm: "140px" },
+              width: { xs: "100%", sm: "auto" },
+              minWidth: { xs: "100%", sm: "140px" },
               whiteSpace: "nowrap",
               "&:hover": {
                 backgroundColor: "rgba(184, 135, 70, 0.1)",
@@ -279,7 +319,7 @@ const Mural = () => {
                   controls
                   autoPlay
                   style={{
-                    width: "90vw",
+                    width: "95vw",
                     maxHeight: "80vh",
                     objectFit: "contain",
                     borderRadius: "8px",
@@ -290,8 +330,8 @@ const Mural = () => {
                   src={selectedItem.src}
                   alt={selectedItem.title}
                   style={{
-                    width: "90vw",
-                    maxHeight: "80vh",
+                    width: "95vw",
+                    maxHeight: "90vh",
                     objectFit: "contain",
                     borderRadius: "8px",
                   }}

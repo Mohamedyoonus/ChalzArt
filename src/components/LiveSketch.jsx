@@ -61,18 +61,21 @@ const LiveSketch = () => {
 
   return (
     <Box
-    sx={{
-      px: { xs: 2, sm: 3, md: 5 },
-      pb: 5,
-      pt: { xs: -10, sm: 2 }, // reduced top padding on mobile
-      minHeight: "100vh",
-      background:
-        "black radial-gradient(circle at center, #111 0%, #000 100%)",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-  >
+  sx={{
+    px: { xs: 2, sm: 3, md: 5 },
+    pb: 5,
+    pt: 0, 
+    mt: -8,   
+    minHeight: "100vh",
+    background:
+      "black radial-gradient(circle at center, #111 0%, #000 100%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }}
+>
+
+  
   
       {/* Heading */}
       <motion.div

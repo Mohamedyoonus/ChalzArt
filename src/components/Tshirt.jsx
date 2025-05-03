@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Card, CardMedia, Typography, Modal, Button } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Modal, Button, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import BrushIcon from "@mui/icons-material/Brush";
@@ -16,7 +16,6 @@ const mediaItems = [
     id: index + 2,
     type: "image",
     src: `/assets/Tshirt/img${index + 1}.jpg`,
-    title: `T-Shirt ${index + 1}`,
   })),
 ];
 
@@ -24,6 +23,8 @@ const Tshirt = () => {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isTablet = useMediaQuery("(max-width:900px)");
 
   const handleShowMore = () => navigate("/myworks#tshirtdesigns");
 
@@ -39,28 +40,27 @@ const Tshirt = () => {
 
   return (
     <Box
-    sx={{
-      px: { xs: 2, sm: 3, md: 5 },
-      pb: 5,
-      pt: 2,
-      minHeight: "100vh",
-      background:
-        "black radial-gradient(circle at center, #111 0%, #000 100%)",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
+      sx={{
+        px: { xs: 2, sm: 3, md: 5 },
+        pb: { xs: 3, sm: 5 },
+        py: { xs: 2, sm: 4 },
+        minHeight: "100vh",
+        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
     >
-      {/* Title */}
+      {/* Title - Enhanced for mobile */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant="h4"
+          variant={isMobile ? "h5" : "h4"}
           fontWeight="700"
-          mb={6}
+          mb={{ xs: 4, sm: 6 }}
           sx={{
             color: "#B88746",
             letterSpacing: "1px",
@@ -69,112 +69,138 @@ const Tshirt = () => {
             "&::after": {
               content: '""',
               position: "absolute",
-              width: "80px",
-              height: "4px",
+              width: isMobile ? "60px" : "80px",
+              height: isMobile ? "3px" : "4px",
               backgroundColor: "#A8743D",
-              bottom: -10,
+              bottom: -8,
               left: "50%",
               transform: "translateX(-50%)",
             },
           }}
         >
-          Tshirt Designs
+          T-Shirt Designs
         </Typography>
       </motion.div>
 
-      {/* Gallery */}
+      {/* Gallery - Enhanced grid for mobile */}
       <Box
         sx={{
-          display: { xs: "grid", sm: "flex" },
-          gridTemplateColumns: { xs: "1fr 1fr", sm: "none" },
-          gap: 3,
-          py: 2,
-          overflowX: { sm: "auto" },
-          scrollbarWidth: "none",
-          "&::-webkit-scrollbar": { display: "none" },
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(auto-fit, minmax(240px, 1fr))",
+          },
+          gap: { xs: 2, sm: 3 },
+          width: "100%",
+          maxWidth: "1200px",
+          mx: "auto",
+          px: { xs: 1, sm: 0 },
           justifyContent: "center",
-          flexDirection: { sm: "row" },
-          alignItems: "center",
         }}
       >
         {mediaItems.map((item) => (
-          <Card
+          <motion.div
             key={item.id}
-            onClick={() => handleOpen(item)}
-            sx={{
-              width: { xs: "100%", sm: "260px" },
-              maxWidth: "100%",
-              height: { xs: "180px", sm: "280px" },
-              cursor: "pointer",
-              boxShadow: "0px 6px 15px rgba(167, 109, 54, 0.8)",
-              borderRadius: "20px",
-              overflow: "hidden",
-              flexShrink: 0,
-              transition: "transform 0.3s, box-shadow 0.3s",
-              "&:hover": {
-                transform: "scale(1.05)",
-                boxShadow: "0px 8px 25px rgba(167, 109, 54, 1)",
-              },
+            whileHover={{ scale: isMobile ? 1 : 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
             }}
           >
-            {item.type === "video" ? (
-              <CardMedia
-                component="video"
-                src={item.src}
-                title={item.title}
-                controls
-                loop
-                autoPlay
-                muted
-                sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            ) : (
-              <CardMedia
-                component="img"
-                image={item.src}
-                alt={item.title}
-                sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            )}
-          </Card>
+            <Card
+              onClick={() => handleOpen(item)}
+              sx={{
+                width: "100%",
+                maxWidth: "260px",
+                height: { xs: "160px", sm: "240px", md: "280px" },
+                cursor: "pointer",
+                boxShadow: "0px 4px 12px rgba(167, 109, 54, 0.6)",
+                borderRadius: "16px",
+                overflow: "hidden",
+                transition: "transform 0.3s, box-shadow 0.3s",
+                "&:hover": {
+                  transform: isMobile ? "none" : "scale(1.03)",
+                  boxShadow: "0px 6px 20px rgba(167, 109, 54, 0.9)",
+                },
+              }}
+            >
+              {item.type === "video" ? (
+                <CardMedia
+                  component="video"
+                  src={item.src}
+                  title={item.title}
+                  controls
+                  loop
+                  autoPlay
+                  muted
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <CardMedia
+                  component="img"
+                  image={item.src}
+                  alt={item.title}
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    transition: "transform 0.5s ease",
+                    "&:hover": {
+                      transform: isMobile ? "none" : "scale(1.1)",
+                    },
+                  }}
+                />
+              )}
+            </Card>
+          </motion.div>
         ))}
       </Box>
 
-      {/* Buttons */}
+      {/* Buttons - Stacked on mobile */}
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
-        flexDirection="row"
-        flexWrap="nowrap"
+        flexDirection={{ xs: "column", sm: "row" }}
         gap={{ xs: 1.5, sm: 2 }}
         mt={{ xs: 3, sm: 4 }}
-        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
+        px={{ xs: 1, sm: 0 }}
         sx={{
           width: "100%",
+          maxWidth: "500px",
           textAlign: "center",
         }}
       >
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div
+          whileHover={{ scale: isMobile ? 1.03 : 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          style={{ width: isMobile ? "100%" : "auto" }}
+        >
           <Button
             onClick={handleShowMore}
             variant="contained"
-            size="medium"
+            size={isMobile ? "small" : "medium"}
             endIcon={<ArrowForwardIcon />}
             sx={{
               backgroundColor: "#B88746",
               color: "white",
-              px: { xs: 1.5, sm: 3 },
-              py: { xs: 0.8, sm: 1.5 },
+              px: { xs: 2, sm: 3 },
+              py: { xs: 1, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.8rem", sm: "0.9rem" },
               borderRadius: "50px",
-              minWidth: { xs: "110px", sm: "140px" },
+              width: isMobile ? "100%" : "auto",
+              minWidth: { xs: "100%", sm: "140px" },
               whiteSpace: "nowrap",
-              boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
+              boxShadow: "0 4px 12px rgba(184, 135, 70, 0.4)",
               "&:hover": {
                 backgroundColor: "#A8743D",
-                boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
+                boxShadow: "0 8px 20px rgba(184, 135, 70, 0.6)",
               },
             }}
           >
@@ -182,22 +208,27 @@ const Tshirt = () => {
           </Button>
         </motion.div>
 
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div
+          whileHover={{ scale: isMobile ? 1.03 : 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          style={{ width: isMobile ? "100%" : "auto" }}
+        >
           <Button
             component={Link}
             to="/customize"
             variant="outlined"
-            size="medium"
+            size={isMobile ? "small" : "medium"}
             startIcon={<BrushIcon />}
             sx={{
               borderColor: "#B88746",
               color: "#B88746",
-              px: { xs: 1.5, sm: 3 },
-              py: { xs: 0.8, sm: 1.5 },
+              px: { xs: 2, sm: 3 },
+              py: { xs: 1, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.8rem", sm: "0.9rem" },
               borderRadius: "50px",
-              minWidth: { xs: "110px", sm: "140px" },
+              width: isMobile ? "100%" : "auto",
+              minWidth: { xs: "100%", sm: "140px" },
               whiteSpace: "nowrap",
               "&:hover": {
                 backgroundColor: "rgba(184, 135, 70, 0.1)",
@@ -211,7 +242,7 @@ const Tshirt = () => {
         </motion.div>
       </Box>
 
-      {/* Modal */}
+      {/* Modal - Enhanced for mobile */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -219,6 +250,7 @@ const Tshirt = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          touchAction: "manipulation", // Better touch handling
         }}
       >
         <Box
@@ -229,12 +261,13 @@ const Tshirt = () => {
             left: 0,
             width: "100vw",
             height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.95)",
+            backgroundColor: "rgba(0, 0, 0, 0.97)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            overflow: "hidden",
+            overflow: "auto",
+            p: 1,
           }}
         >
           {selectedItem && (
@@ -244,9 +277,11 @@ const Tshirt = () => {
                   src={selectedItem.src}
                   controls
                   autoPlay
+                  playsInline // Better mobile video handling
                   style={{
-                    width: "90vw",
-                    maxHeight: "80vh",
+                    width: "100%",
+                    maxWidth: "900px",
+                    maxHeight: "90vh",
                     objectFit: "contain",
                     borderRadius: "8px",
                   }}
@@ -256,8 +291,9 @@ const Tshirt = () => {
                   src={selectedItem.src}
                   alt={selectedItem.title}
                   style={{
-                    width: "90vw",
-                    maxHeight: "80vh",
+                    width: "100%",
+                    maxWidth: "900px",
+                    maxHeight: "90vh",
                     objectFit: "contain",
                     borderRadius: "8px",
                   }}

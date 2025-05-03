@@ -53,18 +53,21 @@ const ShoePaint = () => {
 
   return (
     <Box
-    sx={{
-      px: { xs: 2, sm: 3, md: 5 },
-      pb: 5,
-      pt: 2,
-      minHeight: "100vh",
-      background:
-        "black radial-gradient(circle at center, #111 0%, #000 100%)",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
->
+      sx={{
+        px: { xs: 2, sm: 3, md: 5 },
+        py: 5,
+        pb: -2,
+        pt: 0,
+        mb: -2, 
+        mt: -8,   
+        minHeight: "100vh",
+        background:
+          "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
 
       {/* Title */}
       <motion.div
