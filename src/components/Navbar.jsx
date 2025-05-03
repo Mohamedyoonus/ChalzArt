@@ -422,7 +422,7 @@ const Navbar = () => {
             fontSize: "0.75rem",
           }}
         >
-          © {new Date().getFullYear()} Chalz Art. All rights reserved.
+          © 2035 Chalz Art. All rights reserved.
         </Typography>
       </Box>
     </Box>

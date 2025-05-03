@@ -73,11 +73,12 @@ const Customize = () => {
     };
   
     Object.entries(personalInfo).forEach(([key, value]) => {
-      if (!value.trim()) {
+      const isRequired = ['name', 'phone'].includes(key);
+      if (isRequired && !value.trim()) {
         errorObj[key] = true;
         valid = false;
       } else {
-        if (key === 'email') {
+        if (key === 'email' && value.trim()) {
           const emailValid = validateEmail(value);
           errorObj[key] = !emailValid;
           errorObj.emailError = emailValid ? '' : 'Please enter a valid email';
@@ -90,6 +91,7 @@ const Customize = () => {
         }
       }
     });
+    
   
     setErrors(errorObj);
   
@@ -191,9 +193,9 @@ const Customize = () => {
       )}
 
       <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, mb: 4 }}>
-        <Typography variant="h6" gutterBottom>👤 Personal Information *</Typography>
+        <Typography variant="h6" gutterBottom>👤 Personal Information </Typography>
         <Grid container spacing={2}>
-          {['name', 'email', 'phone', 'address'].map((field) => (
+          {['name*', 'email', 'phone*', 'address'].map((field) => (
             <Grid item xs={12} sm={6} key={field} id={field}>
               <CustomTextField
                 label={field.charAt(0).toUpperCase() + field.slice(1)}

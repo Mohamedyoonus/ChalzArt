@@ -246,10 +246,10 @@ const Footer = () => {
           }}
         >
           <Typography variant="body2" sx={{ color: "#888", fontSize: 14 }}>
-            © 2019–{new Date().getFullYear()} Chalzart. All rights reserved.
+            © 2019–2035 Chalzart. All rights reserved.
           </Typography>
           <Typography variant="body2" sx={{ color: "#555", fontSize: 13 }}>
-            Designed and developed by Mohamed Yoonus
+            Designed and developed by  Yoonus
           </Typography>
         </Box>
 
