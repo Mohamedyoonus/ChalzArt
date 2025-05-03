@@ -15,7 +15,7 @@ import {
   Slide,
   Fade,
   Divider,
-  Typography
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useLocation } from "react-router-dom";
@@ -83,54 +83,53 @@ const Navbar = () => {
           >
             {/* Logo and Name */}
             <Box sx={{ display: "flex", alignItems: "center" }}>
-  <Link
-    to="/"
-    style={{
-      textDecoration: "none",
-      display: "flex",
-      alignItems: "center",
-    }}
-  >
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      style={{ display: "flex", alignItems: "center" }}
-    >
-      <img
-        src={logo}
-        alt="Chalz Art Logo"
-        style={{
-          height: scrolled ? "36px" : "48px",
-          transition: "all 0.3s ease",
-          objectFit: "contain",
-        }}
-      />
-    </motion.div>
-    <Typography
-      variant="h6"
-      sx={{
-        ml: { xs: 1.5, sm: 2 },
-        fontWeight: 700,
-        fontSize: {
-          xs: "1.25rem", // phones
-          sm: "1.5rem",  // tablets
-          md: scrolled ? "1.5rem" : "1.75rem", // desktops
-        },
-        color: "black",
-        letterSpacing: "1px",
-        textTransform: "uppercase",
-        fontFamily: "'Playfair Display', serif",
-        transition: "all 0.3s ease",
-        "&:hover": {
-          color: "#a3742e",
-        },
-      }}
-    >
-      Chalz Art
-    </Typography>
-  </Link>
-</Box>
-
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <img
+                    src={logo}
+                    alt="Chalz Art Logo"
+                    style={{
+                      height: scrolled ? "36px" : "48px",
+                      transition: "all 0.3s ease",
+                      objectFit: "contain",
+                    }}
+                  />
+                </motion.div>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    ml: { xs: 1.5, sm: 2 },
+                    fontWeight: 700,
+                    fontSize: {
+                      xs: "1.25rem", // phones
+                      sm: "1.5rem", // tablets
+                      md: scrolled ? "1.5rem" : "1.75rem", // desktops
+                    },
+                    color: "black",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    fontFamily: "'Playfair Display', serif",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      color: "#a3742e",
+                    },
+                  }}
+                >
+                  Chalz Art
+                </Typography>
+              </Link>
+            </Box>
 
             {/* Desktop Navigation */}
             <Box
@@ -155,9 +154,7 @@ const Navbar = () => {
                       fontWeight: 600,
                       fontSize: "1rem",
                       color:
-                        location.pathname === item.path
-                          ? "#B88746"
-                          : "#2C3E50",
+                        location.pathname === item.path ? "#B88746" : "#2C3E50",
                       position: "relative",
                       overflow: "hidden",
                       letterSpacing: "0.5px",
@@ -197,9 +194,11 @@ const Navbar = () => {
 
             {/* Right Side Icons */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-             
               {isMobile && (
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
                   <IconButton
                     edge="end"
                     onClick={handleDrawerToggle}
@@ -231,204 +230,205 @@ const Navbar = () => {
 
       {/* Mobile Drawer - Three Quarters Width */}
       <Drawer
-  anchor="right"
-  open={mobileOpen}
-  onClose={handleDrawerToggle}
-  ModalProps={{
-    keepMounted: true,
-    BackdropProps: {
-      sx: {
-        backdropFilter: "blur(10px)",
-        backgroundColor: "rgba(0, 0, 0, 0.4)",
-      },
-    },
-  }}
-  PaperProps={{
-    sx: {
-      background: "#fff",
-      boxShadow: "-16px 0 40px rgba(0, 0, 0, 0.12)",
-      width: "80%",
-      maxWidth: 300,
-      borderTopLeftRadius: "16px",
-      borderBottomLeftRadius: "16px",
-      display: "flex",
-      flexDirection: "column",
-      p: 0,
-    },
-  }}
->
-  <Slide
-    direction="left"
-    in={mobileOpen}
-    mountOnEnter
-    unmountOnExit
-    timeout={350}
-  >
-    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      {/* Header */}
-      <Box
-        sx={{
-          p: 3,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-        }}
-      >
-        <Link
-          to="/"
-          onClick={handleDrawerToggle}
-          style={{
-            textDecoration: "none",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <img src={logo} alt="Logo" style={{ height: "40px" }} />
-          <Typography
-            variant="h6"
-            sx={{
-              ml: 2,
-              fontWeight: 700,
-              color: "#2C3E50",
-              letterSpacing: "1px",
-              fontFamily: "'Playfair Display', serif",
-            }}
-          >
-            Chalz Art
-          </Typography>
-        </Link>
-        <IconButton
-          onClick={handleDrawerToggle}
-          sx={{
-            color: "#2C3E50",
-            "&:hover": {
-              color: "#B88746",
-              background: "rgba(184, 135, 70, 0.1)",
+        anchor="right"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+          BackdropProps: {
+            sx: {
+              backdropFilter: "blur(10px)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
             },
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </Box>
-
-      {/* Navigation Links */}
-      <List sx={{ p: 2, flexGrow: 1 }}>
-        {navItems.map((item, index) => (
-          <motion.div
-            key={item.label}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <ListItem disablePadding sx={{ mb: 1 }}>
-              <ListItemButton
-                component={Link}
-                to={item.path}
-                onClick={handleDrawerToggle}
-                sx={{
-                  borderRadius: "12px",
-                  bgcolor:
-                    location.pathname === item.path
-                      ? "rgba(184, 135, 70, 0.1)"
-                      : "transparent",
-                  "&:hover": {
-                    bgcolor: "rgba(184, 135, 70, 0.08)",
-                  },
-                  py: 1.5,
-                  px: 3,
-                }}
-              >
-                <ListItemText
-                  primary={item.label}
-                  primaryTypographyProps={{
-                    fontWeight: 600,
-                    fontSize: "1.05rem",
-                    color:
-                      location.pathname === item.path
-                        ? "#B88746"
-                        : "#2C3E50",
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </motion.div>
-        ))}
-      </List>
-
-      <Divider sx={{ mx: 2, my: 1 }} />
-
-      {/* Social Media Icons */}
-      <Box
-        sx={{
-          px: 3,
-          pb: 3,
-          display: "flex",
-          justifyContent: "center",
-          gap: 3,
+          },
+        }}
+        PaperProps={{
+          sx: {
+            background: "#fff",
+            boxShadow: "-16px 0 40px rgba(0, 0, 0, 0.12)",
+            width: "80%",
+            maxWidth: 300,
+            borderTopLeftRadius: "16px",
+            borderBottomLeftRadius: "16px",
+            display: "flex",
+            flexDirection: "column",
+            p: 0,
+          },
         }}
       >
-        {[
-          {
-            icon: <InstagramIcon />,
-            href: "https://www.instagram.com/chalzart?igsh=MTdhaWliZnFmYng3Mg==",
-            color: "#E1306C",
-          },
-          {
-            icon: <FacebookIcon />,
-            href: "https://www.facebook.com/share/1LAPsZ2U25/",
-            color: "#4267B2",
-          },
-          {
-            icon: <TwitterIcon />,
-            href: "https://twitter.com",
-            color: "#1DA1F2",
-          },
-        ].map((social, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.9 }}
+        <Slide
+          direction="left"
+          in={mobileOpen}
+          mountOnEnter
+          unmountOnExit
+          timeout={350}
+        >
+          <Box
+            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
           >
-            <IconButton
-              href={social.href}
-              target="_blank"
+            {/* Header */}
+            <Box
               sx={{
-                color: "#2C3E50",
-                "&:hover": {
-                  color: social.color,
-                },
-                transition: "color 0.2s ease",
+                p: 3,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
               }}
             >
-              {social.icon}
-            </IconButton>
-          </motion.div>
-        ))}
-      </Box>
+              <Link
+                to="/"
+                onClick={handleDrawerToggle}
+                style={{
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <img src={logo} alt="Logo" style={{ height: "40px" }} />
+                <Typography
+                  variant="h6"
+                  sx={{
+                    ml: 2,
+                    fontWeight: 700,
+                    color: "#2C3E50",
+                    letterSpacing: "1px",
+                    fontFamily: "'Playfair Display', serif",
+                  }}
+                >
+                  Chalz Art
+                </Typography>
+              </Link>
+              <IconButton
+                onClick={handleDrawerToggle}
+                sx={{
+                  color: "#2C3E50",
+                  "&:hover": {
+                    color: "#B88746",
+                    background: "rgba(184, 135, 70, 0.1)",
+                  },
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
 
-      {/* Footer */}
-      <Box
-        sx={{
-          p: 2,
-          textAlign: "center",
-          borderTop: "1px solid rgba(0, 0, 0, 0.08)",
-        }}
-      >
-        <Typography
-          variant="body2"
-          sx={{
-            color: "#888",
-            fontSize: "0.75rem",
-          }}
-        >
-          © 2035 Chalz Art. All rights reserved.
-        </Typography>
-      </Box>
-    </Box>
-  </Slide>
-</Drawer>
+            {/* Navigation Links */}
+            <List sx={{ p: 2, flexGrow: 1 }}>
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <ListItem disablePadding sx={{ mb: 1 }}>
+                    <ListItemButton
+                      component={Link}
+                      to={item.path}
+                      onClick={handleDrawerToggle}
+                      sx={{
+                        borderRadius: "12px",
+                        bgcolor:
+                          location.pathname === item.path
+                            ? "rgba(184, 135, 70, 0.1)"
+                            : "transparent",
+                        "&:hover": {
+                          bgcolor: "rgba(184, 135, 70, 0.08)",
+                        },
+                        py: 1.5,
+                        px: 3,
+                      }}
+                    >
+                      <ListItemText
+                        primary={item.label}
+                        primaryTypographyProps={{
+                          fontWeight: 600,
+                          fontSize: "1.05rem",
+                          color:
+                            location.pathname === item.path
+                              ? "#B88746"
+                              : "#2C3E50",
+                        }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                </motion.div>
+              ))}
+            </List>
 
+            <Divider sx={{ mx: 2, my: 1 }} />
+
+            {/* Social Media Icons */}
+            <Box
+              sx={{
+                px: 3,
+                pb: 3,
+                display: "flex",
+                justifyContent: "center",
+                gap: 3,
+              }}
+            >
+              {[
+                {
+                  icon: <InstagramIcon />,
+                  href: "https://www.instagram.com/chalzart?igsh=MTdhaWliZnFmYng3Mg==",
+                  color: "#E1306C",
+                },
+                {
+                  icon: <FacebookIcon />,
+                  href: "https://www.facebook.com/share/1LAPsZ2U25/",
+                  color: "#4267B2",
+                },
+                {
+                  icon: <TwitterIcon />,
+                  href: "https://twitter.com",
+                  color: "#1DA1F2",
+                },
+              ].map((social, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <IconButton
+                    href={social.href}
+                    target="_blank"
+                    sx={{
+                      color: "#2C3E50",
+                      "&:hover": {
+                        color: social.color,
+                      },
+                      transition: "color 0.2s ease",
+                    }}
+                  >
+                    {social.icon}
+                  </IconButton>
+                </motion.div>
+              ))}
+            </Box>
+
+            {/* Footer */}
+            <Box
+              sx={{
+                p: 2,
+                textAlign: "center",
+                borderTop: "1px solid rgba(0, 0, 0, 0.08)",
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#888",
+                  fontSize: "0.75rem",
+                }}
+              >
+                © 2035 Chalz Art. All rights reserved.
+              </Typography>
+            </Box>
+          </Box>
+        </Slide>
+      </Drawer>
     </>
   );
 };

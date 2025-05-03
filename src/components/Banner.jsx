@@ -122,54 +122,55 @@ const Banner = () => {
             flexWrap: "wrap",
           }}
         >
-          {[{ label: "Discover More", to: "/myworks" }, { label: "Customize Your Art", to: "/customize" }].map(
-            ({ label, to }) => (
-              <Button
-                key={label}
-                component={Link}
-                to={to}
-                variant="contained"
-                sx={{
-                  fontSize: { xs: "0.8rem", sm: "1rem" },
-                  padding: { xs: "10px 20px", sm: "14px 36px" },
-                  fontWeight: "600",
-                  backgroundColor: "#A8743D",
-                  color: "#fff",
-                  borderRadius: "40px",
-                  boxShadow: "0px 8px 30px rgba(167, 109, 54, 0.6)",
-                  transition: "all 0.3s ease-in-out",
-                  position: "relative",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  "&::after": {
-                    content: "''",
-                    position: "absolute",
-                    top: 0,
-                    left: "50%",
-                    width: "0%",
-                    height: "100%",
-                    backgroundColor: "#fff",
-                    zIndex: -1,
-                    transition: "width 0.3s ease, left 0.3s ease",
-                  },
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "#A8743D",
-                    transform: "scale(1.05)",
-                  },
-                  "&:hover::after": {
-                    width: "100%",
-                    left: 0,
-                  },
-                  "&:active": {
-                    animation: `${bounceShrink} 0.3s ease-in-out`,
-                  },
-                }}
-              >
-                {label}
-              </Button>
-            )
-          )}
+          {[
+            { label: "Discover More", to: "/myworks" },
+            { label: "Customize Your Art", to: "/customize" },
+          ].map(({ label, to }) => (
+            <Button
+              key={label}
+              component={Link}
+              to={to}
+              variant="contained"
+              sx={{
+                fontSize: { xs: "0.8rem", sm: "1rem" },
+                padding: { xs: "10px 20px", sm: "14px 36px" },
+                fontWeight: "600",
+                backgroundColor: "#A8743D",
+                color: "#fff",
+                borderRadius: "40px",
+                boxShadow: "0px 8px 30px rgba(167, 109, 54, 0.6)",
+                transition: "all 0.3s ease-in-out",
+                position: "relative",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                "&::after": {
+                  content: "''",
+                  position: "absolute",
+                  top: 0,
+                  left: "50%",
+                  width: "0%",
+                  height: "100%",
+                  backgroundColor: "#fff",
+                  zIndex: -1,
+                  transition: "width 0.3s ease, left 0.3s ease",
+                },
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#A8743D",
+                  transform: "scale(1.05)",
+                },
+                "&:hover::after": {
+                  width: "100%",
+                  left: 0,
+                },
+                "&:active": {
+                  animation: `${bounceShrink} 0.3s ease-in-out`,
+                },
+              }}
+            >
+              {label}
+            </Button>
+          ))}
         </Box>
       </Box>
     </Box>

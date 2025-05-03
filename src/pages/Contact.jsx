@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  IconButton,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Typography, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import {
   Email,
   Phone,
@@ -44,10 +39,22 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, url: "https://www.facebook.com/share/1LAPsZ2U25/", color: "#1877F2" },
-    { icon: Instagram, url: "https://www.instagram.com/chalzart?igsh=MTdhaWliZnFmYng3Mg==", color: "#E1306C" },
+    {
+      icon: Facebook,
+      url: "https://www.facebook.com/share/1LAPsZ2U25/",
+      color: "#1877F2",
+    },
+    {
+      icon: Instagram,
+      url: "https://www.instagram.com/chalzart?igsh=MTdhaWliZnFmYng3Mg==",
+      color: "#E1306C",
+    },
     { icon: Twitter, url: "https://twitter.com/thechalzart", color: "#1DA1F2" },
-    { icon: YouTube, url: "https://youtube.com/@chalzart?si=Ai52HlwzsftDoGH4", color: "#FF0000" },
+    {
+      icon: YouTube,
+      url: "https://youtube.com/@chalzart?si=Ai52HlwzsftDoGH4",
+      color: "#FF0000",
+    },
   ];
 
   const renderContactDetails = () =>
@@ -71,7 +78,11 @@ const Contact = () => {
       >
         <a
           href={item.link}
-          style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
+          style={{
+            textDecoration: "none",
+            display: "flex",
+            alignItems: "center",
+          }}
         >
           {item.icon}
           <Typography
@@ -164,7 +175,8 @@ const Contact = () => {
             lineHeight: "1.7",
           }}
         >
-          Whether you have a question or want to collaborate, feel free to reach out!
+          Whether you have a question or want to collaborate, feel free to reach
+          out!
         </Typography>
 
         {renderContactDetails()}

@@ -104,13 +104,27 @@ const Home = () => {
       animate="visible"
       variants={fadeInUp}
     >
-      <motion.div custom={0}><Banner /></motion.div>
-      <motion.div custom={1}><Slogan /></motion.div>
-      <motion.div custom={2}><CustomPortraits /></motion.div>
-      <motion.div custom={3}><LiveSketch /></motion.div>
-      <motion.div custom={4}><Mural /></motion.div>
-      <motion.div custom={5}><ShoePaint /></motion.div>
-      <motion.div custom={6}><Tshirt /></motion.div>
+      <motion.div custom={0}>
+        <Banner />
+      </motion.div>
+      <motion.div custom={1}>
+        <Slogan />
+      </motion.div>
+      <motion.div custom={2}>
+        <CustomPortraits />
+      </motion.div>
+      <motion.div custom={3}>
+        <LiveSketch />
+      </motion.div>
+      <motion.div custom={4}>
+        <Mural />
+      </motion.div>
+      <motion.div custom={5}>
+        <ShoePaint />
+      </motion.div>
+      <motion.div custom={6}>
+        <Tshirt />
+      </motion.div>
 
       {/* Floating Advertisement */}
       {showAd && (

@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Box,
-  Card,
-  CardMedia,
-  Typography,
-  Modal,
-  Button
-} from "@mui/material";
-import { keyframes } from "@mui/system";
+import { Box, Card, CardMedia, Typography, Modal, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import BrushIcon from "@mui/icons-material/Brush";
@@ -18,14 +10,14 @@ const mediaItems = [
     id: 1,
     type: "video",
     src: "/assets/Tshirt/video2.mp4",
-    title: "T-Shirt Video"
+    title: "T-Shirt Video",
   },
   ...Array.from({ length: 3 }, (_, index) => ({
     id: index + 2,
     type: "image",
     src: `/assets/Tshirt/img${index + 1}.jpg`,
-    title: `T-Shirt ${index + 1}`
-  }))
+    title: `T-Shirt ${index + 1}`,
+  })),
 ];
 
 const Tshirt = () => {
@@ -33,9 +25,7 @@ const Tshirt = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
 
-  const handleShowMore = () => {
-    navigate("/myworks#tshirtdesigns");
-  };
+  const handleShowMore = () => navigate("/myworks#tshirtdesigns");
 
   const handleOpen = (item) => {
     setSelectedItem(item);
@@ -49,18 +39,17 @@ const Tshirt = () => {
 
   return (
     <Box
-      sx={{
-        paddingX: { xs: "16px", sm: "24px", md: "40px" },
-        paddingBottom: "40px",
-        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
-        minHeight: "100vh",
-        overflowX: "hidden",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        paddingTop: "10px"
-      }}
+    sx={{
+      px: { xs: 2, sm: 3, md: 5 },
+      pb: 5,
+      pt: 2,
+      minHeight: "100vh",
+      background:
+        "black radial-gradient(circle at center, #111 0%, #000 100%)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    }}
     >
       {/* Title */}
       <motion.div
@@ -77,8 +66,6 @@ const Tshirt = () => {
             letterSpacing: "1px",
             textAlign: "center",
             position: "relative",
-            display: "inline-block",
-            width: "100%",
             "&::after": {
               content: '""',
               position: "absolute",
@@ -87,15 +74,15 @@ const Tshirt = () => {
               backgroundColor: "#A8743D",
               bottom: -10,
               left: "50%",
-              transform: "translateX(-50%)"
-            }
+              transform: "translateX(-50%)",
+            },
           }}
         >
           Tshirt Designs
         </Typography>
       </motion.div>
 
-      {/* Responsive Gallery */}
+      {/* Gallery */}
       <Box
         sx={{
           display: { xs: "grid", sm: "flex" },
@@ -107,7 +94,7 @@ const Tshirt = () => {
           "&::-webkit-scrollbar": { display: "none" },
           justifyContent: "center",
           flexDirection: { sm: "row" },
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         {mediaItems.map((item) => (
@@ -126,8 +113,8 @@ const Tshirt = () => {
               transition: "transform 0.3s, box-shadow 0.3s",
               "&:hover": {
                 transform: "scale(1.05)",
-                boxShadow: "0px 8px 25px rgba(167, 109, 54, 1)"
-              }
+                boxShadow: "0px 8px 25px rgba(167, 109, 54, 1)",
+              },
             }}
           >
             {item.type === "video" ? (
@@ -155,68 +142,74 @@ const Tshirt = () => {
 
       {/* Buttons */}
       <Box
-  display="flex"
-  justifyContent="center"
-  gap={2}
-  mt={2}
-  sx={{
-    flexDirection: { xs: "row", sm: "row" },
-    flexWrap: { xs: "wrap", sm: "nowrap" },
-    alignItems: "center"
-  }}
->
-  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-    <Button
-      onClick={handleShowMore}
-      variant="contained"
-      size="medium"
-      endIcon={<ArrowForwardIcon />}
-      sx={{
-        backgroundColor: "#B88746",
-        color: "white",
-        padding: { xs: "8px 16px", sm: "12px 24px", md: "14px 32px" },
-        fontWeight: "600",
-        fontSize: { xs: "0.75rem", sm: "0.9rem", md: "1rem" },
-        borderRadius: "50px",
-        boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
-        minWidth: { xs: "130px", sm: "180px", md: "240px" },
-        "&:hover": {
-          backgroundColor: "#A8743D",
-          boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)"
-        }
-      }}
-    >
-      View Full Gallery
-    </Button>
-  </motion.div>
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="row"
+        flexWrap="nowrap"
+        gap={{ xs: 1.5, sm: 2 }}
+        mt={{ xs: 3, sm: 4 }}
+        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
+        sx={{
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            onClick={handleShowMore}
+            variant="contained"
+            size="medium"
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              backgroundColor: "#B88746",
+              color: "white",
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
+              fontWeight: "600",
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              borderRadius: "50px",
+              minWidth: { xs: "110px", sm: "140px" },
+              whiteSpace: "nowrap",
+              boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
+              "&:hover": {
+                backgroundColor: "#A8743D",
+                boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
+              },
+            }}
+          >
+            View Full Gallery
+          </Button>
+        </motion.div>
 
-  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-    <Button
-      component={Link}
-      to="/customize"
-      variant="outlined"
-      size="medium"
-      startIcon={<BrushIcon />}
-      sx={{
-        borderColor: "#B88746",
-        color: "#B88746",
-        padding: { xs: "8px 16px", sm: "12px 24px", md: "14px 32px" },
-        fontWeight: "600",
-        fontSize: { xs: "0.75rem", sm: "0.9rem", md: "1rem" },
-        borderRadius: "50px",
-        minWidth: { xs: "130px", sm: "180px", md: "240px" },
-        "&:hover": {
-          backgroundColor: "rgba(184, 135, 70, 0.1)",
-          borderColor: "#A8743D",
-          color: "#A8743D"
-        }
-      }}
-    >
-      Customize Yours
-    </Button>
-  </motion.div>
-</Box>
-
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            component={Link}
+            to="/customize"
+            variant="outlined"
+            size="medium"
+            startIcon={<BrushIcon />}
+            sx={{
+              borderColor: "#B88746",
+              color: "#B88746",
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
+              fontWeight: "600",
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              borderRadius: "50px",
+              minWidth: { xs: "110px", sm: "140px" },
+              whiteSpace: "nowrap",
+              "&:hover": {
+                backgroundColor: "rgba(184, 135, 70, 0.1)",
+                borderColor: "#A8743D",
+                color: "#A8743D",
+              },
+            }}
+          >
+            Customize Yours
+          </Button>
+        </motion.div>
+      </Box>
 
       {/* Modal */}
       <Modal
@@ -225,7 +218,7 @@ const Tshirt = () => {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Box
@@ -242,8 +235,6 @@ const Tshirt = () => {
             justifyContent: "center",
             cursor: "pointer",
             overflow: "hidden",
-            borderRadius: "15px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.7)"
           }}
         >
           {selectedItem && (
@@ -254,10 +245,10 @@ const Tshirt = () => {
                   controls
                   autoPlay
                   style={{
-                    width: "80vw",
-                    maxHeight: "90vh",
+                    width: "90vw",
+                    maxHeight: "80vh",
                     objectFit: "contain",
-                    borderRadius: "8px"
+                    borderRadius: "8px",
                   }}
                 />
               ) : (
@@ -265,10 +256,10 @@ const Tshirt = () => {
                   src={selectedItem.src}
                   alt={selectedItem.title}
                   style={{
-                    width: "80vw",
-                    maxHeight: "90vh",
+                    width: "90vw",
+                    maxHeight: "80vh",
                     objectFit: "contain",
-                    borderRadius: "8px"
+                    borderRadius: "8px",
                   }}
                 />
               )}

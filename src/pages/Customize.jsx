@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -15,12 +15,12 @@ import {
   AccordionDetails,
   Alert,
   useTheme,
-  useMediaQuery
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+  useMediaQuery,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { keyframes } from "@mui/system";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const bounceShrink = keyframes`
   0% { transform: scale(1); }
@@ -28,7 +28,15 @@ const bounceShrink = keyframes`
   100% { transform: scale(1); }
 `;
 
-const CustomTextField = ({ label, value, onChange, error, helperText, type = 'text', ...rest }) => (
+const CustomTextField = ({
+  label,
+  value,
+  onChange,
+  error,
+  helperText,
+  type = "text",
+  ...rest
+}) => (
   <TextField
     label={label}
     fullWidth
@@ -37,29 +45,57 @@ const CustomTextField = ({ label, value, onChange, error, helperText, type = 'te
     error={error}
     helperText={helperText}
     type={type}
-    InputLabelProps={type === 'date' || type === 'time' ? { shrink: true } : {}}
+    InputLabelProps={type === "date" || type === "time" ? { shrink: true } : {}}
     {...rest}
   />
 );
 
 const Customize = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
-  const [personalInfo, setPersonalInfo] = useState({ name: '', email: '', phone: '', address: '' });
-  const [errors, setErrors] = useState({ name: false, email: false, phone: false, address: false });
-  const [sketchType, setSketchType] = useState('');
-  const [size, setSize] = useState('');
-  const [material, setMaterial] = useState('');
-  const [liveSketch, setLiveSketch] = useState({ place: '', date: '', time: '' });
-  const [mural, setMural] = useState({ wallSize: '', surface: '', location: '' });
-  const [tshirt, setTshirt] = useState({ size: '', color: '', design: '', description: '' });
-  const [shoe, setShoe] = useState({ type: '', size: '', design: '', description: '' });
+  const [personalInfo, setPersonalInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    phone: false,
+    address: false,
+  });
+  const [sketchType, setSketchType] = useState("");
+  const [size, setSize] = useState("");
+  const [material, setMaterial] = useState("");
+  const [liveSketch, setLiveSketch] = useState({
+    place: "",
+    date: "",
+    time: "",
+  });
+  const [mural, setMural] = useState({
+    wallSize: "",
+    surface: "",
+    location: "",
+  });
+  const [tshirt, setTshirt] = useState({
+    size: "",
+    color: "",
+    design: "",
+    description: "",
+  });
+  const [shoe, setShoe] = useState({
+    type: "",
+    size: "",
+    design: "",
+    description: "",
+  });
   const [submitted, setSubmitted] = useState(false);
 
-  const validateEmail = email => /^\S+@\S+\.\S+$/.test(email);
-  const validatePhone = phone => /^[0-9]{10}$/.test(phone);
+  const validateEmail = (email) => /^\S+@\S+\.\S+$/.test(email);
+  const validatePhone = (phone) => /^[0-9]{10}$/.test(phone);
 
   const handleSubmit = () => {
     let valid = true;
@@ -68,102 +104,108 @@ const Customize = () => {
       email: false,
       phone: false,
       address: false,
-      emailError: '',
-      phoneError: ''
+      emailError: "",
+      phoneError: "",
     };
-  
+
     Object.entries(personalInfo).forEach(([key, value]) => {
-      const isRequired = ['name', 'phone'].includes(key);
+      const isRequired = ["name", "phone"].includes(key);
       if (isRequired && !value.trim()) {
         errorObj[key] = true;
         valid = false;
       } else {
-        if (key === 'email' && value.trim()) {
+        if (key === "email" && value.trim()) {
           const emailValid = validateEmail(value);
           errorObj[key] = !emailValid;
-          errorObj.emailError = emailValid ? '' : 'Please enter a valid email';
+          errorObj.emailError = emailValid ? "" : "Please enter a valid email";
           if (!emailValid) valid = false;
-        } else if (key === 'phone') {
+        } else if (key === "phone") {
           const phoneValid = validatePhone(value);
           errorObj[key] = !phoneValid;
-          errorObj.phoneError = phoneValid ? '' : 'Please enter a valid phone number';
+          errorObj.phoneError = phoneValid
+            ? ""
+            : "Please enter a valid phone number";
           if (!phoneValid) valid = false;
         }
       }
     });
-    
-  
+
     setErrors(errorObj);
-  
+
     if (!valid) {
       if (errorObj.emailError) toast.error(errorObj.emailError);
       if (errorObj.phoneError) toast.error(errorObj.phoneError);
-      const firstError = Object.keys(errorObj).find(key => errorObj[key]);
-      if (firstError && !['emailError', 'phoneError'].includes(firstError)) {
-        toast.error(`${firstError.charAt(0).toUpperCase() + firstError.slice(1)} is required`);
+      const firstError = Object.keys(errorObj).find((key) => errorObj[key]);
+      if (firstError && !["emailError", "phoneError"].includes(firstError)) {
+        toast.error(
+          `${firstError.charAt(0).toUpperCase() + firstError.slice(1)} is required`,
+        );
       }
       if (firstError) {
-        document.getElementById(firstError)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document
+          .getElementById(firstError)
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
       }
       return;
     }
-  
+
     const createSection = (title, fields) => {
       const filledFields = Object.entries(fields)
-        .filter(([_, value]) => value && value.trim() !== '')
+        .filter(([_, value]) => value && value.trim() !== "")
         .map(([key, value]) => `• ${key}: ${value.trim()}`);
-      if (filledFields.length === 0) return '';
-      return `\n\n  ${title}\n${filledFields.join('\n')}`;
+      if (filledFields.length === 0) return "";
+      return `\n\n  ${title}\n${filledFields.join("\n")}`;
     };
-  
+
     let message = `New Custom Art Request\n\nHere are the details for my custom artwork request:`;
-    message += createSection('*--Personal Information--*', {
+    message += createSection("*--Personal Information--*", {
       Name: personalInfo.name,
       Email: personalInfo.email,
       Phone: personalInfo.phone,
-      Address: personalInfo.address
+      Address: personalInfo.address,
     });
-  
+
     if (sketchType || size || material) {
-      message += createSection('*--Sketch Details--*', {
+      message += createSection("*--Sketch Details--*", {
         Type: sketchType,
         Size: size,
-        Material: material
+        Material: material,
       });
     }
-  
-    message += createSection('*--Live Sketch Event--*', liveSketch);
-    message += createSection('*--Mural Painting--*', mural);
-    message += createSection('*--T-Shirt Design--*', tshirt);
-    message += createSection('*--Shoe Customization--*', shoe);
-  
+
+    message += createSection("*--Live Sketch Event--*", liveSketch);
+    message += createSection("*--Mural Painting--*", mural);
+    message += createSection("*--T-Shirt Design--*", tshirt);
+    message += createSection("*--Shoe Customization--*", shoe);
+
     message += `\n\nThank you! I'm looking forward to working with you on this project.\n\nPlease let me know if you need any additional information.`;
-  
+
     const whatsappURL = `https://wa.me/9176425811?text=${encodeURIComponent(message)}`;
-    setTimeout(() => window.open(whatsappURL, '_blank'), 300);
-  
+    setTimeout(() => window.open(whatsappURL, "_blank"), 300);
+
     setSubmitted(true);
-    toast.success('Request sent via WhatsApp!');
+    toast.success("Request sent via WhatsApp!");
     setTimeout(() => {
       setSubmitted(false);
     }, 5000);
   };
-  
-  
+
   // Responsive grid settings
   const getGridSize = (field) => {
     if (isMobile) return 12;
-    if (isTablet) return field === 'description' ? 12 : 6;
-    return field === 'description' ? 12 : 4;
+    if (isTablet) return field === "description" ? 12 : 6;
+    return field === "description" ? 12 : 4;
   };
 
   return (
-    <Box sx={{ 
-      p: { xs: 2, sm: 3, md: 4 }, 
-      maxWidth: '1000px', 
-      margin: '0 auto',
-      minHeight: '100vh'
-    }}>
+    <Box
+      sx={{
+        p: { xs: 2, sm: 3, md: 4 },
+        maxWidth: "1000px",
+        margin: "0 auto",
+        minHeight: "100vh",
+      }}
+    >
       <Typography
         variant="h4"
         align="center"
@@ -180,7 +222,7 @@ const Customize = () => {
           letterSpacing: "0.8px",
           fontFamily: "'Playfair Display', serif",
           mt: { xs: 0, sm: 1 },
-          mb: { xs: 2, sm: 3 }
+          mb: { xs: 2, sm: 3 },
         }}
       >
         Craft Your Vision
@@ -193,16 +235,24 @@ const Customize = () => {
       )}
 
       <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, mb: 4 }}>
-        <Typography variant="h6" gutterBottom>👤 Personal Information </Typography>
+        <Typography variant="h6" gutterBottom>
+          👤 Personal Information{" "}
+        </Typography>
         <Grid container spacing={2}>
-          {['name*', 'email', 'phone*', 'address'].map((field) => (
+          {["name*", "email", "phone*", "address"].map((field) => (
             <Grid item xs={12} sm={6} key={field} id={field}>
               <CustomTextField
                 label={field.charAt(0).toUpperCase() + field.slice(1)}
                 value={personalInfo[field]}
-                onChange={(e) => setPersonalInfo({ ...personalInfo, [field]: e.target.value })}
+                onChange={(e) =>
+                  setPersonalInfo({ ...personalInfo, [field]: e.target.value })
+                }
                 error={errors[field]}
-                helperText={errors[field] ? `${field.charAt(0).toUpperCase() + field.slice(1)} is invalid or required` : ''}
+                helperText={
+                  errors[field]
+                    ? `${field.charAt(0).toUpperCase() + field.slice(1)} is invalid or required`
+                    : ""
+                }
                 size={isMobile ? "small" : "medium"}
               />
             </Grid>
@@ -212,7 +262,7 @@ const Customize = () => {
 
       {[
         {
-          label: '🖌 Sketch Options',
+          label: "🖌 Sketch Options",
           content: (
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -224,10 +274,15 @@ const Customize = () => {
                     value={sketchType}
                     onChange={(e) => setSketchType(e.target.value)}
                   >
-                    <MenuItem value="Realistic Pencil Sketch">📝 Realistic Pencil Sketch</MenuItem>
-                    <MenuItem value="Cartoon Sketch">🎨 Cartoon Sketch</MenuItem>
-                    <MenuItem value="Regular Sketch">✏ Regular Sketch</MenuItem>
-                    <MenuItem value="custom">Custom Size</MenuItem>
+                    <MenuItem value="Realistic Pencil Sketch">
+                      📝 Realistic Pencil Sketch
+                    </MenuItem>
+                    <MenuItem value="Cartoon Sketch">
+                      🎨 Cartoon Sketch
+                    </MenuItem>
+                    <MenuItem value="Regular Sketch">
+                      ✏ Regular Sketch
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -244,6 +299,7 @@ const Customize = () => {
                     <MenuItem value="A3">🖼 A3</MenuItem>
                     <MenuItem value="A2">🗂 A2</MenuItem>
                     <MenuItem value="A1">📐 A1</MenuItem>
+                    <MenuItem value="custom">Custom Size</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -258,91 +314,108 @@ const Customize = () => {
                   >
                     <MenuItem value="Paper">📜 Paper</MenuItem>
                     <MenuItem value="Canvas">🖌 Canvas</MenuItem>
-                    <MenuItem value="Textured Sheet">📘 Textured Sheet</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
             </Grid>
-          )
+          ),
         },
 
         {
-          label: '📅 Live Sketch',
+          label: "📅 Live Sketch",
           content: (
             <Grid container spacing={2}>
-              {['place', 'date', 'time'].map((field) => (
+              {["place", "date", "time"].map((field) => (
                 <Grid item xs={12} sm={4} key={field}>
                   <CustomTextField
                     label={field.charAt(0).toUpperCase() + field.slice(1)}
                     value={liveSketch[field]}
-                    type={field === 'date' ? 'date' : field === 'time' ? 'time' : 'text'}
-                    onChange={(e) => setLiveSketch({ ...liveSketch, [field]: e.target.value })}
+                    type={
+                      field === "date"
+                        ? "date"
+                        : field === "time"
+                          ? "time"
+                          : "text"
+                    }
+                    onChange={(e) =>
+                      setLiveSketch({ ...liveSketch, [field]: e.target.value })
+                    }
                     size={isMobile ? "small" : "medium"}
                   />
                 </Grid>
               ))}
             </Grid>
-          )
+          ),
         },
         {
-          label: '🎨 Mural Paint',
+          label: "🎨 Mural Paint",
           content: (
             <Grid container spacing={2}>
-              {['wallSize', 'surface', 'location'].map((field) => (
-                <Grid item xs={12} sm={4} key={field}>
-                  <CustomTextField
-                    label={field.charAt(0).toUpperCase() + field.slice(1)}
-                    value={mural[field]}
-                    onChange={(e) => setMural({ ...mural, [field]: e.target.value })}
-                    size={isMobile ? "small" : "medium"}
-                  />
-                </Grid>
-              ))}
+              {["Wallsize", "Design", "Location", "description"].map(
+                (field) => (
+                  <Grid item xs={getGridSize(field)} key={field}>
+                    <CustomTextField
+                      label={field.charAt(0).toUpperCase() + field.slice(1)}
+                      value={tshirt[field]}
+                      onChange={(e) =>
+                        setTshirt({ ...tshirt, [field]: e.target.value })
+                      }
+                      multiline={field === "description"}
+                      rows={field === "description" ? 3 : 1}
+                      size={isMobile ? "small" : "medium"}
+                    />
+                  </Grid>
+                ),
+              )}
             </Grid>
-          )
+          ),
         },
         {
-          label: '👕 T-Shirt Design',
+          label: "👕 T-Shirt Design",
           content: (
             <Grid container spacing={2}>
-              {['size', 'color', 'design', 'description'].map((field) => (
+              {["size", "color", "design", "description"].map((field) => (
                 <Grid item xs={getGridSize(field)} key={field}>
                   <CustomTextField
                     label={field.charAt(0).toUpperCase() + field.slice(1)}
                     value={tshirt[field]}
-                    onChange={(e) => setTshirt({ ...tshirt, [field]: e.target.value })}
-                    multiline={field === 'description'}
-                    rows={field === 'description' ? 3 : 1}
+                    onChange={(e) =>
+                      setTshirt({ ...tshirt, [field]: e.target.value })
+                    }
+                    multiline={field === "description"}
+                    rows={field === "description" ? 3 : 1}
                     size={isMobile ? "small" : "medium"}
                   />
                 </Grid>
               ))}
             </Grid>
-          )
+          ),
         },
         {
-          label: '👟 Shoe Paint',
+          label: "👟 Shoe Paint",
           content: (
             <Grid container spacing={2}>
-              {['type', 'size', 'design', 'description'].map((field) => (
+              {["type", "size", "design", "description"].map((field) => (
                 <Grid item xs={getGridSize(field)} key={field}>
                   <CustomTextField
                     label={field.charAt(0).toUpperCase() + field.slice(1)}
                     value={shoe[field]}
-                    onChange={(e) => setShoe({ ...shoe, [field]: e.target.value })}
-                    multiline={field === 'description'}
-                    rows={field === 'description' ? 3 : 1}
+                    onChange={(e) =>
+                      setShoe({ ...shoe, [field]: e.target.value })
+                    }
+                    multiline={field === "description"}
+                    rows={field === "description" ? 3 : 1}
                     size={isMobile ? "small" : "medium"}
                   />
                 </Grid>
               ))}
             </Grid>
-          )
-        }
+          ),
+        },
       ].map((section, idx) => (
         <Accordion key={idx} sx={{ mb: 2 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography sx={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>
+            <Typography sx={{ fontSize: isMobile ? "0.9rem" : "1rem" }}>
               {section.label}
             </Typography>
           </AccordionSummary>
@@ -363,7 +436,7 @@ const Customize = () => {
             color: "white",
             padding: {
               xs: "10px 24px",
-              sm: "12px 32px"
+              sm: "12px 32px",
             },
             fontWeight: "600",
             fontSize: isMobile ? "0.9rem" : "1rem",

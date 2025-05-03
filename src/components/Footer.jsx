@@ -52,10 +52,22 @@ const Footer = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const socialLinks = [
-    { icon: Facebook, label: "Facebook", link: "https://www.facebook.com/share/1LAPsZ2U25/" },
-    { icon: Instagram, label: "Instagram", link: "https://www.instagram.com/chalzart?igsh=MTdhaWliZnFmYng3Mg==" },
+    {
+      icon: Facebook,
+      label: "Facebook",
+      link: "https://www.facebook.com/share/1LAPsZ2U25/",
+    },
+    {
+      icon: Instagram,
+      label: "Instagram",
+      link: "https://www.instagram.com/chalzart?igsh=MTdhaWliZnFmYng3Mg==",
+    },
     { icon: Twitter, label: "Twitter", link: "https://twitter.com" },
-    { icon: YouTube, label: "YouTube", link: "https://youtube.com/@chalzart?si=Ai52HlwzsftDoGH4" },
+    {
+      icon: YouTube,
+      label: "YouTube",
+      link: "https://youtube.com/@chalzart?si=Ai52HlwzsftDoGH4",
+    },
   ];
 
   const quickLinks = [
@@ -96,7 +108,11 @@ const Footer = () => {
             flexDirection="column"
             alignItems={isMobile ? "center" : "flex-start"}
           >
-            <Typography variant="h4" fontWeight="bold" sx={{ color: "#B88746", mb: 2 }}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              sx={{ color: "#B88746", mb: 2 }}
+            >
               Chalzart
             </Typography>
             <Typography
@@ -158,11 +174,19 @@ const Footer = () => {
             textAlign="center"
           >
             <Box sx={{ mx: 4 }}>
-              <Typography variant="h6" fontWeight="600" sx={{ color: "#B88746", mb: 2 }}>
+              <Typography
+                variant="h6"
+                fontWeight="600"
+                sx={{ color: "#B88746", mb: 2 }}
+              >
                 Quick Links
               </Typography>
               {quickLinks.map((link) => (
-                <Link key={link.label} to={link.path} style={{ textDecoration: "none" }}>
+                <Link
+                  key={link.label}
+                  to={link.path}
+                  style={{ textDecoration: "none" }}
+                >
                   <Typography
                     sx={{
                       color: "#ccc",
@@ -179,11 +203,19 @@ const Footer = () => {
             </Box>
 
             <Box sx={{ mx: 4 }}>
-              <Typography variant="h6" fontWeight="600" sx={{ color: "#B88746", mb: 2 }}>
+              <Typography
+                variant="h6"
+                fontWeight="600"
+                sx={{ color: "#B88746", mb: 2 }}
+              >
                 More
               </Typography>
               {moreLinks.map((link) => (
-                <Link key={link.label} to={link.path} style={{ textDecoration: "none" }}>
+                <Link
+                  key={link.label}
+                  to={link.path}
+                  style={{ textDecoration: "none" }}
+                >
                   <Typography
                     sx={{
                       color: "#ccc",
@@ -209,20 +241,38 @@ const Footer = () => {
             flexDirection="column"
             alignItems={isMobile ? "center" : "flex-start"}
           >
-            <Typography variant="h6" fontWeight="600" sx={{ color: "#B88746", mb: 2 }}>
+            <Typography
+              variant="h6"
+              fontWeight="600"
+              sx={{ color: "#B88746", mb: 2 }}
+            >
               Stay in Touch
             </Typography>
 
             <Box sx={{ mb: 2 }}>
-              <Box display="flex" alignItems="center" justifyContent={isMobile ? "center" : "flex-start"} mb={1}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent={isMobile ? "center" : "flex-start"}
+                mb={1}
+              >
                 <LocationOn fontSize="small" sx={{ mr: 1, color: "#aaa" }} />
                 <Typography variant="body2">Bangalore, India</Typography>
               </Box>
-              <Box display="flex" alignItems="center" justifyContent={isMobile ? "center" : "flex-start"} mb={1}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent={isMobile ? "center" : "flex-start"}
+                mb={1}
+              >
                 <Phone fontSize="small" sx={{ mr: 1, color: "#aaa" }} />
                 <Typography variant="body2">+91 9176425811</Typography>
               </Box>
-              <Box display="flex" alignItems="center" justifyContent={isMobile ? "center" : "flex-start"}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent={isMobile ? "center" : "flex-start"}
+              >
                 <Email fontSize="small" sx={{ mr: 1, color: "#aaa" }} />
                 <Typography variant="body2">thechalzart@gmail.com</Typography>
               </Box>
@@ -249,7 +299,7 @@ const Footer = () => {
             © 2019–2035 Chalzart. All rights reserved.
           </Typography>
           <Typography variant="body2" sx={{ color: "#555", fontSize: 13 }}>
-            Designed and developed by  Yoonus
+            Designed and developed by Yoonus
           </Typography>
         </Box>
 

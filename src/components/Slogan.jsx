@@ -6,7 +6,8 @@ const Slogan = () => {
   return (
     <Box
       sx={{
-        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        background:
+          "black radial-gradient(circle at center, #111 0%, #000 100%)",
         py: { xs: 6, sm: 8 },
         color: "#fff",
         overflow: "hidden",
@@ -26,7 +27,7 @@ const Slogan = () => {
       }}
     >
       <Container maxWidth="lg">
-      <motion.div
+        <motion.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           transition={{ duration: 1 }}
@@ -96,7 +97,8 @@ const Slogan = () => {
                   textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
                 }}
               >
-Honey Drizzle  Serenity in Stillness              </Typography>
+                Honey Drizzle Serenity in Stillness{" "}
+              </Typography>
             </motion.div>
 
             <motion.div
@@ -114,7 +116,12 @@ Honey Drizzle  Serenity in Stillness              </Typography>
                   lineHeight: 1.6,
                 }}
               >
-                In this hyper-realistic artwork, golden honey gently cascades down a girl's face, symbolizing tranquility, warmth, and emotional healing. The soft texture and glistening flow evoke a sense of peace and inner calm, capturing a moment of mindful stillness. This piece invites viewers to slow down, breathe deeply, and reconnect with a serene state of being.
+                In this hyper-realistic artwork, golden honey gently cascades
+                down a girl's face, symbolizing tranquility, warmth, and
+                emotional healing. The soft texture and glistening flow evoke a
+                sense of peace and inner calm, capturing a moment of mindful
+                stillness. This piece invites viewers to slow down, breathe
+                deeply, and reconnect with a serene state of being.
               </Typography>
             </motion.div>
           </Box>
@@ -174,7 +181,6 @@ Honey Drizzle  Serenity in Stillness              </Typography>
                 }}
               >
                 The Battle Within - Fight for Inner Peace
-
               </Typography>
             </motion.div>
 
@@ -193,7 +199,12 @@ Honey Drizzle  Serenity in Stillness              </Typography>
                   lineHeight: 1.6,
                 }}
               >
-                This realistic pencil drawing shows a man struggling with himself. The many hands pulling and pushing represent the stress, pain, and confusion he feels inside. It shows how hard it can be to find peace when your own mind feels like a battlefield. This artwork speaks about the silent fight many men go through every day
+                This realistic pencil drawing shows a man struggling with
+                himself. The many hands pulling and pushing represent the
+                stress, pain, and confusion he feels inside. It shows how hard
+                it can be to find peace when your own mind feels like a
+                battlefield. This artwork speaks about the silent fight many men
+                go through every day
               </Typography>
             </motion.div>
           </Box>

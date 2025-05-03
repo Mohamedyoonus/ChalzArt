@@ -32,9 +32,9 @@ const About = () => {
   const paragraphs = [
     `Hi, I'm Charles Simon a passionate artist and founder of Chalz Art. I specialize in realistic pencil portraits, live speed sketches, watercolor paintings, and custom artworks for any occasion. With years of experience and a deep love for art, I bring life to every drawing with fine details and personal touch. I also offer online and offline drawing classes for beginners and aspiring artists.`,
 
-`Whether you're looking for a unique gift or want to learn art, I'm here to help you make it special.`,
+    `Whether you're looking for a unique gift or want to learn art, I'm here to help you make it special.`,
 
-`Thank you for visiting and supporting handmade art!`,
+    `Thank you for visiting and supporting handmade art!`,
   ];
 
   return (
@@ -44,7 +44,8 @@ const About = () => {
         px: { xs: 2, sm: 3 },
         minHeight: "100vh",
         backgroundColor: "black",
-        backgroundImage: "radial-gradient(circle at 25% 30%, #1a1a1a 0%, #000 70%)",
+        backgroundImage:
+          "radial-gradient(circle at 25% 30%, #1a1a1a 0%, #000 70%)",
         position: "relative",
         overflow: "hidden",
         "&::before": {
@@ -54,7 +55,8 @@ const About = () => {
           left: "-20%",
           width: "80vh",
           height: "80vh",
-          background: "radial-gradient(circle, rgba(184,135,70,0.15) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(184,135,70,0.15) 0%, transparent 70%)",
           borderRadius: "50%",
           zIndex: 0,
         },
