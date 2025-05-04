@@ -64,8 +64,8 @@ const LiveSketch = () => {
   sx={{
     px: { xs: 2, sm: 3, md: 5 },
     pb: 5,
-    pt: { xs: -2, sm: 3, md:6 },
-    mt: -3,   
+    pt: { xs: 18, sm: 3, md:6 },
+    mt: { xs: -8, sm: 0, md: -5},
     minHeight: "100vh",
     background:
       "black radial-gradient(circle at center, #111 0%, #000 100%)",
