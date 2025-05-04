@@ -35,20 +35,34 @@ const colorfulBounce = keyframes`
 const elegantPulse = keyframes`
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) scale(0.95);
     text-shadow: none;
   }
-  50% {
+  40% {
     opacity: 1;
-    transform: translateY(0);
-    text-shadow: 0 0 10px #D4A373, 0 0 20px #fff;
+    transform: translateY(0) scale(1.05);
+    text-shadow:
+      0 0 8px #D4A373,
+      0 0 12px #ffdebd,
+      0 0 18px #fff5e1;
+  }
+  70% {
+    transform: scale(0.98);
+    text-shadow:
+      0 0 10px #D4A373,
+      0 0 14px #ffdebd,
+      0 0 20px #fff5e1;
   }
   100% {
+    transform: scale(1);
+    text-shadow:
+      0 0 6px #D4A373,
+      0 0 10px #ffdebd;
     opacity: 1;
-    transform: translateY(0);
-    text-shadow: 0 0 8px #D4A373;
   }
 `;
+
+
 
 const bounceShrink = keyframes`
   0% { transform: scale(1); }
@@ -63,7 +77,7 @@ const Banner = () => {
         position: "relative",
         width: "100%",
         minHeight: "100vh",
-        backgroundImage: "none",
+        backgroundImage: `url(${bannerImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -80,11 +94,9 @@ const Banner = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundImage: `url(${bannerImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "blur(2px)",
-          zIndex: 0,
+          background:
+            "linear-gradient(to bottom right, rgba(0,0,0,0.5), rgba(0,0,0,0.3))",
+          zIndex: 1,
         },
       }}
     >
@@ -122,89 +134,82 @@ const Banner = () => {
 
         {/* Tagline */}
         <Typography
-          variant="h4"
-          sx={{
-            mt: 2,
-            fontWeight: 400,
-            letterSpacing: 2,
-            fontFamily: "'Lora', serif",
-            color: "#fff",
-            fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2.5rem" },
-            animation: `${elegantPulse} 3.5s ease-in-out forwards`,
-          }}
-        >
-          Art Meets Heart
-        </Typography>
+  variant="h4"
+  sx={{
+    mt: 2,
+    fontWeight: 400,
+    letterSpacing: 2,
+    fontFamily: "'Lora', serif",
+    color: "#fff",
+    fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2.5rem" },
+    animation: `${elegantPulse} 3.5s ease-in-out forwards`,
+  }}
+>
+  Art Meets Heart
+</Typography>
+
 
         {/* Buttons */}
         <Box
-  sx={{
-    mt: 5,
-    
-    display: "flex",
-    flexDirection: "row",
-    gap: { xs: 1.5, sm: 3 },
-    justifyContent: "center",
-    flexWrap: { xs: "nowrap", sm: "wrap" },
-    overflowX: { xs: "auto", sm: "visible" },
-    px: { xs: 1, sm: 0 },
-  }}
->
-  {[
-    { label: "Discover More", to: "/myworks" },
-    { label: "Customize Your Art", to: "/customize" },
-  ].map(({ label, to }) => (
-    <Button
-      key={label}
-      component={Link}
-      to={to}
-      variant="outlined"
-      sx={{
-        fontSize: { xs: "0.8rem", sm: "1rem" },
-        padding: { xs: "10px 20px", sm: "14px 36px" },
-        fontWeight: "600",
-        
-        borderColor: "white",
-        color: "#fff", // Set default text color to white
-        borderRadius: "40px",
-        boxShadow: "0px 8px 30px rgba(167, 109, 54, 0.6)",
-        transition: "all 0.3s ease-in-out",
-        position: "relative",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        flexShrink: 0,
-        "&::after": {
-          content: "''",
-          position: "absolute",
-          top: 0,
-          filter: "blur(2px)",
-
-          left: "50%",
-          width: "0%",
-          height: "100%",
-          backgroundColor: "#D4A373",
-          zIndex: -1,
-          transition: "width 0.3s ease, left 0.3s ease",
-        },
-        "&:hover": {
-          backgroundColor: "#D4A373",
-          color: "#fff",
-          transform: "scale(1.05)",
-        },
-        "&:hover::after": {
-          width: "100%",
-          left: 0,
-        },
-        "&:active": {
-          animation: `${bounceShrink} 0.3s ease-in-out`,
-        },
-      }}
-    >
-      {label}
-    </Button>
-  ))}
-</Box>
-
+          sx={{
+            mt: 5,
+            display: "flex",
+            flexDirection: "row",
+            gap: { xs: 1.5, sm: 3 },
+            justifyContent: "center",
+            flexWrap: { xs: "nowrap", sm: "wrap" },
+            overflowX: { xs: "auto", sm: "visible" },
+            px: { xs: 1, sm: 0 },
+          }}
+        >
+          {[{ label: "Discover More", to: "/myworks" }, { label: "Customize Your Art", to: "/customize" }].map(({ label, to }) => (
+            <Button
+              key={label}
+              component={Link}
+              to={to}
+              variant="contained"
+              sx={{
+                fontSize: { xs: "0.8rem", sm: "1rem" },
+                padding: { xs: "10px 20px", sm: "14px 36px" },
+                fontWeight: "600",
+                backgroundColor: "#A8743D",
+                color: "#fff",
+                borderRadius: "40px",
+                boxShadow: "0px 8px 30px rgba(167, 109, 54, 0.6)",
+                transition: "all 0.3s ease-in-out",
+                position: "relative",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+                "&::after": {
+                  content: "''",
+                  position: "absolute",
+                  top: 0,
+                  left: "50%",
+                  width: "0%",
+                  height: "100%",
+                  backgroundColor: "#fff",
+                  zIndex: -1,
+                  transition: "width 0.3s ease, left 0.3s ease",
+                },
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#A8743D",
+                  transform: "scale(1.05)",
+                },
+                "&:hover::after": {
+                  width: "100%",
+                  left: 0,
+                },
+                "&:active": {
+                  animation: `${bounceShrink} 0.3s ease-in-out`,
+                },
+              }}
+            >
+              {label}
+            </Button>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
