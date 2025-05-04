@@ -117,7 +117,7 @@ const Tshirt = () => {
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pt: { xs: 4, sm: 6, md: 8 },
+        pt: { xs: 7, sm: 6, md: 8 },
         pb: { xs: -2, sm: 3, md: -1 },
         mb: { xs: 0, sm: 3, md: 0 },
         minHeight: "60vh",
@@ -134,7 +134,7 @@ const Tshirt = () => {
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant={isDesktop ? "h4" : "h5"}
+          variant={isDesktop ? "h4" : "h4"}
           fontWeight="700"
           mb={{ xs: 4, sm: 6 }}
           sx={{

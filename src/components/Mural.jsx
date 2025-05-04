@@ -141,7 +141,7 @@ const Mural = () => {
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant={isDesktop ? "h4" : "h5"}
+          variant={isDesktop ? "h4" : "h4"}
           fontWeight="700"
           mb={{ xs: 4, sm: 6 }}
           sx={{

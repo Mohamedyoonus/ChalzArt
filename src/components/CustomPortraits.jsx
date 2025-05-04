@@ -137,7 +137,7 @@ const CustomPortrait = () => {
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant={isDesktop ? "h4" : "h5"}
+          variant={isDesktop ? "h4" : "h4"}
           fontWeight="700"
           mb={{ xs: 4, sm: 6 }}
           sx={{
@@ -280,7 +280,7 @@ const CustomPortrait = () => {
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      bgcolor: "black",
+      bgcolor: "background.paper",
       boxShadow: 24,
       borderRadius: "16px", // Rounded corners for premium feel
       p: 3,
@@ -291,6 +291,7 @@ const CustomPortrait = () => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center", // Center content within the modal
+      position: "relative",
     }}
   >
     {/* Close Button */}
