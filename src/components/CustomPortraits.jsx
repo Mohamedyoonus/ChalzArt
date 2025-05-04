@@ -24,6 +24,7 @@ const mediaItems = [
     id: index + 2,
     type: "image",
     src: `/assets/portrait/img${index + 1}.jpg`,
+    title: `Portrait ${index + 1}`,
   })),
 ];
 
@@ -46,7 +47,6 @@ const CustomPortrait = () => {
     setSelectedItem(null);
   };
 
-  // Adjust items display based on screen size
   const getVisibleItems = () => {
     if (isDesktop) return { top: mediaItems.slice(0, 4), bottom: mediaItems.slice(4, 8) };
     if (isTablet) return { top: mediaItems.slice(0, 3), bottom: mediaItems.slice(3, 6) };
@@ -57,7 +57,7 @@ const CustomPortrait = () => {
 
   const renderCards = (items) =>
     items.map((item) => (
-      <motion.div 
+      <motion.div
         key={item.id}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
@@ -90,13 +90,10 @@ const CustomPortrait = () => {
               loop
               autoPlay
               muted
-              sx={{ 
-                width: "100%", 
-                height: "100%", 
+              sx={{
+                width: "100%",
+                height: "100%",
                 objectFit: "cover",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                }
               }}
             />
           ) : (
@@ -104,14 +101,14 @@ const CustomPortrait = () => {
               component="img"
               image={item.src}
               alt={item.title}
-              sx={{ 
-                width: "100%", 
-                height: "100%", 
+              sx={{
+                width: "100%",
+                height: "100%",
                 objectFit: "cover",
                 transition: "transform 0.5s ease",
                 "&:hover": {
                   transform: "scale(1.1)",
-                }
+                },
               }}
             />
           )}
@@ -123,11 +120,11 @@ const CustomPortrait = () => {
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pb: 1,
-        pt: 2,
+        pb: { xs: -2, sm: 3, md: 5 },
+        mb: { xs: -3, sm: 2, md: 5 },
+        pt: 1,
         minHeight: "100vh",
-        background:
-          "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -160,7 +157,7 @@ const CustomPortrait = () => {
             },
           }}
         >
-         Custom Portraits
+          Custom Portraits
         </Typography>
       </motion.div>
 
@@ -209,41 +206,36 @@ const CustomPortrait = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        flexDirection={{ xs: "column", sm: "row" }}
+        flexDirection="row"
+        flexWrap="nowrap"
         gap={{ xs: 1.5, sm: 2 }}
-        mt={{ xs: 2, sm: 4 }}
-        mb={{ xs: 2, sm: 0 }}
-        px={{ xs: 1.5, sm: 0 }}
+        mt={{ xs: 3, sm: 4 }}
+        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
         sx={{
           width: "100%",
           textAlign: "center",
         }}
       >
-        <motion.div 
-          whileHover={{ scale: 1.05 }} 
-          whileTap={{ scale: 0.95 }}
-          style={{ width: isDesktop ? "auto" : "100%" }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             onClick={handleShowMore}
             variant="contained"
-            size={isDesktop ? "medium" : "small"}
+            size="medium"
             endIcon={<ArrowForwardIcon />}
             sx={{
               backgroundColor: "#B88746",
               color: "white",
-              px: { xs: 2, sm: 3 },
-              py: { xs: 1, sm: 1.5 },
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              width: { xs: "100%", sm: "auto" },
-              minWidth: { xs: "100%", sm: "140px" },
+              minWidth: { xs: "110px", sm: "140px" },
               whiteSpace: "nowrap",
-              boxShadow: "0 4px 12px rgba(184, 135, 70, 0.4)",
+              boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
               "&:hover": {
                 backgroundColor: "#A8743D",
-                boxShadow: "0 8px 20px rgba(184, 135, 70, 0.6)",
+                boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
               },
             }}
           >
@@ -251,27 +243,22 @@ const CustomPortrait = () => {
           </Button>
         </motion.div>
 
-        <motion.div 
-          whileHover={{ scale: 1.05 }} 
-          whileTap={{ scale: 0.95 }}
-          style={{ width: isDesktop ? "auto" : "100%" }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             component={Link}
             to="/customize"
             variant="outlined"
-            size={isDesktop ? "medium" : "small"}
+            size="medium"
             startIcon={<BrushIcon />}
             sx={{
               borderColor: "#B88746",
               color: "#B88746",
-              px: { xs: 2, sm: 3 },
-              py: { xs: 1, sm: 1.5 },
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              width: { xs: "100%", sm: "auto" },
-              minWidth: { xs: "100%", sm: "140px" },
+              minWidth: { xs: "110px", sm: "140px" },
               whiteSpace: "nowrap",
               "&:hover": {
                 backgroundColor: "rgba(184, 135, 70, 0.1)",
@@ -286,58 +273,35 @@ const CustomPortrait = () => {
       </Box>
 
       {/* Modal */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Modal open={open} onClose={handleClose}>
         <Box
-          onClick={handleClose}
           sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.95)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            overflow: "hidden",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            borderRadius: 2,
+            p: 2,
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+            outline: "none",
           }}
         >
-          {selectedItem && (
-            <>
-              {selectedItem.type === "video" ? (
-                <video
-                  src={selectedItem.src}
-                  controls
-                  autoPlay
-                  style={{
-                    width: "95vw",
-                    maxHeight: "80vh",
-                    objectFit: "contain",
-                    borderRadius: "8px",
-                  }}
-                />
-              ) : (
-                <img
-                  src={selectedItem.src}
-                  alt={selectedItem.title}
-                  style={{
-                    width: "95vw",
-                    maxHeight: "90vh",
-                    objectFit: "contain",
-                    borderRadius: "8px",
-                  }}
-                />
-              )}
-            </>
+          {selectedItem && selectedItem.type === "video" ? (
+            <video
+              src={selectedItem.src}
+              controls
+              autoPlay
+              style={{ width: "100%", height: "100%", borderRadius: 8 }}
+            />
+          ) : (
+            <img
+              src={selectedItem?.src}
+              alt={selectedItem?.title}
+              style={{ width: "100%", height: "100%", borderRadius: 8, objectFit: "contain" }}
+            />
           )}
         </Box>
       </Modal>

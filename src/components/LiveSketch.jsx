@@ -64,7 +64,7 @@ const LiveSketch = () => {
   sx={{
     px: { xs: 2, sm: 3, md: 5 },
     pb: 5,
-    pt: 0, 
+    pt: { xs: -2, sm: 3, md:6 },
     mt: -8,   
     minHeight: "100vh",
     background:

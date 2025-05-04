@@ -143,74 +143,74 @@ const ShoePaint = () => {
       </Grid>
 
       <Box
-  display="flex"
-  justifyContent="center"
-  alignItems="center"
-  flexDirection="row"
-  flexWrap="nowrap"
-  gap={{ xs: 1.5, sm: 2 }}
-  mt={{ xs: 3, sm: 4 }}
-  px={{ xs: 1.5, sm: 0 }} 
-  sx={{
-    width: "100%",
-    textAlign: "center",
-  }}
->
-  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-    <Button
-      onClick={handleShowMore}
-      variant="contained"
-      size="medium"
-      endIcon={<ArrowForwardIcon />}
-      sx={{
-        backgroundColor: "#B88746",
-        color: "white",
-        px: { xs: 1.5, sm: 3 },
-        py: { xs: 0.8, sm: 1.5 },
-        fontWeight: "600",
-        fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
-        borderRadius: "50px",
-        minWidth: { xs: "110px", sm: "140px" },
-        whiteSpace: "nowrap",
-        boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
-        "&:hover": {
-          backgroundColor: "#A8743D",
-          boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
-        },
-      }}
-    >
-      View Full Gallery
-    </Button>
-  </motion.div>
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="row"
+        flexWrap="nowrap"
+        gap={{ xs: 1.5, sm: 2 }}
+        mt={{ xs: 3, sm: 4 }}
+        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
+        sx={{
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            onClick={handleShowMore}
+            variant="contained"
+            size="medium"
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              backgroundColor: "#B88746",
+              color: "white",
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
+              fontWeight: "600",
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              borderRadius: "50px",
+              minWidth: { xs: "110px", sm: "140px" },
+              whiteSpace: "nowrap",
+              boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
+              "&:hover": {
+                backgroundColor: "#A8743D",
+                boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
+              },
+            }}
+          >
+            View Full Gallery
+          </Button>
+        </motion.div>
 
-  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-    <Button
-      component={Link}
-      to="/customize"
-      variant="outlined"
-      size="medium"
-      startIcon={<BrushIcon />}
-      sx={{
-        borderColor: "#B88746",
-        color: "#B88746",
-        px: { xs: 1.5, sm: 3 },
-        py: { xs: 0.8, sm: 1.5 },
-        fontWeight: "600",
-        fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
-        borderRadius: "50px",
-        minWidth: { xs: "110px", sm: "140px" },
-        whiteSpace: "nowrap",
-        "&:hover": {
-          backgroundColor: "rgba(184, 135, 70, 0.1)",
-          borderColor: "#A8743D",
-          color: "#A8743D",
-        },
-      }}
-    >
-      Customize Yours
-    </Button>
-  </motion.div>
-</Box>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            component={Link}
+            to="/customize"
+            variant="outlined"
+            size="medium"
+            startIcon={<BrushIcon />}
+            sx={{
+              borderColor: "#B88746",
+              color: "#B88746",
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
+              fontWeight: "600",
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
+              borderRadius: "50px",
+              minWidth: { xs: "110px", sm: "140px" },
+              whiteSpace: "nowrap",
+              "&:hover": {
+                backgroundColor: "rgba(184, 135, 70, 0.1)",
+                borderColor: "#A8743D",
+                color: "#A8743D",
+              },
+            }}
+          >
+            Customize Yours
+          </Button>
+        </motion.div>
+      </Box>
 
 
 

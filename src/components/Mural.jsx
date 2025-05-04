@@ -123,7 +123,8 @@ const Mural = () => {
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pb: 1,
+        pb: { xs: -2, sm: 3, md: 3 },
+        mb: { xs: -18, sm: 2, md: 5 },
         pt: 2,
         minHeight: "100vh",
         background:
@@ -209,41 +210,36 @@ const Mural = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        flexDirection={{ xs: "column", sm: "row" }}
+        flexDirection="row"
+        flexWrap="nowrap"
         gap={{ xs: 1.5, sm: 2 }}
-        mt={{ xs: 2, sm: 4 }}
-        mb={{ xs: 2, sm: 0 }}
-        px={{ xs: 1.5, sm: 0 }}
+        mt={{ xs: 3, sm: 4 }}
+        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
         sx={{
           width: "100%",
           textAlign: "center",
         }}
       >
-        <motion.div 
-          whileHover={{ scale: 1.05 }} 
-          whileTap={{ scale: 0.95 }}
-          style={{ width: isDesktop ? "auto" : "100%" }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             onClick={handleShowMore}
             variant="contained"
-            size={isDesktop ? "medium" : "small"}
+            size="medium"
             endIcon={<ArrowForwardIcon />}
             sx={{
               backgroundColor: "#B88746",
               color: "white",
-              px: { xs: 2, sm: 3 },
-              py: { xs: 1, sm: 1.5 },
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              width: { xs: "100%", sm: "auto" },
-              minWidth: { xs: "100%", sm: "140px" },
+              minWidth: { xs: "110px", sm: "140px" },
               whiteSpace: "nowrap",
-              boxShadow: "0 4px 12px rgba(184, 135, 70, 0.4)",
+              boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
               "&:hover": {
                 backgroundColor: "#A8743D",
-                boxShadow: "0 8px 20px rgba(184, 135, 70, 0.6)",
+                boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
               },
             }}
           >
@@ -251,27 +247,22 @@ const Mural = () => {
           </Button>
         </motion.div>
 
-        <motion.div 
-          whileHover={{ scale: 1.05 }} 
-          whileTap={{ scale: 0.95 }}
-          style={{ width: isDesktop ? "auto" : "100%" }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             component={Link}
             to="/customize"
             variant="outlined"
-            size={isDesktop ? "medium" : "small"}
+            size="medium"
             startIcon={<BrushIcon />}
             sx={{
               borderColor: "#B88746",
               color: "#B88746",
-              px: { xs: 2, sm: 3 },
-              py: { xs: 1, sm: 1.5 },
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              width: { xs: "100%", sm: "auto" },
-              minWidth: { xs: "100%", sm: "140px" },
+              minWidth: { xs: "110px", sm: "140px" },
               whiteSpace: "nowrap",
               "&:hover": {
                 backgroundColor: "rgba(184, 135, 70, 0.1)",

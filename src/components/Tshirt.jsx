@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Card, CardMedia, Typography, Modal, Button, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardMedia,
+  Typography,
+  Modal,
+  Button,
+  useMediaQuery,
+} from "@mui/material";
 import { motion } from "framer-motion";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import BrushIcon from "@mui/icons-material/Brush";
 
+// Media data
 const mediaItems = [
   {
     id: 1,
     type: "video",
     src: "/assets/Tshirt/video2.mp4",
-    title: "T-Shirt Video",
   },
   ...Array.from({ length: 3 }, (_, index) => ({
     id: index + 2,
@@ -23,10 +31,10 @@ const Tshirt = () => {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
-  const isMobile = useMediaQuery("(max-width:600px)");
-  const isTablet = useMediaQuery("(max-width:900px)");
+  const isDesktop = useMediaQuery("(min-width:900px)");
+  const isTablet = useMediaQuery("(min-width:600px)");
 
-  const handleShowMore = () => navigate("/myworks#tshirtdesigns");
+  const handleShowMore = () => navigate("/myworks#customportraits");
 
   const handleOpen = (item) => {
     setSelectedItem(item);
@@ -38,12 +46,80 @@ const Tshirt = () => {
     setSelectedItem(null);
   };
 
+  const getVisibleItems = () => {
+    if (isDesktop) return { top: mediaItems.slice(0, 4) };
+    if (isTablet) return { top: mediaItems.slice(0, 3), bottom: mediaItems.slice(3, 6) };
+    return { top: mediaItems.slice(0, 2), bottom: mediaItems.slice(2, 4) };
+  };
+
+  const { top, bottom } = getVisibleItems();
+
+  const renderCards = (items) =>
+    items?.map((item) => (
+      <motion.div
+        key={item.id}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        style={{ width: isDesktop ? "260px" : isTablet ? "30%" : "45%" }}
+      >
+        <Card
+          onClick={() => handleOpen(item)}
+          sx={{
+            width: "100%",
+            height: isDesktop ? "280px" : isTablet ? "220px" : "160px",
+            cursor: "pointer",
+            boxShadow: "0px 4px 12px rgba(167, 109, 54, 0.6)",
+            borderRadius: "16px",
+            overflow: "hidden",
+            mx: "auto",
+            transition: "transform 0.3s, box-shadow 0.3s",
+            "&:hover": {
+              transform: "scale(1.03)",
+              boxShadow: "0px 6px 20px rgba(167, 109, 54, 0.9)",
+            },
+          }}
+        >
+          {item.type === "video" ? (
+            <CardMedia
+              component="video"
+              src={item.src}
+              controls
+              loop
+              autoPlay
+              muted
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <CardMedia
+              component="img"
+              image={item.src}
+              alt={item.title}
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transition: "transform 0.5s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              }}
+            />
+          )}
+        </Card>
+      </motion.div>
+    ));
+
   return (
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pb: { xs: 3, sm: 5 },
-        py: { xs: 2, sm: 4 },
+        pt: { xs: 4, sm: 6, md: 0 },
+        pb: { xs: -2, sm: 3, md: -1 },
+        mb: { xs: 0, sm: 3, md: 0 },
         minHeight: "100vh",
         background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
         display: "flex",
@@ -51,14 +127,14 @@ const Tshirt = () => {
         alignItems: "center",
       }}
     >
-      {/* Title - Enhanced for mobile */}
+      {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant={isMobile ? "h5" : "h4"}
+          variant={isDesktop ? "h4" : "h5"}
           fontWeight="700"
           mb={{ xs: 4, sm: 6 }}
           sx={{
@@ -69,138 +145,94 @@ const Tshirt = () => {
             "&::after": {
               content: '""',
               position: "absolute",
-              width: isMobile ? "60px" : "80px",
-              height: isMobile ? "3px" : "4px",
+              width: "80px",
+              height: "3px",
               backgroundColor: "#A8743D",
-              bottom: -8,
+              bottom: -10,
               left: "50%",
               transform: "translateX(-50%)",
             },
           }}
         >
-          T-Shirt Designs
+          Tshirt Designs
         </Typography>
       </motion.div>
 
-      {/* Gallery - Enhanced grid for mobile */}
+      {/* Gallery */}
       <Box
         sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "repeat(2, 1fr)",
-            sm: "repeat(auto-fit, minmax(240px, 1fr))",
-          },
-          gap: { xs: 2, sm: 3 },
+          display: "flex",
+          flexDirection: "column",
+          gap: { xs: 2, sm: 3, md: 4 },
+          alignItems: "center",
           width: "100%",
-          maxWidth: "1200px",
-          mx: "auto",
-          px: { xs: 1, sm: 0 },
-          justifyContent: "center",
+          mb: 2,
         }}
       >
-        {mediaItems.map((item) => (
-          <motion.div
-            key={item.id}
-            whileHover={{ scale: isMobile ? 1 : 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            style={{
+        {/* Top Row */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: { xs: 2, sm: 3 },
+            justifyContent: "center",
+            flexWrap: "wrap",
+            width: "100%",
+          }}
+        >
+          {renderCards(top)}
+        </Box>
+
+        {/* Bottom Row */}
+        {bottom && bottom.length > 0 && (
+          <Box
+            sx={{
               display: "flex",
+              gap: { xs: 2, sm: 3 },
               justifyContent: "center",
+              flexWrap: "wrap",
+              width: "100%",
             }}
           >
-            <Card
-              onClick={() => handleOpen(item)}
-              sx={{
-                width: "100%",
-                maxWidth: "260px",
-                height: { xs: "160px", sm: "240px", md: "280px" },
-                cursor: "pointer",
-                boxShadow: "0px 4px 12px rgba(167, 109, 54, 0.6)",
-                borderRadius: "16px",
-                overflow: "hidden",
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&:hover": {
-                  transform: isMobile ? "none" : "scale(1.03)",
-                  boxShadow: "0px 6px 20px rgba(167, 109, 54, 0.9)",
-                },
-              }}
-            >
-              {item.type === "video" ? (
-                <CardMedia
-                  component="video"
-                  src={item.src}
-                  title={item.title}
-                  controls
-                  loop
-                  autoPlay
-                  muted
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                <CardMedia
-                  component="img"
-                  image={item.src}
-                  alt={item.title}
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    transition: "transform 0.5s ease",
-                    "&:hover": {
-                      transform: isMobile ? "none" : "scale(1.1)",
-                    },
-                  }}
-                />
-              )}
-            </Card>
-          </motion.div>
-        ))}
+            {renderCards(bottom)}
+          </Box>
+        )}
       </Box>
 
-      {/* Buttons - Stacked on mobile */}
+      {/* Buttons */}
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
-        flexDirection={{ xs: "column", sm: "row" }}
+        flexDirection="row"
+        flexWrap="nowrap"
         gap={{ xs: 1.5, sm: 2 }}
         mt={{ xs: 3, sm: 4 }}
-        px={{ xs: 1, sm: 0 }}
+        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
         sx={{
           width: "100%",
-          maxWidth: "500px",
           textAlign: "center",
         }}
       >
-        <motion.div
-          whileHover={{ scale: isMobile ? 1.03 : 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{ width: isMobile ? "100%" : "auto" }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             onClick={handleShowMore}
             variant="contained"
-            size={isMobile ? "small" : "medium"}
+            size="medium"
             endIcon={<ArrowForwardIcon />}
             sx={{
               backgroundColor: "#B88746",
               color: "white",
-              px: { xs: 2, sm: 3 },
-              py: { xs: 1, sm: 1.5 },
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.8rem", sm: "0.9rem" },
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              width: isMobile ? "100%" : "auto",
-              minWidth: { xs: "100%", sm: "140px" },
+              minWidth: { xs: "110px", sm: "140px" },
               whiteSpace: "nowrap",
-              boxShadow: "0 4px 12px rgba(184, 135, 70, 0.4)",
+              boxShadow: "0 8px 20px rgba(184, 135, 70, 0.4)",
               "&:hover": {
                 backgroundColor: "#A8743D",
-                boxShadow: "0 8px 20px rgba(184, 135, 70, 0.6)",
+                boxShadow: "0 12px 24px rgba(184, 135, 70, 0.6)",
               },
             }}
           >
@@ -208,27 +240,22 @@ const Tshirt = () => {
           </Button>
         </motion.div>
 
-        <motion.div
-          whileHover={{ scale: isMobile ? 1.03 : 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{ width: isMobile ? "100%" : "auto" }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             component={Link}
             to="/customize"
             variant="outlined"
-            size={isMobile ? "small" : "medium"}
+            size="medium"
             startIcon={<BrushIcon />}
             sx={{
               borderColor: "#B88746",
               color: "#B88746",
-              px: { xs: 2, sm: 3 },
-              py: { xs: 1, sm: 1.5 },
+              px: { xs: 1.5, sm: 3 },
+              py: { xs: 0.8, sm: 1.5 },
               fontWeight: "600",
-              fontSize: { xs: "0.8rem", sm: "0.9rem" },
+              fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
               borderRadius: "50px",
-              width: isMobile ? "100%" : "auto",
-              minWidth: { xs: "100%", sm: "140px" },
+              minWidth: { xs: "110px", sm: "140px" },
               whiteSpace: "nowrap",
               "&:hover": {
                 backgroundColor: "rgba(184, 135, 70, 0.1)",
@@ -242,64 +269,43 @@ const Tshirt = () => {
         </motion.div>
       </Box>
 
-      {/* Modal - Enhanced for mobile */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          touchAction: "manipulation", // Better touch handling
-        }}
-      >
+
+      {/* Modal */}
+      <Modal open={open} onClose={handleClose}>
         <Box
-          onClick={handleClose}
           sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.97)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            overflow: "auto",
-            p: 1,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+            outline: "none",
           }}
         >
-          {selectedItem && (
-            <>
-              {selectedItem.type === "video" ? (
-                <video
-                  src={selectedItem.src}
-                  controls
-                  autoPlay
-                  playsInline // Better mobile video handling
-                  style={{
-                    width: "100%",
-                    maxWidth: "900px",
-                    maxHeight: "90vh",
-                    objectFit: "contain",
-                    borderRadius: "8px",
-                  }}
-                />
-              ) : (
-                <img
-                  src={selectedItem.src}
-                  alt={selectedItem.title}
-                  style={{
-                    width: "100%",
-                    maxWidth: "900px",
-                    maxHeight: "90vh",
-                    objectFit: "contain",
-                    borderRadius: "8px",
-                  }}
-                />
-              )}
-            </>
+          {selectedItem?.type === "video" ? (
+            <video
+              src={selectedItem.src}
+              controls
+              autoPlay
+              loop
+              muted
+              style={{
+                maxWidth: "100%",
+                maxHeight: "90vh",
+                borderRadius: "12px",
+              }}
+            />
+          ) : (
+            <img
+              src={selectedItem?.src}
+              alt="preview"
+              style={{
+                maxWidth: "100%",
+                maxHeight: "90vh",
+                borderRadius: "12px",
+              }}
+            />
           )}
         </Box>
       </Modal>
