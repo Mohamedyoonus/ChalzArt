@@ -274,80 +274,37 @@ const CustomPortrait = () => {
 
       {/* Modal */}
       <Modal open={open} onClose={handleClose}>
-  <Box
-    sx={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      bgcolor: "background.paper",
-      boxShadow: 24,
-      borderRadius: "16px", // Rounded corners for premium feel
-      p: 3,
-      width: "90vw", // Limit width to 90% of the viewport width
-      height: "90vh", // Limit height to 90% of the viewport height
-      outline: "none",
-      overflow: "hidden",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center", // Center content within the modal
-      position: "relative",
-    }}
-  >
-    {/* Close Button */}
-    <Button
-      onClick={handleClose}
-      sx={{
-        position: "absolute",
-        top: 10,
-        right: 10,
-        backgroundColor: "#B88746",
-        color: "white",
-        borderRadius: "50%",
-        padding: 1,
-        minWidth: 0,
-        height: 30,
-        width: 30,
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-        "&:hover": {
-          backgroundColor: "#A8743D",
-          boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.6)",
-        },
-      }}
-    >
-      <Typography sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>X</Typography>
-    </Button>
-
-    {/* Content (Video or Image) */}
-    {selectedItem && selectedItem.type === "video" ? (
-      <video
-        src={selectedItem.src}
-        controls
-        autoPlay
-        style={{
-          width: "100%", // Full width
-          height: "auto", // Maintain aspect ratio
-          borderRadius: "16px", // Rounded corners for video
-          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.6)",
-          objectFit: "contain",
-        }}
-      />
-    ) : (
-      <img
-        src={selectedItem?.src}
-        alt={selectedItem?.title}
-        style={{
-          width: "100%", // Full width
-          height: "100%", // Full height
-          objectFit: "contain", // Ensures it doesn't stretch or distort
-          borderRadius: "16px", // Rounded corners for image
-          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.6)",
-        }}
-      />
-    )}
-  </Box>
-</Modal>
-
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            borderRadius: 2,
+            p: 2,
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+            outline: "none",
+          }}
+        >
+          {selectedItem && selectedItem.type === "video" ? (
+            <video
+              src={selectedItem.src}
+              controls
+              autoPlay
+              style={{ width: "100%", height: "100%", borderRadius: 8 }}
+            />
+          ) : (
+            <img
+              src={selectedItem?.src}
+              alt={selectedItem?.title}
+              style={{ width: "100%", height: "100%", borderRadius: 8, objectFit: "contain" }}
+            />
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };
