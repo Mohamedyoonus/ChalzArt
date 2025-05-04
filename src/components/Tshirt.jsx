@@ -117,10 +117,10 @@ const Tshirt = () => {
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pt: { xs: 4, sm: 6, md: 0 },
+        pt: { xs: 4, sm: 6, md: 8 },
         pb: { xs: -2, sm: 3, md: -1 },
         mb: { xs: 0, sm: 3, md: 0 },
-        minHeight: "100vh",
+        minHeight: "60vh",
         background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
         display: "flex",
         flexDirection: "column",

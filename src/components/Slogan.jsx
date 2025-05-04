@@ -2,6 +2,42 @@ import React from "react";
 import { Box, Typography, Container, Divider } from "@mui/material";
 import { motion } from "framer-motion";
 
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, ease: "easeOut" },
+  },
+};
+
+const imageFadeIn = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1, ease: "easeOut" },
+  },
+};
+
+const dividerGrow = {
+  hidden: { scaleX: 0 },
+  visible: {
+    scaleX: 1,
+    transition: { duration: 1.1, ease: "easeInOut" },
+  },
+};
+
+const imageContainerStyle = {
+  border: "2px solid #F2C57F",
+  borderRadius: "16px",
+  padding: "8px",
+  background:
+    "linear-gradient(145deg, rgba(242, 197, 127, 0.05), rgba(255, 255, 255, 0.02))",
+  boxShadow: "0 4px 20px rgba(242, 197, 127, 0.15)",
+};
+
 const Slogan = () => {
   return (
     <Box
@@ -27,10 +63,11 @@ const Slogan = () => {
       }}
     >
       <Container maxWidth="lg">
+        {/* Top Divider */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          transition={{ duration: 1 }}
+          variants={dividerGrow}
+          initial="hidden"
+          whileInView="visible"
           style={{ originX: 0 }}
         >
           <Divider
@@ -43,6 +80,7 @@ const Slogan = () => {
             }}
           />
         </motion.div>
+
         {/* Section 1 */}
         <Box
           sx={{
@@ -54,24 +92,25 @@ const Slogan = () => {
             mb: { xs: 4, md: 6 },
           }}
         >
-          <motion.img
-            src="/assets/slogan1.jpg"
-            alt="Slogan Image"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+          <motion.div
+            variants={imageFadeIn}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            style={{
-              width: "80%",
-              maxWidth: "350px",
-              borderRadius: "12px",
-              boxShadow: "0px 6px 12px rgba(212, 163, 115, 0.8)",
-              height: "auto",
-              maxHeight: "450px",
-              transition: "transform 0.4s ease-in-out",
-            }}
-            whileHover={{ y: -8, scale: 1.02 }}
-          />
+            style={imageContainerStyle}
+            whileHover={{ y: -6, scale: 1.02 }}
+          >
+            <motion.img
+              src="/assets/slogan1.jpg"
+              alt="Slogan Image"
+              style={{
+                width: "100%",
+                maxWidth: "320px",
+                borderRadius: "12px",
+                display: "block",
+              }}
+            />
+          </motion.div>
 
           <Box
             sx={{
@@ -81,9 +120,9 @@ const Slogan = () => {
             }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
             >
               <Typography
@@ -97,14 +136,14 @@ const Slogan = () => {
                   textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
                 }}
               >
-                Honey Drizzle Serenity in Stillness{" "}
+                Honey Drizzle Serenity in Stillness
               </Typography>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
             >
               <Typography
@@ -127,11 +166,11 @@ const Slogan = () => {
           </Box>
         </Box>
 
-        {/* Divider */}
+        {/* Middle Divider */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          transition={{ duration: 1 }}
+          variants={dividerGrow}
+          initial="hidden"
+          whileInView="visible"
           style={{ originX: 0 }}
         >
           <Divider
@@ -164,9 +203,9 @@ const Slogan = () => {
             }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
             >
               <Typography
@@ -185,9 +224,9 @@ const Slogan = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2 }}
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
             >
               <Typography
@@ -204,35 +243,37 @@ const Slogan = () => {
                 stress, pain, and confusion he feels inside. It shows how hard
                 it can be to find peace when your own mind feels like a
                 battlefield. This artwork speaks about the silent fight many men
-                go through every day
+                go through every day.
               </Typography>
             </motion.div>
           </Box>
 
-          <motion.img
-            src="/assets/slogan2.jpg"
-            alt="Slogan Image 2"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+          <motion.div
+            variants={imageFadeIn}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            style={{
-              width: "80%",
-              maxWidth: "300px",
-              borderRadius: "12px",
-              boxShadow: "0px 6px 12px rgba(212, 163, 115, 0.8)",
-              height: "auto",
-              maxHeight: "400px",
-              transition: "transform 0.4s ease-in-out",
-            }}
-            whileHover={{ y: -8, scale: 1.02 }}
-          />
+            style={imageContainerStyle}
+            whileHover={{ y: -6, scale: 1.02 }}
+          >
+            <motion.img
+              src="/assets/slogan2.jpg"
+              alt="Slogan Image 2"
+              style={{
+                width: "100%",
+                maxWidth: "280px",
+                borderRadius: "12px",
+                display: "block",
+              }}
+            />
+          </motion.div>
         </Box>
 
+        {/* Bottom Divider */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          transition={{ duration: 1 }}
+          variants={dividerGrow}
+          initial="hidden"
+          whileInView="visible"
           style={{ originX: 0 }}
         >
           <Divider

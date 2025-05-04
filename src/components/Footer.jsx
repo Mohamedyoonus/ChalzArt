@@ -125,8 +125,7 @@ const Footer = () => {
                 mb: 2,
               }}
             >
-              Crafting timeless, hyper-realistic sketches and live portraits
-              that reflect emotion and soul.
+              Crafted with heart,sketched sketched with soul - Chalzart 
             </Typography>
 
             <Box

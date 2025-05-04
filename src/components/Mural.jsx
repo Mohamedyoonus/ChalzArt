@@ -126,7 +126,7 @@ const Mural = () => {
         pb: { xs: -2, sm: 3, md: 3 },
         mb: { xs: -18, sm: 2, md: 5 },
         pt: 2,
-        minHeight: "100vh",
+        minHeight: "75vh",
         background:
           "black radial-gradient(circle at center, #111 0%, #000 100%)",
         display: "flex",
@@ -278,60 +278,102 @@ const Mural = () => {
 
       {/* Modal */}
       <Modal
-        open={open}
-        onClose={handleClose}
+  open={open}
+  onClose={handleClose}
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1300,
+  }}
+>
+  <Box
+    sx={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      backgroundColor: "rgba(0, 0, 0, 0.95)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      p: 2,
+      boxSizing: "border-box",
+    }}
+  >
+    {/* Close Button */}
+    <Box
+      onClick={handleClose}
+      sx={{
+        position: "absolute",
+        top: 16,
+        right: 16,
+        backgroundColor: "#B88746",
+        color: "#fff",
+        borderRadius: "50%",
+        width: 36,
+        height: 36,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontWeight: "bold",
+        fontSize: "1.2rem",
+        cursor: "pointer",
+        zIndex: 1400,
+        boxShadow: "0px 4px 10px rgba(0,0,0,0.5)",
+        "&:hover": {
+          backgroundColor: "#A8743D",
+        },
+      }}
+    >
+      ✕
+    </Box>
+
+    {/* Media Content */}
+    {selectedItem && (
+      <Box
         sx={{
+          maxWidth: "95vw",
+          maxHeight: "90vh",
+          width: "100%",
+          height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Box
-          onClick={handleClose}
-          sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.95)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            overflow: "hidden",
-          }}
-        >
-          {selectedItem && (
-            <>
-              {selectedItem.type === "video" ? (
-                <video
-                  src={selectedItem.src}
-                  controls
-                  autoPlay
-                  style={{
-                    width: "95vw",
-                    maxHeight: "80vh",
-                    objectFit: "contain",
-                    borderRadius: "8px",
-                  }}
-                />
-              ) : (
-                <img
-                  src={selectedItem.src}
-                  alt={selectedItem.title}
-                  style={{
-                    width: "95vw",
-                    maxHeight: "90vh",
-                    objectFit: "contain",
-                    borderRadius: "8px",
-                  }}
-                />
-              )}
-            </>
-          )}
-        </Box>
-      </Modal>
+        {selectedItem.type === "video" ? (
+          <video
+            src={selectedItem.src}
+            controls
+            autoPlay
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              borderRadius: "12px",
+              boxShadow: "0px 6px 20px rgba(0,0,0,0.6)",
+            }}
+          />
+        ) : (
+          <img
+            src={selectedItem.src}
+            alt={selectedItem.title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              borderRadius: "12px",
+              boxShadow: "0px 6px 20px rgba(0,0,0,0.6)",
+            }}
+          />
+        )}
+      </Box>
+    )}
+  </Box>
+</Modal>
+
     </Box>
   );
 };

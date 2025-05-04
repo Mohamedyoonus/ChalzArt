@@ -10,12 +10,14 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  IconButton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { keyframes } from "@mui/system";
 import { motion } from "framer-motion";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import BrushIcon from "@mui/icons-material/Brush";
+import CloseIcon from "@mui/icons-material/Close";
 
 const bounceShrink = keyframes`
   0% { transform: scale(1); }
@@ -29,8 +31,9 @@ const ShoePaint = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
-  const shoepaintImages = Array.from({ length: 8 }, (_, index) => ({
+  const shoepaintImages = Array.from({ length: 10 }, (_, index) => ({
     id: index + 1,
     src: `/assets/shoepaint/img${index + 1}.jpg`,
     title: `ShoePaint Image ${index + 1}`,
@@ -50,17 +53,16 @@ const ShoePaint = () => {
 
   const handleShowMore = () => navigate("/myworks#shoepaintings");
 
-
   return (
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
         py: 5,
         pb: -2,
-        pt: 0,
-        mb: -2, 
-        mt: -8,   
-        minHeight: "100vh",
+        pt: 8,
+        mb: -2,
+        mt: -8,
+        minHeight: "55vh",
         background:
           "black radial-gradient(circle at center, #111 0%, #000 100%)",
         display: "flex",
@@ -68,7 +70,6 @@ const ShoePaint = () => {
         alignItems: "center",
       }}
     >
-
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -109,7 +110,9 @@ const ShoePaint = () => {
           <Grid
             item
             key={image.id}
-            xs={6} sm={4} md={3}
+            xs={6}
+            sm={4}
+            md={4} // 3 columns on md and up (12 / 4 = 3)
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Card
@@ -142,6 +145,7 @@ const ShoePaint = () => {
         ))}
       </Grid>
 
+      {/* Buttons */}
       <Box
         display="flex"
         justifyContent="center"
@@ -150,7 +154,7 @@ const ShoePaint = () => {
         flexWrap="nowrap"
         gap={{ xs: 1.5, sm: 2 }}
         mt={{ xs: 3, sm: 4 }}
-        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
+        px={{ xs: 1.5, sm: 0 }}
         sx={{
           width: "100%",
           textAlign: "center",
@@ -212,8 +216,6 @@ const ShoePaint = () => {
         </motion.div>
       </Box>
 
-
-
       {/* Modal */}
       <Modal
         open={open}
@@ -225,28 +227,48 @@ const ShoePaint = () => {
         }}
       >
         <Box
-          onClick={handleClose}
           sx={{
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.9)",
+            position: "relative",
+            backgroundColor: "rgba(0, 0, 0, 0.9)",
+            padding: 2,
+            borderRadius: "12px",
+            maxWidth: "90vw",
+            maxHeight: "90vh",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            cursor: "pointer",
-            p: 2,
           }}
         >
+          {/* Close button */}
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              color: "#fff",
+              backgroundColor: "rgba(255,255,255,0.1)",
+              "&:hover": {
+                backgroundColor: "rgba(255,255,255,0.2)",
+              },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+
           {selectedImage && (
-            <img
+            <motion.img
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
               src={selectedImage.src}
               alt={selectedImage.title}
-              onClick={(e) => e.stopPropagation()}
               style={{
                 maxWidth: "100%",
-                maxHeight: "90vh",
+                maxHeight: "80vh",
                 objectFit: "contain",
-                borderRadius: "12px",
+                borderRadius: "8px",
               }}
             />
           )}
