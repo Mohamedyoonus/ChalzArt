@@ -54,29 +54,24 @@ const LiveSketch = () => {
     navigate("/myworks#livesketches");
   };
 
-  // Optionally limit images shown per device
   const displayedImages = isMobile
     ? sketchImages.slice(0, 5)
     : sketchImages.slice(0, 7);
 
   return (
     <Box
-  sx={{
-    px: { xs: 2, sm: 3, md: 5 },
-    pb: 5,
-    pt: { xs: 8, sm: 3, md:6 },
-    mt: { xs: -8, sm: 0, md: -5},
-    minHeight: "100vh",
-    background:
-      "black radial-gradient(circle at center, #111 0%, #000 100%)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  }}
->
-
-  
-  
+      sx={{
+        px: { xs: 2, sm: 3, md: 5 },
+        pb: 5,
+        pt: { xs: 8, sm: 3, md: 6 },
+        mt: { xs: -8, sm: 0, md: -5 },
+        minHeight: "100vh",
+        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       {/* Heading */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -146,6 +141,7 @@ const LiveSketch = () => {
             />
           </Box>
 
+          {/* Images */}
           {displayedImages.map((image) => {
             const isExpanded = [4, 5, 6, 7].includes(image.id);
             const isReduced = image.id === 3 && isMobile;
@@ -170,7 +166,7 @@ const LiveSketch = () => {
                   alt={image.title}
                   effect="blur"
                   style={{
-                    width: isReduced ? "180px" : "250px", // Reduce img3 width on mobile
+                    width: isReduced ? "180px" : "250px",
                     height: isExpanded ? "320px" : "250px",
                     objectFit: "cover",
                     display: "block",
@@ -193,7 +189,7 @@ const LiveSketch = () => {
         flexWrap="nowrap"
         gap={{ xs: 1.5, sm: 2 }}
         mt={{ xs: 3, sm: 4 }}
-        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
+        px={{ xs: 1.5, sm: 0 }}
         sx={{
           width: "100%",
           textAlign: "center",
@@ -255,7 +251,7 @@ const LiveSketch = () => {
         </motion.div>
       </Box>
 
-      {/* Modal */}
+      {/* Modal for image preview */}
       <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
@@ -263,14 +259,14 @@ const LiveSketch = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
+            bgcolor: "black",
+            borderRadius: 4,
+            boxShadow: 24,
+            outline: "none",
             maxWidth: "90vw",
             maxHeight: "90vh",
-            bgcolor: "background.paper",
-            borderRadius: "12px",
-            boxShadow: 24,
             p: 2,
             animation: `${fadeIn} 0.3s ease-in-out`,
-            outline: "none",
           }}
         >
           {selectedImage && (
@@ -280,8 +276,8 @@ const LiveSketch = () => {
               style={{
                 maxWidth: "100%",
                 maxHeight: "80vh",
+                borderRadius: "16px",
                 objectFit: "contain",
-                borderRadius: "12px",
               }}
               onError={(e) => (e.target.src = "/assets/placeholder.png")}
             />

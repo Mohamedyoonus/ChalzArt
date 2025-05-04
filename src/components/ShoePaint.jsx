@@ -10,7 +10,6 @@ import {
   Button,
   useTheme,
   useMediaQuery,
-  IconButton,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { keyframes } from "@mui/system";
@@ -112,7 +111,7 @@ const ShoePaint = () => {
             key={image.id}
             xs={6}
             sm={4}
-            md={4} // 3 columns on md and up (12 / 4 = 3)
+            md={4}
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Card
@@ -224,51 +223,58 @@ const ShoePaint = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          zIndex: 1300,
         }}
       >
         <Box
           sx={{
             position: "relative",
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
-            padding: 2,
+            backgroundColor: "rgba(0, 0, 0, 0.95)",
+            p: 2,
+            maxWidth: "95vw",
+            maxHeight: "95vh",
             borderRadius: "12px",
-            maxWidth: "90vw",
-            maxHeight: "90vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
           }}
         >
-          {/* Close button */}
-          <IconButton
+          {/* Close Button */}
+          <Box
             onClick={handleClose}
             sx={{
               position: "absolute",
               top: 8,
               right: 8,
+              backgroundColor: "#B88746",
               color: "#fff",
-              backgroundColor: "rgba(255,255,255,0.1)",
+              borderRadius: "50%",
+              width: 36,
+              height: 36,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+              cursor: "pointer",
+              zIndex: 1400,
+              boxShadow: "0px 4px 10px rgba(0,0,0,0.5)",
               "&:hover": {
-                backgroundColor: "rgba(255,255,255,0.2)",
+                backgroundColor: "#A8743D",
               },
             }}
           >
             <CloseIcon />
-          </IconButton>
+          </Box>
 
+          {/* Modal Image */}
           {selectedImage && (
-            <motion.img
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
+            <img
               src={selectedImage.src}
               alt={selectedImage.title}
               style={{
                 maxWidth: "100%",
-                maxHeight: "80vh",
+                maxHeight: "85vh",
+                borderRadius: "10px",
                 objectFit: "contain",
-                borderRadius: "8px",
               }}
             />
           )}

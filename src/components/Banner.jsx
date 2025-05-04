@@ -63,7 +63,7 @@ const Banner = () => {
         position: "relative",
         width: "100%",
         minHeight: "100vh",
-        backgroundImage: `url(${bannerImage})`,
+        backgroundImage: "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -80,9 +80,11 @@ const Banner = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          background:
-            "linear-gradient(to bottom right, rgba(0,0,0,0.5), rgba(0,0,0,0.3))",
-          zIndex: 1,
+          backgroundImage: `url(${bannerImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "blur(2px)",
+          zIndex: 0,
         },
       }}
     >
@@ -136,65 +138,73 @@ const Banner = () => {
 
         {/* Buttons */}
         <Box
-          sx={{
-            mt: 5,
-            display: "flex",
-            flexDirection: "row",
-            gap: { xs: 1.5, sm: 3 },
-            justifyContent: "center",
-            flexWrap: { xs: "nowrap", sm: "wrap" },
-            overflowX: { xs: "auto", sm: "visible" },
-            px: { xs: 1, sm: 0 },
-          }}
-        >
-          {[{ label: "Discover More", to: "/myworks" }, { label: "Customize Your Art", to: "/customize" }].map(({ label, to }) => (
-            <Button
-              key={label}
-              component={Link}
-              to={to}
-              variant="outlined"
-              sx={{
-                fontSize: { xs: "0.8rem", sm: "1rem" },
-                padding: { xs: "10px 20px", sm: "14px 36px" },
-                fontWeight: "600",
-                borderColor: "#D4A373",
-                color: "#D4A373",
-                borderRadius: "40px",
-                boxShadow: "0px 8px 30px rgba(167, 109, 54, 0.6)",
-                transition: "all 0.3s ease-in-out",
-                position: "relative",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-                "&::after": {
-                  content: "''",
-                  position: "absolute",
-                  top: 0,
-                  left: "50%",
-                  width: "0%",
-                  height: "100%",
-                  backgroundColor: "#D4A373",
-                  zIndex: -1,
-                  transition: "width 0.3s ease, left 0.3s ease",
-                },
-                "&:hover": {
-                  backgroundColor: "#D4A373",
-                  color: "#fff",
-                  transform: "scale(1.05)",
-                },
-                "&:hover::after": {
-                  width: "100%",
-                  left: 0,
-                },
-                "&:active": {
-                  animation: `${bounceShrink} 0.3s ease-in-out`,
-                },
-              }}
-            >
-              {label}
-            </Button>
-          ))}
-        </Box>
+  sx={{
+    mt: 5,
+    
+    display: "flex",
+    flexDirection: "row",
+    gap: { xs: 1.5, sm: 3 },
+    justifyContent: "center",
+    flexWrap: { xs: "nowrap", sm: "wrap" },
+    overflowX: { xs: "auto", sm: "visible" },
+    px: { xs: 1, sm: 0 },
+  }}
+>
+  {[
+    { label: "Discover More", to: "/myworks" },
+    { label: "Customize Your Art", to: "/customize" },
+  ].map(({ label, to }) => (
+    <Button
+      key={label}
+      component={Link}
+      to={to}
+      variant="outlined"
+      sx={{
+        fontSize: { xs: "0.8rem", sm: "1rem" },
+        padding: { xs: "10px 20px", sm: "14px 36px" },
+        fontWeight: "600",
+        
+        borderColor: "white",
+        color: "#fff", // Set default text color to white
+        borderRadius: "40px",
+        boxShadow: "0px 8px 30px rgba(167, 109, 54, 0.6)",
+        transition: "all 0.3s ease-in-out",
+        position: "relative",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        flexShrink: 0,
+        "&::after": {
+          content: "''",
+          position: "absolute",
+          top: 0,
+          filter: "blur(2px)",
+
+          left: "50%",
+          width: "0%",
+          height: "100%",
+          backgroundColor: "#D4A373",
+          zIndex: -1,
+          transition: "width 0.3s ease, left 0.3s ease",
+        },
+        "&:hover": {
+          backgroundColor: "#D4A373",
+          color: "#fff",
+          transform: "scale(1.05)",
+        },
+        "&:hover::after": {
+          width: "100%",
+          left: 0,
+        },
+        "&:active": {
+          animation: `${bounceShrink} 0.3s ease-in-out`,
+        },
+      }}
+    >
+      {label}
+    </Button>
+  ))}
+</Box>
+
       </Box>
     </Box>
   );
