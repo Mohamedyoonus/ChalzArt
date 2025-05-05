@@ -24,7 +24,7 @@ const bounceShrink = keyframes`
   100% { transform: scale(1); }
 `;
 
-const Oil = () => {
+const OilPaint = () => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -283,4 +283,4 @@ const Oil = () => {
   );
 };
 
-export default Oil;
+export default OilPaint;
