@@ -56,7 +56,7 @@ const galleries = {
       src: `/assets/mural/img${i + 1}.jpg`,
     })),
   },
-  "Shoe Paint Gallery": {
+  "Shoe Paint ": {
     images: Array.from({ length: 8 }, (_, i) => ({
       src: `/assets/shoepaint/img${i + 1}.jpg`,
     })),
