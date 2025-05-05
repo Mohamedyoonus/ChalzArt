@@ -125,7 +125,7 @@ const Footer = () => {
                 mb: 2,
               }}
             >
-              Crafted with heart,sketched sketched with soul - Chalzart 
+              Crafted with heart,sketched with soul - Chalzart 
             </Typography>
 
             <Box

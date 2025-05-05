@@ -58,7 +58,7 @@ const ShoePaint = () => {
         px: { xs: 2, sm: 3, md: 5 },
         py: 5,
         pb: -2,
-        pt: 17,
+        pt: 15,
         mb: -2,
         mt: -8,
         minHeight: "55vh",
