@@ -89,7 +89,7 @@ const Slogan = () => {
             justifyContent: "center",
             flexDirection: { xs: "column", md: "row" },
             gap: 4,
-            mb: { xs: 4, md: 6 },
+            mb: { xs: 2, md: 6 },
           }}
         >
           <motion.div
