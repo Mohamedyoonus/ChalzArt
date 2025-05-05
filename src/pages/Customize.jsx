@@ -262,12 +262,12 @@ const Customize = () => {
 
       {[
         {
-          label: "🖌 Sketch Options",
+          label: "🖌 Art Options",
           content: (
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormControl fullWidth variant="filled" sx={{ minWidth: 200 }}>
-                  <InputLabel id="sketch-type-label">Sketch Type</InputLabel>
+                  <InputLabel id="sketch-type-label">Art Type</InputLabel>
                   <Select
                     labelId="sketch-type-label"
                     id="sketch-type-select"
@@ -282,6 +282,25 @@ const Customize = () => {
                     </MenuItem>
                     <MenuItem value="Regular Sketch">
                       ✏ Regular Sketch
+                    </MenuItem>
+                    <MenuItem value="Regular Sketch">
+                    🎨 Acrylic Painting
+
+</MenuItem>
+                    <MenuItem value="Regular Sketch">
+                    🖌️ Oil Painting
+
+
+                    </MenuItem>
+                    <MenuItem value="Regular Sketch">
+                    💧 Watercolor
+
+
+                    </MenuItem>
+                    <MenuItem value="Regular Sketch">
+                    🖼️ Art Prints
+
+
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -299,7 +318,7 @@ const Customize = () => {
                     <MenuItem value="A3">🖼 A3</MenuItem>
                     <MenuItem value="A2">🗂 A2</MenuItem>
                     <MenuItem value="A1">📐 A1</MenuItem>
-                    <MenuItem value="custom">Custom Size</MenuItem>
+                    <MenuItem value="custom">⚙️Custom Size</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

@@ -46,6 +46,11 @@ const galleries = {
       src: `/assets/Tshirt/img${i + 1}.jpg`,
     })),
   },
+  "Oil Paint": {
+    images: Array.from({ length: 8 }, (_, i) => ({
+      src: `/assets/oil/img${i + 1}.jpg`,
+    })),
+  },
   "Mural Paint": {
     images: Array.from({ length: 6 }, (_, i) => ({
       src: `/assets/mural/img${i + 1}.jpg`,

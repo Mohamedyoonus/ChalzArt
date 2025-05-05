@@ -18,6 +18,7 @@ import Mural from "../components/Mural";
 import ShoePaint from "../components/ShoePaint";
 import Tshirt from "../components/Tshirt";
 import Slogan from "../components/Slogan";
+import Oil from "../components/oil";
 import promoImage from "../assets/promo.jpg";
 import { keyframes } from "@mui/system";
 import { motion } from "framer-motion";
@@ -118,6 +119,9 @@ const Home = () => {
       </motion.div>
       <motion.div custom={4}>
         <Mural />
+      </motion.div>\
+      <motion.div custom={4}>
+        <Oil />
       </motion.div>
       <motion.div custom={5}>
         <ShoePaint />

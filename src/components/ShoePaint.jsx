@@ -32,7 +32,7 @@ const ShoePaint = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
 
-  const shoepaintImages = Array.from({ length: 10 }, (_, index) => ({
+  const shoepaintImages = Array.from({ length: 8 }, (_, index) => ({
     id: index + 1,
     src: `/assets/shoepaint/img${index + 1}.jpg`,
     title: `ShoePaint Image ${index + 1}`,
@@ -58,7 +58,7 @@ const ShoePaint = () => {
         px: { xs: 2, sm: 3, md: 5 },
         py: 5,
         pb: -2,
-        pt: 8,
+        pt: 17,
         mb: -2,
         mt: -8,
         minHeight: "55vh",

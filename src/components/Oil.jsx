@@ -1,20 +1,22 @@
+// Keep all existing imports
 import React, { useState } from "react";
 import {
   Box,
+  Grid,
+  Card,
+  CardMedia,
   Typography,
   Modal,
   Button,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { keyframes } from "@mui/system";
-import Masonry from "@mui/lab/Masonry";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link, useNavigate } from "react-router-dom";
+import { keyframes } from "@mui/system";
 import { motion } from "framer-motion";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import BrushIcon from "@mui/icons-material/Brush";
+import CloseIcon from "@mui/icons-material/Close";
 
 const bounceShrink = keyframes`
   0% { transform: scale(1); }
@@ -22,23 +24,21 @@ const bounceShrink = keyframes`
   100% { transform: scale(1); }
 `;
 
-const fadeIn = keyframes`
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-`;
-
-const sketchImages = Array.from({ length: 11 }, (_, index) => ({
-  id: index + 1,
-  src: `/assets/livesketch/img${index + 1}.jpg`,
-  title: `Live Sketch ${index + 1}`,
-}));
-
-const LiveSketch = () => {
+const Oil = () => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+
+  const oilImages = Array.from({ length: 8 }, (_, index) => ({
+    id: index + 1,
+    src: `/assets/oil/img${index + 1}.jpg`,
+    title: `OilPaint Image ${index + 1}`,
+  }));
+
+  const visibleImages = isMobile ? oilImages.slice(0, 4) : oilImages;
 
   const handleOpen = (image) => {
     setSelectedImage(image);
@@ -50,38 +50,35 @@ const LiveSketch = () => {
     setSelectedImage(null);
   };
 
-  const handleShowMore = () => {
-    navigate("/myworks#livesketches");
-  };
-
-  const displayedImages = isMobile
-    ? sketchImages.slice(0, 5)
-    : sketchImages.slice(0, 7);
+  const handleShowMore = () => navigate("/myworks#oilpaintings");
 
   return (
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pb: 5,
-        pt: { xs: 15, sm: 3, md: 6 },
-        mt: { xs: -8, sm: 0, md: -5 },
-        minHeight: "60vh",
+        py: 5,
+        pb: -2,
+        pt: 20,
+        mb: -2,
+        mt: -8,
+        minHeight: "55vh",
         background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      {/* Heading */}
+      {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
+        style={{ width: "100%" }}
       >
         <Typography
           variant="h4"
           fontWeight="700"
-          mb={3}
+          mb={6}
           sx={{
             color: "#B88746",
             letterSpacing: "1px",
@@ -101,84 +98,50 @@ const LiveSketch = () => {
             },
           }}
         >
-          Live Sketches
+          Oil Paints
         </Typography>
       </motion.div>
 
-      {/* Masonry Layout */}
-      <Box mt={4}>
-        <Masonry
-          columns={{ xs: 2, sm: 2, md: 3, lg: 4 }}
-          spacing={3}
-          sx={{ mx: "auto", maxWidth: "1200px" }}
-        >
-          {/* Video */}
-          <Box
-            key="video"
-            sx={{
-              borderRadius: "16px",
-              overflow: "hidden",
-              cursor: "pointer",
-              boxShadow: "0px 4px 20px rgba(167, 109, 54, 0.7)",
-              transition: "transform 0.3s",
-              "&:hover": {
-                transform: "scale(1.03)",
-              },
-            }}
+      {/* Gallery */}
+      <Grid container spacing={{ xs: 2, sm: 3 }} justifyContent="center">
+        {visibleImages.map((image) => (
+          <Grid
+            item
+            key={image.id}
+            xs={6}
+            sm={4}
+            md={4}
+            sx={{ display: "flex", justifyContent: "center" }}
           >
-            <video
-              src="/assets/livesketch/video.mp4"
-              controls
-              loop
-              autoPlay
-              muted
-              style={{
-                width: "100%",
-                height: "250px",
-                objectFit: "cover",
-                display: "block",
+            <Card
+              onClick={() => handleOpen(image)}
+              sx={{
+                width: { xs: 140, sm: 200, md: 250 },
+                height: { xs: 140, sm: 200, md: 250 },
+                borderRadius: "16px",
+                overflow: "hidden",
+                boxShadow: "0px 6px 15px rgba(167, 109, 54, 0.5)",
+                cursor: "pointer",
+                transition: "transform 0.3s",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                },
               }}
-            />
-          </Box>
-
-          {/* Images */}
-          {displayedImages.map((image) => {
-            const isExpanded = [4, 5, 6, 7].includes(image.id);
-            const isReduced = image.id === 3 && isMobile;
-
-            return (
-              <Box
-                key={image.id}
-                onClick={() => handleOpen(image)}
+            >
+              <CardMedia
+                component="img"
+                image={image.src}
+                alt={image.title}
                 sx={{
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  cursor: "pointer",
-                  boxShadow: "0px 4px 20px rgba(167, 109, 54, 0.7)",
-                  transition: "transform 0.3s",
-                  "&:hover": {
-                    transform: "scale(1.03)",
-                  },
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
                 }}
-              >
-                <LazyLoadImage
-                  src={image.src}
-                  alt={image.title}
-                  effect="blur"
-                  style={{
-                    width: isReduced ? "180px" : "250px",
-                    height: isExpanded ? "320px" : "250px",
-                    objectFit: "cover",
-                    display: "block",
-                    borderRadius: "16px",
-                  }}
-                  onError={(e) => (e.target.src = "/assets/placeholder.png")}
-                />
-              </Box>
-            );
-          })}
-        </Masonry>
-      </Box>
+              />
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
       {/* Buttons */}
       <Box
@@ -251,35 +214,67 @@ const LiveSketch = () => {
         </motion.div>
       </Box>
 
-      {/* Modal for image preview */}
-      <Modal open={open} onClose={handleClose}>
+      {/* Modal */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1300,
+        }}
+      >
         <Box
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "black",
-            borderRadius: 4,
-            boxShadow: 24,
-            outline: "none",
-            maxWidth: "90vw",
-            maxHeight: "90vh",
+            position: "relative",
+            backgroundColor: "rgba(0, 0, 0, 0.95)",
             p: 2,
-            animation: `${fadeIn} 0.3s ease-in-out`,
+            maxWidth: "95vw",
+            maxHeight: "95vh",
+            borderRadius: "12px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
           }}
         >
+          {/* Close Button */}
+          <Box
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              backgroundColor: "#B88746",
+              color: "#fff",
+              borderRadius: "50%",
+              width: 36,
+              height: 36,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+              cursor: "pointer",
+              zIndex: 1400,
+              boxShadow: "0px 4px 10px rgba(0,0,0,0.5)",
+              "&:hover": {
+                backgroundColor: "#A8743D",
+              },
+            }}
+          >
+            <CloseIcon />
+          </Box>
+
+          {/* Modal Image */}
           {selectedImage && (
             <img
               src={selectedImage.src}
               alt={selectedImage.title}
               style={{
                 maxWidth: "100%",
-                maxHeight: "80vh",
-                borderRadius: "16px",
+                maxHeight: "85vh",
+                borderRadius: "10px",
                 objectFit: "contain",
               }}
-              onError={(e) => (e.target.src = "/assets/placeholder.png")}
             />
           )}
         </Box>
@@ -288,4 +283,4 @@ const LiveSketch = () => {
   );
 };
 
-export default LiveSketch;
+export default Oil;
