@@ -228,6 +228,35 @@ const Customize = () => {
         Craft Your Vision
       </Typography>
 
+      <Box textAlign="center" sx={{ mb: 3 }}>
+  <Button
+    variant="outlined"
+    component="a"
+    href="https://wa.me/c/919176425811"
+    target="_blank"  
+    rel="noopener noreferrer"
+    sx={{
+      borderRadius: "20px",
+      fontWeight: "bold",
+      fontSize: isMobile ? "0.8rem" : "1rem",
+      px: 3,
+      py: 1,
+      textDecoration: "none",
+      color: "#B88746",       
+      borderColor: "#B88746", 
+      '&:hover': {
+        backgroundColor: "#B88746", 
+        color: "#fff",              
+      },
+    }}
+  >
+    View Samples
+  </Button>
+</Box>
+
+
+
+
       {submitted && (
         <Alert severity="success" sx={{ mb: 3 }}>
           Your request has been prepared! Check WhatsApp to confirm details.
