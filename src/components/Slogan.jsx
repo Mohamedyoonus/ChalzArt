@@ -92,6 +92,7 @@ const Slogan = () => {
             mb: { xs: 2, md: 6 },
           }}
         >
+           
           <motion.div
             variants={imageFadeIn}
             initial="hidden"
@@ -126,18 +127,19 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="h2"
-                fontWeight={{ xs: 700, md: 200 }} // ✅ Bold on mobile, light on desktop
-                color="#F2C57F"
-                gutterBottom
-                sx={{
-                  letterSpacing: "1px",
-                  fontSize: { xs: "1rem", md: "2.5rem" },
-                  textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
-                }}
-              >
-                Honey Drizzle Serenity in Stillness
-              </Typography>
+  variant="h2"
+  fontWeight={{ xs: 700, md: 200 }} // ✅ Bold on mobile, light on desktop
+  color="#F2C57F"
+  gutterBottom
+  sx={{
+    letterSpacing: "1px",
+    fontSize: { xs: "1rem", md: "2.5rem" },
+    textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
+  }}
+>
+  Honey Drizzle Serenity in Stillness
+</Typography>
+
             </motion.div>
 
             <motion.div

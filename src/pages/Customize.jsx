@@ -108,39 +108,40 @@ const Customize = () => {
       phoneError: "",
     };
 
-    Object.entries(personalInfo).forEach(([key, value]) => {
-      const isRequired = ["name", "phone"].includes(key);
-      if (isRequired && !value.trim()) {
-        errorObj[key] = true;
-        valid = false;
-      } else {
-        if (key === "email" && value.trim()) {
-          const emailValid = validateEmail(value);
-          errorObj[key] = !emailValid;
-          errorObj.emailError = emailValid ? "" : "Please enter a valid email";
-          if (!emailValid) valid = false;
-        } else if (key === "phone") {
-          const phoneValid = validatePhone(value);
-          errorObj[key] = !phoneValid;
-          errorObj.phoneError = phoneValid
-            ? ""
-            : "Please enter a valid phone number";
-          if (!phoneValid) valid = false;
-        }
-      }
-    });
+    // Check required fields
+    if (!personalInfo.name.trim()) {
+      errorObj.name = true;
+      valid = false;
+    }
+
+    if (!personalInfo.phone.trim()) {
+      errorObj.phone = true;
+      valid = false;
+    }
+
+    // Validate email if provided
+    if (personalInfo.email.trim() && !validateEmail(personalInfo.email)) {
+      errorObj.email = true;
+      errorObj.emailError = "Please enter a valid email";
+      valid = false;
+    }
+
+    // Validate phone format if provided
+    if (personalInfo.phone.trim() && !validatePhone(personalInfo.phone)) {
+      errorObj.phone = true;
+      errorObj.phoneError = "Please enter a valid phone number";
+      valid = false;
+    }
 
     setErrors(errorObj);
 
     if (!valid) {
       if (errorObj.emailError) toast.error(errorObj.emailError);
       if (errorObj.phoneError) toast.error(errorObj.phoneError);
-      const firstError = Object.keys(errorObj).find((key) => errorObj[key]);
-      if (firstError && !["emailError", "phoneError"].includes(firstError)) {
-        toast.error(
-          `${firstError.charAt(0).toUpperCase() + firstError.slice(1)} is required`,
-        );
-      }
+      if (errorObj.name) toast.error("Name is required");
+      const firstError = Object.keys(errorObj).find(
+        (key) => errorObj[key] && !["emailError", "phoneError"].includes(key)
+      );
       if (firstError) {
         document
           .getElementById(firstError)
@@ -229,33 +230,30 @@ const Customize = () => {
       </Typography>
 
       <Box textAlign="center" sx={{ mb: 3 }}>
-  <Button
-    variant="outlined"
-    component="a"
-    href="https://wa.me/c/919176425811"
-    target="_blank"  
-    rel="noopener noreferrer"
-    sx={{
-      borderRadius: "20px",
-      fontWeight: "bold",
-      fontSize: isMobile ? "0.8rem" : "1rem",
-      px: 3,
-      py: 1,
-      textDecoration: "none",
-      color: "#B88746",       
-      borderColor: "#B88746", 
-      '&:hover': {
-        backgroundColor: "#B88746", 
-        color: "#fff",              
-      },
-    }}
-  >
-    View Samples
-  </Button>
-</Box>
-
-
-
+        <Button
+          variant="outlined"
+          component="a"
+          href="https://wa.me/c/919176425811"
+          target="_blank"  
+          rel="noopener noreferrer"
+          sx={{
+            borderRadius: "20px",
+            fontWeight: "bold",
+            fontSize: isMobile ? "0.8rem" : "1rem",
+            px: 3,
+            py: 1,
+            textDecoration: "none",
+            color: "#B88746",       
+            borderColor: "#B88746", 
+            '&:hover': {
+              backgroundColor: "#B88746", 
+              color: "#fff",              
+            },
+          }}
+        >
+          View Samples
+        </Button>
+      </Box>
 
       {submitted && (
         <Alert severity="success" sx={{ mb: 3 }}>
@@ -265,13 +263,13 @@ const Customize = () => {
 
       <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, mb: 4 }}>
         <Typography variant="h6" gutterBottom>
-          👤 Personal Information{" "}
+          👤 Personal Information
         </Typography>
         <Grid container spacing={2}>
-          {["name*", "email", "phone*", "address"].map((field) => (
+          {["name", "email", "phone", "address"].map((field) => (
             <Grid item xs={12} sm={6} key={field} id={field}>
               <CustomTextField
-                label={field.charAt(0).toUpperCase() + field.slice(1)}
+                label={`${field.charAt(0).toUpperCase() + field.slice(1)}${field === "name" || field === "phone" ? "*" : ""}`}
                 value={personalInfo[field]}
                 onChange={(e) =>
                   setPersonalInfo({ ...personalInfo, [field]: e.target.value })
@@ -279,7 +277,13 @@ const Customize = () => {
                 error={errors[field]}
                 helperText={
                   errors[field]
-                    ? `${field.charAt(0).toUpperCase() + field.slice(1)} is invalid or required`
+                    ? field === "name" 
+                      ? "Name is required"
+                      : field === "phone"
+                        ? errors.phoneError || "Phone is required"
+                        : field === "email"
+                          ? errors.emailError || "Please enter a valid email"
+                          : ""
                     : ""
                 }
                 size={isMobile ? "small" : "medium"}
@@ -314,22 +318,15 @@ const Customize = () => {
                     </MenuItem>
                     <MenuItem value="Regular Sketch">
                     🎨 Acrylic Painting
-
-</MenuItem>
+                    </MenuItem>
                     <MenuItem value="Regular Sketch">
                     🖌️ Oil Painting
-
-
                     </MenuItem>
                     <MenuItem value="Regular Sketch">
                     💧 Watercolor
-
-
                     </MenuItem>
                     <MenuItem value="Regular Sketch">
                     🖼️ Art Prints
-
-
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -368,7 +365,6 @@ const Customize = () => {
             </Grid>
           ),
         },
-
         {
           label: "📅 Live Sketch",
           content: (
@@ -399,22 +395,18 @@ const Customize = () => {
           label: "🎨 Mural Paint",
           content: (
             <Grid container spacing={2}>
-              {["Wallsize", "Design", "Location", "description"].map(
-                (field) => (
-                  <Grid item xs={getGridSize(field)} key={field}>
-                    <CustomTextField
-                      label={field.charAt(0).toUpperCase() + field.slice(1)}
-                      value={tshirt[field]}
-                      onChange={(e) =>
-                        setTshirt({ ...tshirt, [field]: e.target.value })
-                      }
-                      multiline={field === "description"}
-                      rows={field === "description" ? 3 : 1}
-                      size={isMobile ? "small" : "medium"}
-                    />
-                  </Grid>
-                ),
-              )}
+              {["wallSize", "surface", "location"].map((field) => (
+                <Grid item xs={12} sm={4} key={field}>
+                  <CustomTextField
+                    label={field.charAt(0).toUpperCase() + field.slice(1)}
+                    value={mural[field]}
+                    onChange={(e) =>
+                      setMural({ ...mural, [field]: e.target.value })
+                    }
+                    size={isMobile ? "small" : "medium"}
+                  />
+                </Grid>
+              ))}
             </Grid>
           ),
         },
