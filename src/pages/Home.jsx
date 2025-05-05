@@ -119,7 +119,7 @@ const Home = () => {
       </motion.div>
       <motion.div custom={4}>
         <Mural />
-      </motion.div>\
+      </motion.div>
       <motion.div custom={4}>
         <Oil />
       </motion.div>
