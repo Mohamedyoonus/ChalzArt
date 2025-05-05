@@ -24,7 +24,7 @@ const bounceShrink = keyframes`
   100% { transform: scale(1); }
 `;
 
-const ShoePaint = () => {
+const OilPaint = () => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -34,8 +34,8 @@ const ShoePaint = () => {
 
   const shoepaintImages = Array.from({ length: 8 }, (_, index) => ({
     id: index + 1,
-    src: `/assets/shoepaint/img${index + 1}.jpg`,
-    title: `ShoePaint Image ${index + 1}`,
+    src: `/assets/oil/img${index + 1}.jpg`,
+    title: `OilPaint Image ${index + 1}`,
   }));
 
   const visibleImages = isMobile ? shoepaintImages.slice(0, 4) : shoepaintImages;
@@ -50,7 +50,7 @@ const ShoePaint = () => {
     setSelectedImage(null);
   };
 
-  const handleShowMore = () => navigate("/myworks#shoepaintings");
+  const handleShowMore = () => navigate("/myworks#oilpaintings");
 
   return (
     <Box
@@ -77,30 +77,30 @@ const ShoePaint = () => {
         style={{ width: "100%" }}
       >
         <Typography
-         variant="h4"
-         fontWeight="900" // Maximum boldness
-         mb={{ xs: 4, sm: 6 }}
-         sx={{
-           fontFamily: "'Montserrat', sans-serif", // Changeable if you prefer another
-           color: "#B88746",
-           letterSpacing: "2px",
-           textTransform: "uppercase",
-           textAlign: "center",
-           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
-           position: "relative",
-           "&::after": {
-             content: '""',
-             position: "absolute",
-             width: "80px",
-             height: "3px",
-             backgroundColor: "#A8743D",
-             bottom: -10,
-             left: "50%",
-             transform: "translateX(-50%)",
-           },
-         }}
+          variant="h4"
+          fontWeight="900" // Maximum boldness
+          mb={{ xs: 4, sm: 6 }}
+          sx={{
+            fontFamily: "'Montserrat', sans-serif", // Changeable if you prefer another
+            color: "#B88746",
+            letterSpacing: "2px",
+            textTransform: "uppercase",
+            textAlign: "center",
+            textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              width: "80px",
+              height: "3px",
+              backgroundColor: "#A8743D",
+              bottom: -10,
+              left: "50%",
+              transform: "translateX(-50%)",
+            },
+          }}
         >
-          Shoe Paints
+          Oil Paints
         </Typography>
       </motion.div>
 
@@ -285,4 +285,4 @@ const ShoePaint = () => {
   );
 };
 
-export default ShoePaint;
+export default OilPaint;

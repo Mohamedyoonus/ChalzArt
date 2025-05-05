@@ -141,25 +141,28 @@ const Mural = () => {
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant={isDesktop ? "h4" : "h4"}
-          fontWeight="700"
-          mb={{ xs: 4, sm: 6 }}
-          sx={{
-            color: "#B88746",
-            letterSpacing: "1px",
-            textAlign: "center",
-            position: "relative",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              width: "80px",
-              height: "3px",
-              backgroundColor: "#A8743D",
-              bottom: -10,
-              left: "50%",
-              transform: "translateX(-50%)",
-            },
-          }}
+         variant={isDesktop ? "h4" : "h4"}
+         fontWeight="900" // Maximum boldness
+         mb={{ xs: 4, sm: 6 }}
+         sx={{
+           fontFamily: "'Montserrat', sans-serif", // Changeable if you prefer another
+           color: "#B88746",
+           letterSpacing: "2px",
+           textTransform: "uppercase",
+           textAlign: "center",
+           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
+           position: "relative",
+           "&::after": {
+             content: '""',
+             position: "absolute",
+             width: "80px",
+             height: "3px",
+             backgroundColor: "#A8743D",
+             bottom: -10,
+             left: "50%",
+             transform: "translateX(-50%)",
+           },
+         }}
         >
           Mural Paints
         </Typography>

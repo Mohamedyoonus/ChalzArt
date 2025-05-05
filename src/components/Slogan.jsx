@@ -126,13 +126,13 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="h1"
-                fontWeight="700"
+                variant="h2"
+                fontWeight={{ xs: 700, md: 200 }} // ✅ Bold on mobile, light on desktop
                 color="#F2C57F"
                 gutterBottom
                 sx={{
                   letterSpacing: "1px",
-                  fontSize: { xs: "2rem", md: "2.5rem" },
+                  fontSize: { xs: "1rem", md: "2.5rem" },
                   textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
                 }}
               >
@@ -209,13 +209,13 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="h1"
-                fontWeight="700"
+                variant="h2"
+                fontWeight={{ xs: 700, md: 200 }} // ✅ Bold on mobile, light on desktop
                 color="#F2C57F"
                 gutterBottom
                 sx={{
                   letterSpacing: "1px",
-                  fontSize: { xs: "2rem", md: "2.5rem" },
+                  fontSize: { xs: "1rem", md: "2.5rem" },
                   textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
                 }}
               >

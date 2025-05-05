@@ -25,6 +25,9 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { motion } from "framer-motion";
+import '@fontsource/lora/400.css';
+import '@fontsource/lora/700.css';
+
 
 const navItems = [
   { label: "Home", path: "/" },
@@ -107,27 +110,28 @@ const Navbar = () => {
                   />
                 </motion.div>
                 <Typography
-                  variant="h6"
-                  sx={{
-                    ml: { xs: 1.5, sm: 2 },
-                    fontWeight: 700,
-                    fontSize: {
-                      xs: "1.25rem", // phones
-                      sm: "1.5rem", // tablets
-                      md: scrolled ? "1.5rem" : "1.75rem", // desktops
-                    },
-                    color: "black",
-                    letterSpacing: "1px",
-                    textTransform: "uppercase",
-                    fontFamily: "'Playfair Display', serif",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      color: "#a3742e",
-                    },
-                  }}
-                >
-                  Chalz Art
-                </Typography>
+  variant="h6"
+  sx={{
+    ml: { xs: 1.5, sm: 2 },
+    fontWeight: 700,
+    fontSize: {
+      xs: "1.25rem",
+      sm: "1.5rem",
+      md: scrolled ? "1.5rem" : "1.75rem",
+    },
+    color: "black",
+    letterSpacing: "1px",
+    textTransform: "uppercase",
+    fontFamily: "'Lora', serif",  
+    transition: "all 0.3s ease",
+    "&:hover": {
+      color: "#a3742e",
+    },
+  }}
+>
+  Chalz Art
+</Typography>
+
               </Link>
             </Box>
 

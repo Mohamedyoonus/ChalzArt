@@ -79,21 +79,22 @@ const LiveSketch = () => {
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant="h4"
-          fontWeight="700"
-          mb={3}
+          variant= "h4"
+          fontWeight="900" 
+          mb={{ xs: 4, sm: 6 }}
           sx={{
+            fontFamily: "'Montserrat', sans-serif",
             color: "#B88746",
-            letterSpacing: "1px",
+            letterSpacing: "2px",
+            textTransform: "uppercase",
             textAlign: "center",
+            textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
             position: "relative",
-            display: "inline-block",
-            width: "100%",
             "&::after": {
               content: '""',
               position: "absolute",
               width: "80px",
-              height: "4px",
+              height: "3px",
               backgroundColor: "#A8743D",
               bottom: -10,
               left: "50%",

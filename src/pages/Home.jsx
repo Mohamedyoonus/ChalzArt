@@ -21,6 +21,7 @@ import Slogan from "../components/Slogan";
 import promoImage from "../assets/promo.jpg";
 import { keyframes } from "@mui/system";
 import { motion } from "framer-motion";
+import OilPaint from "../components/OilPaint";
 
 const floatAnimation = keyframes`
   0% { transform: translateY(0px); }
@@ -118,6 +119,9 @@ const Home = () => {
       </motion.div>
       <motion.div custom={4}>
         <Mural />
+      </motion.div>
+      <motion.div custom={4}>
+        <OilPaint />
       </motion.div>
       
       <motion.div custom={5}>
