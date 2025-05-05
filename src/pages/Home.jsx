@@ -18,7 +18,7 @@ import Mural from "../components/Mural";
 import ShoePaint from "../components/ShoePaint";
 import Tshirt from "../components/Tshirt";
 import Slogan from "../components/Slogan";
-import Oil from "../components/oil";
+import Oil from "../components/Oil";
 import promoImage from "../assets/promo.jpg";
 import { keyframes } from "@mui/system";
 import { motion } from "framer-motion";
