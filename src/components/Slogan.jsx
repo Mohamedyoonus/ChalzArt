@@ -33,8 +33,7 @@ const imageContainerStyle = {
   border: "2px solid #F2C57F",
   borderRadius: "16px",
   padding: "8px",
-  background:
-    "linear-gradient(145deg, rgba(242, 197, 127, 0.05), rgba(255, 255, 255, 0.02))",
+  background: "linear-gradient(145deg, rgba(242, 197, 127, 0.05), rgba(255, 255, 255, 0.02))",
   boxShadow: "0 4px 20px rgba(242, 197, 127, 0.15)",
 };
 
@@ -42,24 +41,13 @@ const Slogan = () => {
   return (
     <Box
       sx={{
-        background:
-          "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        background: "#ffffff", // ✅ White background
         py: { xs: 6, sm: 8 },
-        color: "#fff",
+        pt: { xs: 0, sm: 0 , md: 0 },
+        color: "#333333", // ✅ Default text color
         overflow: "hidden",
         position: "relative",
         zIndex: 1,
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background:
-            "linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3))",
-          zIndex: -1,
-        },
       }}
     >
       <Container maxWidth="lg">
@@ -72,11 +60,11 @@ const Slogan = () => {
         >
           <Divider
             sx={{
-              borderColor: "#F2C57F",
+              borderColor: "#B88746",
               my: 6,
-              width: "60%",
+              width: "70%",
               mx: "auto",
-              opacity: 0.3,
+              opacity: 0.8,
             }}
           />
         </motion.div>
@@ -92,7 +80,6 @@ const Slogan = () => {
             mb: { xs: 2, md: 6 },
           }}
         >
-           
           <motion.div
             variants={imageFadeIn}
             initial="hidden"
@@ -127,19 +114,18 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-  variant="h2"
-  fontWeight={{ xs: 700, md: 200 }} // ✅ Bold on mobile, light on desktop
-  color="#F2C57F"
-  gutterBottom
-  sx={{
-    letterSpacing: "1px",
-    fontSize: { xs: "1rem", md: "2.5rem" },
-    textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
-  }}
->
-  Honey Drizzle Serenity in Stillness
-</Typography>
-
+                variant="h2"
+                fontWeight={{ xs: 700, md: 200 }}
+                color="#B88746"
+                gutterBottom
+                sx={{
+                  letterSpacing: "1px",
+                  fontSize: { xs: "1rem", md: "2.5rem" },
+                  textShadow: "2px 2px 8px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                Honey Drizzle Serenity in Stillness
+              </Typography>
             </motion.div>
 
             <motion.div
@@ -150,7 +136,7 @@ const Slogan = () => {
             >
               <Typography
                 variant="body1"
-                color="#E0E0E0"
+                color="#333333"
                 sx={{
                   fontSize: { xs: "16px", md: "18px" },
                   opacity: 0.9,
@@ -177,11 +163,11 @@ const Slogan = () => {
         >
           <Divider
             sx={{
-              borderColor: "#F2C57F",
+              borderColor: "#B88746",
               my: 6,
-              width: "60%",
+              width: "70%",
               mx: "auto",
-              opacity: 0.3,
+              opacity: 0.8,
             }}
           />
         </motion.div>
@@ -212,13 +198,13 @@ const Slogan = () => {
             >
               <Typography
                 variant="h2"
-                fontWeight={{ xs: 700, md: 200 }} // ✅ Bold on mobile, light on desktop
-                color="#F2C57F"
+                fontWeight={{ xs: 700, md: 200 }}
+                color="#B88746"
                 gutterBottom
                 sx={{
                   letterSpacing: "1px",
                   fontSize: { xs: "1rem", md: "2.5rem" },
-                  textShadow: "2px 2px 8px rgba(0, 0, 0, 0.5)",
+                  textShadow: "2px 2px 8px rgba(0, 0, 0, 0.1)",
                 }}
               >
                 The Battle Within - Fight for Inner Peace
@@ -233,7 +219,7 @@ const Slogan = () => {
             >
               <Typography
                 variant="body1"
-                color="#E0E0E0"
+                color="#333333"
                 sx={{
                   fontSize: { xs: "16px", md: "18px" },
                   opacity: 0.9,
@@ -280,11 +266,11 @@ const Slogan = () => {
         >
           <Divider
             sx={{
-              borderColor: "#F2C57F",
-              my: 6,
-              width: "60%",
+              borderColor: "#B88746",
+              my: 2,
+              width: "70%",
               mx: "auto",
-              opacity: 0.3,
+              opacity: 0.8,
             }}
           />
         </motion.div>

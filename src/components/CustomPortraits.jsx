@@ -36,7 +36,7 @@ const CustomPortrait = () => {
   const isDesktop = useMediaQuery("(min-width:900px)");
   const isTablet = useMediaQuery("(min-width:600px)");
 
-  const handleShowMore = () => navigate("/myworks#customportraits");
+  const handleShowMore = () => navigate("/myworks#custom-portraits");
 
   const handleOpen = (item) => {
     setSelectedItem(item);
@@ -125,7 +125,7 @@ const CustomPortrait = () => {
         mb: { xs: -3, sm: 2, md: 5 },
         pt: 1,
         minHeight: "65vh",
-        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        background: "white",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -133,38 +133,39 @@ const CustomPortrait = () => {
     >
       {/* Title */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-       <Typography
-  variant={isDesktop ? "h4" : "h4"}
-  fontWeight="900" // Maximum boldness
-  mb={{ xs: 4, sm: 6 }}
-  sx={{
-    fontFamily: "'Montserrat', sans-serif", // Changeable if you prefer another
-    color: "#B88746",
-    letterSpacing: "2px",
-    textTransform: "uppercase",
-    textAlign: "center",
-    textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
-    position: "relative",
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      width: "80px",
-      height: "3px",
-      backgroundColor: "#A8743D",
-      bottom: -10,
-      left: "50%",
-      transform: "translateX(-50%)",
-    },
-  }}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
 >
-  Custom Portraits
-</Typography>
+  <Typography
+    variant={isDesktop ? "h4" : "h4"}
+    fontWeight={700}
+    mb={{ xs: 4, sm: 6 }}
+    sx={{
+fontFamily: "'Cinzel', serif"
+      ,
+      color: "#B88746", // A softer, rich bronze
+      letterSpacing: "1.5px",
+      textTransform: "uppercase",
+      textAlign: "center",
+      textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+      position: "relative",
+      "&::after": {
+        content: '""',
+        position: "absolute",
+        width: "60px",
+        height: "2px",
+        backgroundColor: "#A8743D",
+        bottom: -10,
+        left: "50%",
+        transform: "translateX(-50%)",
+      },
+    }}
+  >
+    Custom Portraits
+  </Typography>
+</motion.div>
 
-      </motion.div>
 
       {/* Gallery */}
       <Box

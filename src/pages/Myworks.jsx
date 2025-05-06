@@ -140,7 +140,7 @@ const MyWorks = () => {
         pt: { xs: 6, md: 10 },
         pb: 5,
         px: { xs: 2, md: 8 },
-        bgcolor: themeColor,
+        background: "white",
         color: "white",
         minHeight: "100vh",
       }}
@@ -157,7 +157,7 @@ const MyWorks = () => {
           textAlign="center"
           mb={3}
           sx={{
-            color: highlightColor,
+            color: "#B88746",
             letterSpacing: 3,
             textTransform: "uppercase",
             fontFamily: "'Playfair Display', serif",
@@ -180,7 +180,7 @@ const MyWorks = () => {
             top: { xs: 56, sm: 64 },
             zIndex: 10,
             py: 2,
-            bgcolor: "rgba(15,15,15,0.9)",
+            bgcolor: "white",
             backdropFilter: "blur(8px)",
           }}
         >
@@ -191,7 +191,7 @@ const MyWorks = () => {
                 onClick={handleFilterClick}
                 startIcon={<FilterListIcon />}
                 sx={{
-                  color: highlightColor,
+                  color: "#B88746",
                   borderColor: highlightColor,
                   "&:hover": {
                     backgroundColor: "rgba(212, 175, 55, 0.1)",
@@ -207,8 +207,8 @@ const MyWorks = () => {
                 onClose={handleFilterClose}
                 PaperProps={{
                   sx: {
-                    bgcolor: "#1e1e1e",
-                    color: "white",
+                    bgcolor: "white",
+                    color: "black",
                     "& .MuiMenuItem-root": {
                       "&:hover": {
                         bgcolor: "rgba(212, 175, 55, 0.1)",
@@ -304,7 +304,7 @@ const MyWorks = () => {
                       textTransform: "uppercase",
                       letterSpacing: 2,
                       fontFamily: "'Playfair Display', serif",
-                      color: "#e0e0e0",
+                      color: "black",
                     }}
                   >
                     {galleryName}

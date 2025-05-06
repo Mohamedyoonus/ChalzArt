@@ -40,12 +40,13 @@ const About = () => {
   return (
     <Box
       sx={{
-        py: { xs: 6, sm: 8, md: 10 },
+        py: { xs: 6, sm: 8, md: 5 },
+        pb: { xs: 0, sm: 0, md: -3 },
         px: { xs: 2, sm: 3 },
         minHeight: "100vh",
-        backgroundColor: "black",
+        backgroundColor: "white",
         backgroundImage:
-          "radial-gradient(circle at 25% 30%, #1a1a1a 0%, #000 70%)",
+          "white",
         position: "relative",
         overflow: "hidden",
         "&::before": {
@@ -56,7 +57,7 @@ const About = () => {
           width: "80vh",
           height: "80vh",
           background:
-            "radial-gradient(circle, rgba(184,135,70,0.15) 0%, transparent 70%)",
+            "white",
           borderRadius: "50%",
           zIndex: 0,
         },
@@ -209,7 +210,7 @@ const About = () => {
                         md: "1.1rem",
                       },
                       lineHeight: 1.8,
-                      color: "rgba(255,255,255,0.85)",
+                      color: "black",
                       fontFamily: "'Merriweather', serif",
                       fontWeight: 300,
                       letterSpacing: "0.3px",

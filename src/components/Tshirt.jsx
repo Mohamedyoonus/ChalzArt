@@ -117,11 +117,11 @@ const Tshirt = () => {
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pt: { xs: 7, sm: 6, md: 8 },
+        pt: { xs: 1, sm: 6, md: 10 },
         pb: { xs: -2, sm: 3, md: -1 },
         mb: { xs: 0, sm: 3, md: 0 },
         minHeight: "60vh",
-        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        background: "white",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -138,26 +138,27 @@ const Tshirt = () => {
           fontWeight="900" // Maximum boldness
           mb={{ xs: 4, sm: 6 }}
           sx={{
-            fontFamily: "'Montserrat', sans-serif", // Changeable if you prefer another
-            color: "#B88746",
-            letterSpacing: "2px",
-            textTransform: "uppercase",
-            textAlign: "center",
-            textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
-            position: "relative",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              width: "80px",
-              height: "3px",
-              backgroundColor: "#A8743D",
-              bottom: -10,
-              left: "50%",
-              transform: "translateX(-50%)",
-            },
-          }}
+            fontFamily: "'Cinzel', serif"
+                  ,
+                  color: "#B88746", // A softer, rich bronze
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+                  position: "relative",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    width: "60px",
+                    height: "2px",
+                    backgroundColor: "#A8743D",
+                    bottom: -10,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  },
+                }}
         >
-          Tshirt Designs
+          Bleach Paints
         </Typography>
       </motion.div>
 

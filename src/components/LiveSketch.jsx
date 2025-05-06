@@ -63,10 +63,10 @@ const LiveSketch = () => {
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
         pb: 5,
-        pt: { xs: 15, sm: 3, md: 6 },
+        pt: { xs: 2, sm: 3, md: 3 },
         mt: { xs: -8, sm: 0, md: -5 },
         minHeight: "60vh",
-        background: "black radial-gradient(circle at center, #111 0%, #000 100%)",
+        background: "white",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -81,26 +81,27 @@ const LiveSketch = () => {
         <Typography
           variant= "h4"
           fontWeight="900" 
-          mb={{ xs: 4, sm: 6 }}
+          mb={{ xs: 4, sm: 6 , md: 1 }}
           sx={{
-            fontFamily: "'Montserrat', sans-serif",
-            color: "#B88746",
-            letterSpacing: "2px",
-            textTransform: "uppercase",
-            textAlign: "center",
-            textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
-            position: "relative",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              width: "80px",
-              height: "3px",
-              backgroundColor: "#A8743D",
-              bottom: -10,
-              left: "50%",
-              transform: "translateX(-50%)",
-            },
-          }}
+            fontFamily: "'Cinzel', serif"
+                  ,
+                  color: "#B88746", // A softer, rich bronze
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+                  position: "relative",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    width: "60px",
+                    height: "2px",
+                    backgroundColor: "#A8743D",
+                    bottom: -10,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  },
+                }}
         >
           Live Sketches
         </Typography>

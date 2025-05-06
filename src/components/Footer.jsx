@@ -87,8 +87,8 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "black",
-        color: "#ccc",
+        backgroundColor: "white",
+        color: "#333",
         fontFamily: "'Poppins', sans-serif",
         position: "relative",
         pt: 6,
@@ -118,14 +118,14 @@ const Footer = () => {
             <Typography
               variant="body2"
               sx={{
-                color: "#aaa",
+                color: "#333",
                 maxWidth: 300,
                 lineHeight: 1.7,
                 fontStyle: "italic",
                 mb: 2,
               }}
             >
-              Crafted with heart,sketched with soul - Chalzart 
+              Crafted with heart, sketched with soul - Chalzart
             </Typography>
 
             <Box
@@ -188,7 +188,7 @@ const Footer = () => {
                 >
                   <Typography
                     sx={{
-                      color: "#ccc",
+                      color: "#333",
                       fontSize: 14,
                       mb: 1,
                       transition: "0.3s ease",
@@ -217,7 +217,7 @@ const Footer = () => {
                 >
                   <Typography
                     sx={{
-                      color: "#ccc",
+                      color: "#333",
                       fontSize: 14,
                       mb: 1,
                       transition: "0.3s ease",
@@ -256,7 +256,9 @@ const Footer = () => {
                 mb={1}
               >
                 <LocationOn fontSize="small" sx={{ mr: 1, color: "#aaa" }} />
-                <Typography variant="body2">Bangalore, India</Typography>
+                <Typography variant="body2" sx={{ color: "#333" }}>
+                  Bangalore, India
+                </Typography>
               </Box>
               <Box
                 display="flex"
@@ -265,7 +267,9 @@ const Footer = () => {
                 mb={1}
               >
                 <Phone fontSize="small" sx={{ mr: 1, color: "#aaa" }} />
-                <Typography variant="body2">+91 9176425811</Typography>
+                <Typography variant="body2" sx={{ color: "#333" }}>
+                  +91 9176425811
+                </Typography>
               </Box>
               <Box
                 display="flex"
@@ -273,14 +277,16 @@ const Footer = () => {
                 justifyContent={isMobile ? "center" : "flex-start"}
               >
                 <Email fontSize="small" sx={{ mr: 1, color: "#aaa" }} />
-                <Typography variant="body2">thechalzart@gmail.com</Typography>
+                <Typography variant="body2" sx={{ color: "#333" }}>
+                  thechalzart@gmail.com
+                </Typography>
               </Box>
             </Box>
           </Grid>
         </Grid>
 
         {/* Divider */}
-        <Divider sx={{ backgroundColor: "#333", my: 4 }} />
+        <Divider sx={{ backgroundColor: "#ccc", my: 4 }} />
 
         {/* Footer Bottom */}
         <Box
@@ -294,33 +300,28 @@ const Footer = () => {
             pb: 4,
           }}
         >
-          <Typography variant="body2" sx={{ color: "#888", fontSize: 14 }}>
+          <Typography variant="body2" sx={{ color: "#666", fontSize: 14 }}>
             © 2019–2035 Chalzart. All rights reserved.
           </Typography>
-          <Typography variant="body2" sx={{ color: "#555", fontSize: 13 }}>
-            Designed and developed by Yoonus
-          </Typography>
-        </Box>
 
-        {/* Scroll To Top */}
-        <IconButton
-          onClick={scrollToTop}
-          sx={{
-            position: "absolute",
-            bottom: 30,
-            right: 30,
-            backgroundColor: "#C89B3C",
-            color: "#000",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-            "&:hover": {
-              backgroundColor: "#e0c066",
-              transform: "scale(1.1)",
-            },
-            transition: "all 0.3s ease",
-          }}
-        >
-          <KeyboardArrowUp />
-        </IconButton>
+          <Typography variant="body2" sx={{ color: "#666", fontSize: 14 }}>
+          </Typography>
+          <Typography variant="body2" sx={{ color: "#666", fontSize: 14 }}>
+            Designed And Developed by Yoonus
+          </Typography>
+          <IconButton
+            onClick={scrollToTop}
+            sx={{
+              backgroundColor: "#B88746",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#C89B3C",
+              },
+            }}
+          >
+            <KeyboardArrowUp />
+          </IconButton>
+        </Box>
       </Container>
     </Box>
   );

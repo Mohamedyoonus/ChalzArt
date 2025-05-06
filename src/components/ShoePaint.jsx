@@ -58,12 +58,12 @@ const ShoePaint = () => {
         px: { xs: 2, sm: 3, md: 5 },
         py: 5,
         pb: -2,
-        pt: 15,
+        pt: { xs: 7, sm: 3, md: 2 },
         mb: -2,
         mt: -8,
         minHeight: "55vh",
         background:
-          "black radial-gradient(circle at center, #111 0%, #000 100%)",
+          "white",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -81,24 +81,25 @@ const ShoePaint = () => {
          fontWeight="900" // Maximum boldness
          mb={{ xs: 4, sm: 6 }}
          sx={{
-           fontFamily: "'Montserrat', sans-serif", // Changeable if you prefer another
-           color: "#B88746",
-           letterSpacing: "2px",
-           textTransform: "uppercase",
-           textAlign: "center",
-           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)",
-           position: "relative",
-           "&::after": {
-             content: '""',
-             position: "absolute",
-             width: "80px",
-             height: "3px",
-             backgroundColor: "#A8743D",
-             bottom: -10,
-             left: "50%",
-             transform: "translateX(-50%)",
-           },
-         }}
+          fontFamily: "'Cinzel', serif"
+                ,
+                color: "#B88746", // A softer, rich bronze
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                textAlign: "center",
+                textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+                position: "relative",
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  width: "60px",
+                  height: "2px",
+                  backgroundColor: "#A8743D",
+                  bottom: -10,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                },
+              }}
         >
           Shoe Paints
         </Typography>
