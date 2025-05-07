@@ -58,7 +58,7 @@ const OilPaint = () => {
         px: { xs: 2, sm: 3, md: 5 },
         py: 5,
         pb: -2,
-        pt:  { xs: 5, sm: 3, md: 6 },
+        pt:  { xs: 8, sm: 3, md: 6 },
         mb: -2,
         mt: -8,
         minHeight: "55vh",
