@@ -117,7 +117,7 @@ const Tshirt = () => {
     <Box
       sx={{
         px: { xs: 2, sm: 3, md: 5 },
-        pt: { xs: 1, sm: 6, md: 10 },
+        pt: { xs: 6, sm: 6, md: 10 },
         pb: { xs: -2, sm: 3, md: -1 },
         mb: { xs: 0, sm: 3, md: 0 },
         minHeight: "60vh",
