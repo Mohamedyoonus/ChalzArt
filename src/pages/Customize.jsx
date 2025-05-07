@@ -158,7 +158,7 @@ const Customize = () => {
       return `\n\n  ${title}\n${filledFields.join("\n")}`;
     };
 
-    let message = `New Custom Art Request\n\nHere are the details for my custom artwork request:`;
+    let message = `Hi,\n\nHere are the details for my custom artwork request:`;
     message += createSection("*--Personal Information--*", {
       Name: personalInfo.name,
       Email: personalInfo.email,
