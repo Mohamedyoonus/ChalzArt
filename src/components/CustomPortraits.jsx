@@ -117,6 +117,23 @@ const CustomPortrait = () => {
       </motion.div>
     ));
 
+    const words = ["Custom", "Portraits"];
+
+const textVariants = {
+  initial: { y: 20, opacity: 0 },
+  animate: (i) => ({
+    y: [0, -10, 0],
+    opacity: 1,
+    transition: {
+      delay: i * 0.2,
+      duration: 1.5,
+      repeat: Infinity,
+      repeatType: "loop",
+      ease: "easeInOut",
+    },
+  }),
+};
+
   return (
     <Box
       sx={{
@@ -162,7 +179,7 @@ fontFamily: "'Cinzel', serif"
       },
     }}
   >
-    Custom Portraits
+     Portraits
   </Typography>
 </motion.div>
 
