@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   IconButton,
@@ -53,7 +53,16 @@ const Home = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const sectionsRef = useRef([]);
 
+  // Add all section refs to the array
+  const addToRefs = (el) => {
+    if (el && !sectionsRef.current.includes(el)) {
+      sectionsRef.current.push(el);
+    }
+  };
+
+  // Initial ad position setup
   useEffect(() => {
     const padding = 20;
     const width = window.innerWidth;
@@ -100,34 +109,32 @@ const Home = () => {
     <motion.div
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      style={{ overflowX: "hidden" }}
       initial="hidden"
       animate="visible"
       variants={fadeInUp}
     >
-      <motion.div custom={0}>
+      <motion.div ref={addToRefs} custom={0}>
         <Banner />
       </motion.div>
-      <motion.div custom={1}>
+      <motion.div ref={addToRefs} custom={1}>
         <Slogan />
       </motion.div>
-      <motion.div custom={2}>
+      <motion.div ref={addToRefs} custom={2}>
         <CustomPortraits />
       </motion.div>
-      <motion.div custom={3}>
+      <motion.div ref={addToRefs} custom={3}>
         <LiveSketch />
       </motion.div>
-      <motion.div custom={4}>
+      <motion.div ref={addToRefs} custom={4}>
         <Mural />
       </motion.div>
-      <motion.div custom={4}>
+      <motion.div ref={addToRefs} custom={4}>
         <OilPaint />
       </motion.div>
-      
-      <motion.div custom={5}>
+      <motion.div ref={addToRefs} custom={5}>
         <ShoePaint />
       </motion.div>
-      <motion.div custom={6}>
+      <motion.div ref={addToRefs} custom={6}>
         <Tshirt />
       </motion.div>
 
@@ -274,7 +281,7 @@ const Home = () => {
                 px: { xs: 0.5, sm: 2 },
                 py: { xs: 1, sm: 1.5 },
                 fontWeight: "bold",
-                fontSize: { xs: "0.875rem", sm: "1rem" },
+                fontSize: { xs: "0.875rem", sm: "1rem"},
                 borderRadius: 2,
                 minWidth: 200,
                 animation: `${pulse} 2s infinite`,
