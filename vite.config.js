@@ -8,7 +8,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "public/chalzfavicon1.svg",
+          src: "public/assets/chalzfavicon1.svg",
           dest: "", 
           rename: "favicon.svg",
         },
