@@ -9,10 +9,20 @@ export default defineConfig({
       targets: [
         {
           src: "public/assets/chalzfavicon1.svg",
-          dest: "", 
+          dest: "",
           rename: "favicon.svg",
         },
       ],
     }),
   ],
+  build: {
+    // Make sure the app is built in a way that supports SPA (Single Page Application)
+    rollupOptions: {
+      input: "index.html",  // Ensure correct entry for the build
+    },
+  },
+  server: {
+    // This ensures Vite uses React Router or client-side routing correctly during development
+    historyApiFallback: true, // Handles any 404s and redirects them to index.html
+  },
 });
