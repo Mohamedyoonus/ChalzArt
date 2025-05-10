@@ -9,7 +9,7 @@ export default defineConfig({
       targets: [
         {
           src: "public/assets/chalzfavicon1.svg",
-          dest: "", // root of dist
+          dest: "", 
           rename: "favicon.svg",
         },
       ],
