@@ -34,7 +34,7 @@ const Tshirt = () => {
   const isDesktop = useMediaQuery("(min-width:900px)");
   const isTablet = useMediaQuery("(min-width:600px)");
 
-  const handleShowMore = () => navigate("/myworks#tshirt-designs");
+  const handleShowMore = () => navigate("/myworks#customportraits");
 
   const handleOpen = (item) => {
     setSelectedItem(item);

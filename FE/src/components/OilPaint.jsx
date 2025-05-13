@@ -35,7 +35,7 @@ const OilPaint = () => {
   const shoepaintImages = Array.from({ length: 8 }, (_, index) => ({
     id: index + 1,
     src: `/assets/oil/img${index + 1}.jpg`,
-    title: `OilPaints Image ${index + 1}`,
+    title: `OilPaint Image ${index + 1}`,
   }));
 
   const visibleImages = isMobile ? shoepaintImages.slice(0, 4) : shoepaintImages;
@@ -50,7 +50,7 @@ const OilPaint = () => {
     setSelectedImage(null);
   };
 
-  const handleShowMore = () => navigate("/myworks#oil-paints");
+  const handleShowMore = () => navigate("/myworks#oilpaintings");
 
   return (
     <Box

@@ -307,7 +307,7 @@ const Footer = () => {
           <Typography variant="body2" sx={{ color: "#666", fontSize: 14 }}>
           </Typography>
           <Typography variant="body2" sx={{ color: "#666", fontSize: 14 }}>
-            Designed And Developed by Yoonus
+            Designed And Developed by Yoonus.
           </Typography>
           <IconButton
             onClick={scrollToTop}
