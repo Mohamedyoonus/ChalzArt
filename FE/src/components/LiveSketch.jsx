@@ -51,7 +51,7 @@ const LiveSketch = () => {
   };
 
   const handleShowMore = () => {
-    navigate("/myworks#livesketches");
+    navigate("/myworks#live-sketches");
   };
 
   const displayedImages = isMobile
@@ -79,29 +79,28 @@ const LiveSketch = () => {
         transition={{ duration: 0.6 }}
       >
         <Typography
-          variant= "h4"
-          fontWeight="900" 
-          mb={{ xs: 4, sm: 6 , md: 1 }}
+          variant="h4"
+          fontWeight="900"
+          mb={{ xs: 4, sm: 6, md: 1 }}
           sx={{
-            fontFamily: "'Cinzel', serif"
-                  ,
-                  color: "#B88746", // A softer, rich bronze
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  textAlign: "center",
-                  textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
-                  position: "relative",
-                  "&::after": {
-                    content: '""',
-                    position: "absolute",
-                    width: "60px",
-                    height: "2px",
-                    backgroundColor: "#A8743D",
-                    bottom: -10,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                  },
-                }}
+            fontFamily: "'Cinzel', serif",
+            color: "#B88746", // A softer, rich bronze
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            textAlign: "center",
+            textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              width: "60px",
+              height: "2px",
+              backgroundColor: "#A8743D",
+              bottom: -10,
+              left: "50%",
+              transform: "translateX(-50%)",
+            },
+          }}
         >
           Live Sketches
         </Typography>
@@ -171,6 +170,8 @@ const LiveSketch = () => {
                     width: isReduced ? "180px" : "250px",
                     height: isExpanded ? "320px" : "250px",
                     objectFit: "cover",
+                    objectPosition:
+                      image.id === 1 && isMobile ? "140% center" : "center",
                     display: "block",
                     borderRadius: "16px",
                   }}
