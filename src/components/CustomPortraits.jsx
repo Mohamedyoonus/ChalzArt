@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import BrushIcon from "@mui/icons-material/Brush";
 
-
 const mediaItems = [
   {
     id: 1,
@@ -49,8 +48,10 @@ const CustomPortrait = () => {
   };
 
   const getVisibleItems = () => {
-    if (isDesktop) return { top: mediaItems.slice(0, 4), bottom: mediaItems.slice(4, 8) };
-    if (isTablet) return { top: mediaItems.slice(0, 3), bottom: mediaItems.slice(3, 6) };
+    if (isDesktop)
+      return { top: mediaItems.slice(0, 4), bottom: mediaItems.slice(4, 8) };
+    if (isTablet)
+      return { top: mediaItems.slice(0, 3), bottom: mediaItems.slice(3, 6) };
     return { top: mediaItems.slice(0, 2), bottom: mediaItems.slice(2, 4) };
   };
 
@@ -117,22 +118,22 @@ const CustomPortrait = () => {
       </motion.div>
     ));
 
-    const words = ["Custom", "Portraits"];
+  const words = ["Custom", "Portraits"];
 
-const textVariants = {
-  initial: { y: 20, opacity: 0 },
-  animate: (i) => ({
-    y: [0, -10, 0],
-    opacity: 1,
-    transition: {
-      delay: i * 0.2,
-      duration: 1.5,
-      repeat: Infinity,
-      repeatType: "loop",
-      ease: "easeInOut",
-    },
-  }),
-};
+  const textVariants = {
+    initial: { y: 20, opacity: 0 },
+    animate: (i) => ({
+      y: [0, -10, 0],
+      opacity: 1,
+      transition: {
+        delay: i * 0.2,
+        duration: 1.5,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+      },
+    }),
+  };
 
   return (
     <Box
@@ -150,39 +151,37 @@ const textVariants = {
     >
       {/* Title */}
       <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
->
-  <Typography
-    variant={isDesktop ? "h4" : "h4"}
-    fontWeight={700}
-    mb={{ xs: 4, sm: 6 }}
-    sx={{
-fontFamily: "'Cinzel', serif"
-      ,
-      color: "#B88746", // A softer, rich bronze
-      letterSpacing: "1.5px",
-      textTransform: "uppercase",
-      textAlign: "center",
-      textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
-      position: "relative",
-      "&::after": {
-        content: '""',
-        position: "absolute",
-        width: "60px",
-        height: "2px",
-        backgroundColor: "#A8743D",
-        bottom: -10,
-        left: "50%",
-        transform: "translateX(-50%)",
-      },
-    }}
-  >
-     Portraits
-  </Typography>
-</motion.div>
-
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Typography
+          variant={isDesktop ? "h4" : "h4"}
+          fontWeight={700}
+          mb={{ xs: 4, sm: 6 }}
+          sx={{
+            fontFamily: "'Cinzel', serif",
+            color: "#B88746",
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            textAlign: "center",
+            textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              width: "60px",
+              height: "2px",
+              backgroundColor: "#A8743D",
+              bottom: -10,
+              left: "50%",
+              transform: "translateX(-50%)",
+            },
+          }}
+        >
+          Portraits
+        </Typography>
+      </motion.div>
 
       {/* Gallery */}
       <Box
@@ -233,7 +232,7 @@ fontFamily: "'Cinzel', serif"
         flexWrap="nowrap"
         gap={{ xs: 1.5, sm: 2 }}
         mt={{ xs: 3, sm: 4 }}
-        px={{ xs: 1.5, sm: 0 }} // padding to prevent edge collision on mobile
+        px={{ xs: 1.5, sm: 0 }} 
         sx={{
           width: "100%",
           textAlign: "center",
@@ -296,7 +295,7 @@ fontFamily: "'Cinzel', serif"
       </Box>
 
       {/* Modal */}
-       <Modal
+      <Modal
         open={open}
         onClose={handleClose}
         sx={{
@@ -348,7 +347,7 @@ fontFamily: "'Cinzel', serif"
           >
             ✕
           </Box>
-      
+
           {/* Media Content */}
           {selectedItem && (
             <Box

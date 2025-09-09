@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Myworks from "./pages/Myworks";
 import Customize from "./pages/Customize";
+import Classes from "./pages/Classes";    
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/myworks" element={<Myworks />} />
         <Route path="/customize" element={<Customize />} />
+        <Route path="/classes" element={<Classes />} />
       </Routes>
       <Footer />
     </Router>
