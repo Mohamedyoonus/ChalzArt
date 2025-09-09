@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import history from "connect-history-api-fallback";
 
 export default defineConfig({
   plugins: [
@@ -16,13 +17,25 @@ export default defineConfig({
     }),
   ],
   build: {
-    // Make sure the app is built in a way that supports SPA (Single Page Application)
     rollupOptions: {
-      input: "index.html",  // Ensure correct entry for the build
+      input: "index.html", // Entry point for SPA
     },
+    outDir: "dist", // Default output folder
+    assetsDir: "assets", // Folder for static assets
   },
   server: {
-    // This ensures Vite uses React Router or client-side routing correctly during development
-    historyApiFallback: true, // Handles any 404s and redirects them to index.html
+    middlewareMode: true,
+    setup: ({ middlewares }) => {
+      middlewares.use(
+        history({
+          verbose: true,
+        })
+      );
+    },
+  },
+  resolve: {
+    alias: {
+      "@": "/src", // Optional: Alias for src folder
+    },
   },
 });
