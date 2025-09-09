@@ -72,17 +72,21 @@ const Classes = () => {
               }}
             >
               <Typography
-                variant="h3"
-                fontWeight="bold"
-                gutterBottom
-                sx={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
-                  textShadow: "2px 2px 8px rgba(0,0,0,0.4)",
-                }}
-              >
-                Chalz Art Drawing Classes
-              </Typography>
+  variant="h3"
+  fontWeight="bold"
+  gutterBottom
+  sx={{
+    fontFamily: "'Playfair Display', serif",
+    fontSize: { xs: "1.2rem", sm: "2rem", md: "3rem" }, // smaller in mobile
+    textShadow: "2px 2px 8px rgba(0,0,0,0.4)",
+    whiteSpace: { xs: "nowrap", md: "normal" }, // single line only in mobile
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  }}
+>
+  Chalz Art Drawing Classes
+</Typography>
+
               <Typography
                 variant="h6"
                 sx={{
@@ -101,63 +105,88 @@ const Classes = () => {
             {/* MARK:About Section */}
             <CardContent sx={{ px: 0 }}>
               <Typography
-                variant="h5"
-                fontWeight="bold"
-                gutterBottom
-                sx={{ color: darkGold, mb: 2 }}
-              >
-                <BrushIcon
-                  sx={{ fontSize: 28, mr: 1, verticalAlign: "middle" }}
-                />
-                Master the Art of Drawing
-              </Typography>
+  variant="h5"
+  fontWeight="bold"
+  gutterBottom
+  sx={{
+    color: darkGold,
+    mb: 2,
+    fontSize: { xs: "1.3rem", sm: "1.25rem", md: "1.5rem" }, // responsive font sizes
+    whiteSpace: { xs: "nowrap", md: "normal" }, // single line on mobile
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  }}
+>
+  <BrushIcon
+    sx={{
+      fontSize: { xs: 20, md: 28 }, // smaller icon on mobile
+      mr: 1,
+      verticalAlign: "middle",
+    }}
+  />
+  Master the Art of Drawing
+</Typography>
+
               <Typography
                 variant="body1"
                 paragraph
                 sx={{ mb: 4, color: "text.secondary", lineHeight: 1.7 }}
               >
-                Join Chalz Art's personalized one-on-one classes where you'll
-                develop your artistic skills in a supportive, focused
-                environment. From freehand basics to hyper-realistic portraits,
-                every student gets individual attention.
+               Join Chalz Art’s one-on-one classes to grow your skills, from freehand basics to hyper-realistic portraits, with personalized guidance.
               </Typography>
 
               {/*MARK: Skills */}
               <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-                  gap: 2,
-                  mb: 5,
-                }}
-              >
-                {[
-                  { icon: <BrushIcon />, text: "Freehand Drawing" },
-                  { icon: <PaletteIcon />, text: "Painting Techniques" },
-                  { icon: <PeopleIcon />, text: "Kids Regular Classes" },
-                  { icon: <StarIcon />, text: "Portrait & Hyper-Realistic" },
-                ].map((skill, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      p: 2,
-                      borderRadius: 2,
-                      bgcolor: lightGold,
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        boxShadow: 2,
-                        bgcolor: "#f3ebe0",
-                      },
-                    }}
-                  >
-                    <Box sx={{ color: goldColor, mr: 2 }}>{skill.icon}</Box>
-                    <Typography fontWeight="medium">{skill.text}</Typography>
-                  </Box>
-                ))}
-              </Box>
+  sx={{
+    display: "grid",
+    gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr" }, // side by side even in mobile
+    gap: { xs: 1, sm: 2 }, // smaller gap in mobile
+    mb: 5,
+  }}
+>
+  {[
+    { icon: <BrushIcon />, text: "Freehand Drawing" },
+    { icon: <PaletteIcon />, text: "Painting Techniques" },
+    { icon: <PeopleIcon />, text: "Kids Regular Classes" },
+    { icon: <StarIcon />, text: "Portrait & Hyper-Realistic" },
+  ].map((skill, index) => (
+    <Box
+      key={index}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        p: { xs: 1, sm: 2 }, // smaller padding in mobile
+        borderRadius: 2,
+        bgcolor: lightGold,
+        transition: "all 0.3s ease",
+        "&:hover": {
+          transform: "translateY(-4px)",
+          boxShadow: 2,
+          bgcolor: "#f3ebe0",
+        },
+      }}
+    >
+      <Box
+        sx={{
+          color: goldColor,
+          mr: 1,
+          fontSize: { xs: "1rem", sm: "1.5rem" }, // smaller icons in mobile
+        }}
+      >
+        {skill.icon}
+      </Box>
+      <Typography
+        fontWeight="medium"
+        sx={{
+          fontSize: { xs: "0.75rem", sm: "1rem" }, // smaller text in mobile
+        }}
+      >
+        {skill.text}
+      </Typography>
+    </Box>
+  ))}
+</Box>
+
 
               
               {/* Content Grid */}
@@ -470,39 +499,46 @@ const Classes = () => {
                   Why Choose Chalz Art?
                 </Typography>
                 <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "1fr",
-                      sm: "1fr 1fr",
-                      md: "1fr 1fr 1fr",
-                    },
-                    gap: 2,
-                  }}
-                >
-                  {features.map((feature, i) => (
-                    <Box
-                      key={i}
-                      sx={{
-                        p: 2,
-                        borderRadius: 2,
-                        bgcolor: lightGold,
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          transform: "translateY(-4px)",
-                          boxShadow: 2,
-                        },
-                      }}
-                    >
-                      <Box sx={{ color: goldColor, fontSize: 30, mb: 1 }}>
-                        {feature.icon}
-                      </Box>
-                      <Typography variant="body2" fontWeight="medium">
-                        {feature.text}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
+  sx={{
+    display: "grid",
+    gridTemplateColumns: { xs: "1fr 1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" }, // 2 per row on mobile
+    gap: { xs: 1, sm: 2 }, // smaller gap in mobile
+  }}
+>
+  {features.map((feature, i) => (
+    <Box
+      key={i}
+      sx={{
+        p: { xs: 1, sm: 2 }, // smaller padding in mobile
+        borderRadius: 2,
+        bgcolor: lightGold,
+        transition: "all 0.3s ease",
+        "&:hover": {
+          transform: "translateY(-4px)",
+          boxShadow: 2,
+        },
+      }}
+    >
+      <Box
+        sx={{
+          color: goldColor,
+          fontSize: { xs: 20, sm: 30 }, // smaller icon in mobile
+          mb: 1,
+        }}
+      >
+        {feature.icon}
+      </Box>
+      <Typography
+        variant="body2"
+        fontWeight="medium"
+        sx={{ fontSize: { xs: "0.75rem", sm: "0.875rem" } }} // smaller text in mobile
+      >
+        {feature.text}
+      </Typography>
+    </Box>
+  ))}
+</Box>
+
               </Box>
 
               {/* MARK:Certificate Section */}
@@ -518,13 +554,18 @@ const Classes = () => {
                 <CertificateIcon
                   sx={{ fontSize: 50, color: goldColor, mb: 2 }}
                 />
-                <Typography
-                  variant="h6"
-                  fontWeight="bold"
-                  sx={{ color: darkGold }}
-                >
-                  Certificate of Completion
-                </Typography>
+               <Typography
+  variant="h6"
+  fontWeight="bold"
+  noWrap
+  sx={{
+    color: darkGold,
+    fontSize: { xs: "0.9rem", sm: "1rem", md: "1.25rem" }, // smaller on mobile
+  }}
+>
+  Certificate of Completion
+</Typography>
+
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   Every student receives a professional certificate after course
                   completion.
