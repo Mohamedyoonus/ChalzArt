@@ -17,19 +17,12 @@ export default defineConfig({
   ],
 
   build: {
-    rollupOptions: {
-      input: "index.html", // Entry point for SPA
-    },
-    outDir: "dist", // Default output folder
+    outDir: "dist",      // Default output folder
     assetsDir: "assets", // Folder for static assets
   },
 
-  // ✅ This is all you need for React Router / SPA fallback
   server: {
-    // Automatically handles SPA history fallback
-    historyApiFallback: true,
-    // Optional: choose your port
-    port: 5173,
+    port: 5173, // Optional: choose your port
     open: true,
   },
 
