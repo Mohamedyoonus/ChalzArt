@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import history from "connect-history-api-fallback";
 
 export default defineConfig({
   plugins: [
@@ -16,6 +15,7 @@ export default defineConfig({
       ],
     }),
   ],
+
   build: {
     rollupOptions: {
       input: "index.html", // Entry point for SPA
@@ -23,19 +23,19 @@ export default defineConfig({
     outDir: "dist", // Default output folder
     assetsDir: "assets", // Folder for static assets
   },
+
+  // ✅ This is all you need for React Router / SPA fallback
   server: {
-    middlewareMode: true,
-    setup: ({ middlewares }) => {
-      middlewares.use(
-        history({
-          verbose: true,
-        })
-      );
-    },
+    // Automatically handles SPA history fallback
+    historyApiFallback: true,
+    // Optional: choose your port
+    port: 5173,
+    open: true,
   },
+
   resolve: {
     alias: {
-      "@": "/src", // Optional: Alias for src folder
+      "@": "/src", // Alias for src folder
     },
   },
 });

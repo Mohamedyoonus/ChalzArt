@@ -25,6 +25,7 @@ import {
   WorkspacePremium as CertificateIcon,
   FormatQuote as QuoteIcon,
 } from "@mui/icons-material";
+import { motion } from "framer-motion";
 
 const Classes = () => {
   const goldColor = "#B88746";
@@ -58,49 +59,60 @@ const Classes = () => {
             }}
           >
             {/* MARK:Hero Section */}
-            <Box
-              sx={{
-                mb: 5,
-                textAlign: "center",
-                backgroundImage:
-                  "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                borderRadius: 3,
-                p: { xs: 4, md: 6 },
-                color: "white",
-              }}
-            >
-              <Typography
-  variant="h3"
-  fontWeight="bold"
-  gutterBottom
-  sx={{
-    fontFamily: "'Playfair Display', serif",
-    fontSize: { xs: "1.2rem", sm: "2rem", md: "3rem" }, // smaller in mobile
-    textShadow: "2px 2px 8px rgba(0,0,0,0.4)",
-    whiteSpace: { xs: "nowrap", md: "normal" }, // single line only in mobile
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  }}
->
-  Chalz Art Drawing Classes
-</Typography>
+             <Box
+      sx={{
+        mb: 5,
+        textAlign: "center",
+        backgroundImage:
+          'linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url("/assets/classbanner.jpg")', // ✅ added dark overlay
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        borderRadius: 3,
+        p: { xs: 4, md: 8 },
+        color: "white",
+      }}
+    >
+      {/* Animated Heading */}
+      <Typography
+        component={motion.h1}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        variant="h3"
+        fontWeight="bold"
+        gutterBottom
+        sx={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: { xs: "1.2rem", sm: "2.5rem", md: "3rem" },
+          textShadow: "3px 3px 10px rgba(0,0,0,0.8)", // stronger shadow
+          whiteSpace: { xs: "nowrap", md: "normal" },
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        Chalz Art Drawing Classes
+      </Typography>
 
-              <Typography
-                variant="h6"
-                sx={{
-                  maxWidth: 700,
-                  mx: "auto",
-                  fontStyle: "italic",
-                  fontSize: { xs: "0.9rem", sm: "1rem", md: "1.25rem" },
-                  textShadow: "1px 1px 6px rgba(0,0,0,0.5)",
-                }}
-              >
-                Learn Freehand, Portrait, and Hyper-Realistic Drawing in a
-                peaceful offline environment!
-              </Typography>
-            </Box>
+      {/* Animated Subheading */}
+      <Typography
+        component={motion.p}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.2 }}
+        variant="h6"
+        sx={{
+          maxWidth: 700,
+          mx: "auto",
+          fontStyle: "italic",
+          fontSize: { xs: "0.8rem", sm: "1.2rem", md: "1.5rem" },
+          textShadow: "2px 2px 8px rgba(0,0,0,0.8)", // stronger shadow
+          lineHeight: 1.6,
+        }}
+      >
+        Learn Freehand, Portrait, and Hyper-Realistic Drawing in a peaceful
+        offline environment!
+      </Typography>
+    </Box>
 
             {/* MARK:About Section */}
             <CardContent sx={{ px: 0 }}>
