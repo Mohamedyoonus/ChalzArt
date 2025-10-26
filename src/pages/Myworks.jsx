@@ -3,7 +3,6 @@ import {
   Box,
   Typography,
   Card,
-  CardMedia,
   Modal,
   IconButton,
   Fade,
@@ -27,8 +26,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-const themeColor = "#0f0f0f";
-const highlightColor = "#D4AF37";
+const highlightColor = "#B88746";
 
 const galleries = {
   "Custom Portraits": {
@@ -56,7 +54,7 @@ const galleries = {
       src: `/assets/mural/img${i + 1}.jpg`,
     })),
   },
-  "Shoe Paint ": {
+  "Shoe Paint": {
     images: Array.from({ length: 8 }, (_, i) => ({
       src: `/assets/shoepaint/img${i + 1}.jpg`,
     })),
@@ -99,14 +97,12 @@ const MyWorks = () => {
   const navigateImages = (direction) => {
     const currentGallery = galleries[selectedImage.galleryName].images;
     let newIndex;
-
     if (direction === "prev") {
       newIndex =
         (currentImageIndex - 1 + currentGallery.length) % currentGallery.length;
     } else {
       newIndex = (currentImageIndex + 1) % currentGallery.length;
     }
-
     setSelectedImage({
       ...currentGallery[newIndex],
       galleryName: selectedImage.galleryName,
@@ -117,11 +113,9 @@ const MyWorks = () => {
   const handleFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleFilterClose = () => {
     setAnchorEl(null);
   };
-
   const handleFilterSelect = (galleryName) => {
     setSelectedGallery(galleryName);
     setAnchorEl(null);
@@ -137,51 +131,30 @@ const MyWorks = () => {
   return (
     <Box
       sx={{
-        pt: { xs: 6, md: 10 },
-        pb: 5,
-        px: { xs: 2, md: 8 },
-        background: "white",
-        color: "white",
+        pt: { xs: 2, md: 3 }, // removed extra top space
+        pb: 6,
+        px: { xs: 2, md: 6 },
+        bgcolor: "#fff",
+        color: "#222",
         minHeight: "100vh",
       }}
     >
-      {/* Hero Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <Typography
-          variant={isMobile ? "h4" : "h3"}
-          fontWeight="700"
-          textAlign="center"
-          mb={3}
-          sx={{
-            color: "#B88746",
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            fontFamily: "'Playfair Display', serif",
-            textShadow: "0px 2px 4px rgba(0,0,0,0.3)",
-          }}
-        >
-          Gallery
-        </Typography>
-      </motion.div>
-
       <Container maxWidth="lg">
+        {/* Sticky Category Bar */}
         <Box
           display="flex"
           justifyContent="center"
-          mb={5}
+          mb={4}
           sx={{
             flexWrap: "wrap",
-            gap: 2,
+            gap: 1.5,
             position: "sticky",
-            top: { xs: 56, sm: 64 },
+            top: { xs: 56, md: 70 },
             zIndex: 10,
-            py: 2,
-            bgcolor: "white",
-            backdropFilter: "blur(8px)",
+            py: 1.5,
+            bgcolor: "rgba(255,255,255,0.9)",
+            backdropFilter: "blur(10px)",
+            borderBottom: "1px solid rgba(0,0,0,0.05)",
           }}
         >
           {isMobile ? (
@@ -191,11 +164,10 @@ const MyWorks = () => {
                 onClick={handleFilterClick}
                 startIcon={<FilterListIcon />}
                 sx={{
-                  color: "#B88746",
+                  color: highlightColor,
                   borderColor: highlightColor,
                   "&:hover": {
-                    backgroundColor: "rgba(212, 175, 55, 0.1)",
-                    borderColor: highlightColor,
+                    backgroundColor: "rgba(212,175,55,0.1)",
                   },
                 }}
               >
@@ -209,10 +181,8 @@ const MyWorks = () => {
                   sx: {
                     bgcolor: "white",
                     color: "black",
-                    "& .MuiMenuItem-root": {
-                      "&:hover": {
-                        bgcolor: "rgba(212, 175, 55, 0.1)",
-                      },
+                    "& .MuiMenuItem-root:hover": {
+                      bgcolor: "rgba(212,175,55,0.1)",
                     },
                   },
                 }}
@@ -225,7 +195,7 @@ const MyWorks = () => {
                     sx={{
                       bgcolor:
                         selectedGallery === galleryName
-                          ? "rgba(212, 175, 55, 0.2)"
+                          ? "rgba(212,175,55,0.15)"
                           : "transparent",
                       fontWeight:
                         selectedGallery === galleryName ? "bold" : "normal",
@@ -246,32 +216,30 @@ const MyWorks = () => {
               >
                 <Chip
                   label={galleryName}
-                  onClick={() => {
-                    setSelectedGallery(galleryName);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
+                  onClick={() => handleFilterSelect(galleryName)}
                   sx={{
                     cursor: "pointer",
                     backgroundColor:
                       selectedGallery === galleryName
                         ? highlightColor
-                        : "#1e1e1e",
-                    color: selectedGallery === galleryName ? "#000" : "white",
+                        : "transparent",
+                    border: `1px solid ${highlightColor}`,
+                    color:
+                      selectedGallery === galleryName ? "#000" : highlightColor,
                     fontWeight:
                       selectedGallery === galleryName ? "bold" : "normal",
                     "&:hover": {
                       backgroundColor: highlightColor,
                       color: "#000",
                     },
-                    transition: "all 0.3s ease",
-                    fontSize: isMobile ? "0.8rem" : "0.9rem",
+                    fontSize: "0.9rem",
                     px: 1,
                     height: "auto",
-                    borderRadius: "12px",
+                    borderRadius: "10px",
                     padding: "6px 12px",
                     boxShadow:
                       selectedGallery === galleryName
-                        ? "0 4px 10px rgba(0,0,0,0.3)"
+                        ? "0 3px 10px rgba(0,0,0,0.1)"
                         : "none",
                   }}
                 />
@@ -280,117 +248,65 @@ const MyWorks = () => {
           )}
         </Box>
 
-        {/* Gallery Sections */}
-        <Box sx={{ mt: 4 }}>
+        {/* Gallery Grid */}
+        <Box sx={{ mt: 3 }}>
           {Object.entries(displayGalleries).map(
             ([galleryName, galleryData]) => (
-              <Box
+              <Masonry
                 key={galleryName}
-                mb={8}
-                id={galleryName.replace(/\s+/g, "-").toLowerCase()}
+                columns={{ xs: 2, sm: 2, md: 3, lg: 4 }}
+                spacing={2}
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Typography
-                    variant={isMobile ? "h6" : "h5"}
-                    fontWeight="600"
-                    textAlign="center"
-                    mb={2}
-                    sx={{
-                      textTransform: "uppercase",
-                      letterSpacing: 2,
-                      fontFamily: "'Playfair Display', serif",
-                      color: "black",
-                    }}
+                {galleryData.images.map((image, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    {galleryName}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    textAlign="center"
-                    mb={4}
-                    sx={{
-                      maxWidth: "700px",
-                      mx: "auto",
-                      color: "#aaa",
-                      fontFamily: "'Merriweather', serif",
-                    }}
-                  >
-                    {galleryData.description}
-                  </Typography>
-                </motion.div>
-
-                <Masonry
-                  columns={{
-                    xs: 2,
-                    sm: 2,
-                    md: 3,
-                    lg: selectedGallery === "All" ? 4 : 4,
-                  }}
-                  spacing={2}
-                >
-                  {galleryData.images.map((image, index) => (
-                    <motion.div
-                      key={image.id}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.5 }}
+                    <Card
+                      sx={{
+                        cursor: "pointer",
+                        background: "#fff",
+                        borderRadius: "10px",
+                        boxShadow: "0px 4px 10px rgba(0,0,0,0.08)",
+                        overflow: "hidden",
+                        "&:hover": {
+                          boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
+                        },
+                      }}
+                      onClick={() => handleOpen(image, galleryName, index)}
                     >
-                      <Card
-                        sx={{
-                          cursor: "pointer",
-                          background: "#1e1e1e",
-                          borderRadius: "12px",
-                          boxShadow: "0px 6px 18px rgba(212, 175, 55, 0.15)",
-                          overflow: "hidden",
-                          transition:
-                            "transform 0.3s ease, box-shadow 0.3s ease",
-                          "&:hover": {
-                            transform: "scale(1.03)",
-                            boxShadow: "0px 10px 20px rgba(212, 175, 55, 0.4)",
-                          },
+                      <LazyLoadImage
+                        src={image.src}
+                        alt=""
+                        effect="blur"
+                        width="100%"
+                        height="auto"
+                        style={{
+                          objectFit: "cover",
+                          transition: "opacity 0.3s ease-in-out",
+                          minHeight: "200px",
+                          backgroundColor: "#f9f9f9",
                         }}
-                        onClick={() => handleOpen(image, galleryName, index)}
-                      >
-                        <LazyLoadImage
-                          src={image.src}
-                          alt={image.title}
-                          effect="blur"
-                          width="100%"
-                          height="auto"
-                          style={{
-                            objectFit: "cover",
-                            transition: "opacity 0.3s ease-in-out",
-                            minHeight: "200px",
-                            backgroundColor: "#1e1e1e",
+                        onLoad={() => setLoading(false)}
+                      />
+                      {loading && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "200px",
                           }}
-                          onLoad={() => setLoading(false)}
-                        />
-                        {loading && (
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              height: "200px",
-                            }}
-                          >
-                            <CircularProgress sx={{ color: highlightColor }} />
-                          </Box>
-                        )}
-                      </Card>
-                    </motion.div>
-                  ))}
-                </Masonry>
-              </Box>
-            ),
+                        >
+                          <CircularProgress sx={{ color: highlightColor }} />
+                        </Box>
+                      )}
+                    </Card>
+                  </motion.div>
+                ))}
+              </Masonry>
+            )
           )}
         </Box>
 
@@ -410,7 +326,7 @@ const MyWorks = () => {
                 left: 0,
                 width: "100vw",
                 height: "100vh",
-                bgcolor: "rgba(0,0,0,0.8)",
+                bgcolor: "rgba(0,0,0,0.9)",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -419,7 +335,7 @@ const MyWorks = () => {
                 overflow: "hidden",
               }}
             >
-              {/* Navigation Arrows */}
+              {/* Arrows */}
               <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
@@ -428,13 +344,12 @@ const MyWorks = () => {
                 sx={{
                   position: "absolute",
                   left: { xs: 10, md: 40 },
-                  color: "#D4AF37",
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  color: highlightColor,
+                  backgroundColor: "rgba(255,255,255,0.1)",
                   backdropFilter: "blur(5px)",
-                  border: "1px solid rgba(212, 175, 55, 0.4)",
-                  transition: "all 0.3s ease",
+                  border: "1px solid rgba(212,175,55,0.3)",
                   "&:hover": {
-                    backgroundColor: "rgba(212, 175, 55, 0.25)",
+                    backgroundColor: "rgba(212,175,55,0.2)",
                     transform: "scale(1.1)",
                   },
                   zIndex: 10,
@@ -452,13 +367,12 @@ const MyWorks = () => {
                 sx={{
                   position: "absolute",
                   right: { xs: 10, md: 40 },
-                  color: "#D4AF37",
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  color: highlightColor,
+                  backgroundColor: "rgba(255,255,255,0.1)",
                   backdropFilter: "blur(5px)",
-                  border: "1px solid rgba(212, 175, 55, 0.4)",
-                  transition: "all 0.3s ease",
+                  border: "1px solid rgba(212,175,55,0.3)",
                   "&:hover": {
-                    backgroundColor: "rgba(212, 175, 55, 0.25)",
+                    backgroundColor: "rgba(212,175,55,0.2)",
                     transform: "scale(1.1)",
                   },
                   zIndex: 10,
@@ -470,65 +384,43 @@ const MyWorks = () => {
 
               {/* Close Button */}
               <IconButton
+                onClick={handleClose}
                 sx={{
                   position: "absolute",
                   top: 30,
                   right: 30,
-                  color: "#D4AF37",
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  backdropFilter: "blur(5px)",
-                  border: "1px solid rgba(212, 175, 55, 0.4)",
-                  transition: "all 0.3s ease",
+                  color: highlightColor,
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  border: "1px solid rgba(212,175,55,0.3)",
                   "&:hover": {
-                    backgroundColor: "rgba(212, 175, 55, 0.25)",
+                    backgroundColor: "rgba(212,175,55,0.25)",
                     transform: "rotate(90deg) scale(1.1)",
                   },
                   zIndex: 10,
                   p: 2,
                 }}
-                onClick={handleClose}
               >
                 <CloseIcon fontSize="small" />
               </IconButton>
 
-              {/* Image and Details */}
+              {/* Image */}
               {selectedImage && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: { xs: "column", md: "row" },
-                    alignItems: "center",
-                    maxWidth: "90vw",
+                <motion.img
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  src={selectedImage.src}
+                  alt=""
+                  style={{
+                    maxWidth: "95%",
                     maxHeight: "90vh",
-                    gap: { xs: 2, md: 4 },
+                    objectFit: "contain",
+                    borderRadius: "12px",
+                    boxShadow:
+                      "0px 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212,175,55,0.4)",
+                    border: "2px solid rgba(212,175,55,0.4)",
                   }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <img
-                      src={selectedImage.src}
-                      alt={selectedImage.title}
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "80vh",
-                        objectFit: "contain",
-                        borderRadius: "12px",
-                        boxShadow:
-                          "0px 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.4)",
-                        border: "2px solid rgba(212, 175, 55, 0.4)",
-                      }}
-                    />
-                  </motion.div>
-                </Box>
+                />
               )}
             </Box>
           </Fade>
