@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { HeadProvider, Title, Meta, Link } from "react-head";
+import { useEffect } from "react";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -10,114 +11,100 @@ import Classes from "./pages/Classes";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
+// 🧭 Scroll to top on route change (SEO + UX)
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
+  return null;
+};
+
+// 🌐 Centralized SEO meta data for each route
+const seoData = {
+  "/": {
+    title: "Home | Chalz Art - Custom Portraits & Hand-Painted Shoes",
+    description:
+      "Discover Chalz Art's creative world — custom portraits, hand-painted shoes, T-shirt designs, and live sketches. Art made personal.",
+    keywords:
+      "chalz art, custom portrait, hand painted shoes, t-shirt art, live sketch, artist in Tamil Nadu",
+    canonical: "https://www.chalzart.in/",
+  },
+  "/about": {
+    title: "About | Chalz Art - Artist Profile & Vision",
+    description:
+      "Learn about Chalz Art — the artist behind custom portraits, shoe paints, and live sketches, spreading creativity across Tamil Nadu.",
+    keywords: "chalz art about, artist bio, creative journey, art portfolio, art vision",
+    canonical: "https://www.chalzart.in/about",
+  },
+  "/myworks": {
+    title: "Gallery | Chalz Art - Shoe Paints, Portraits & T-Shirt Designs",
+    description:
+      "Browse Chalz Art’s art gallery featuring shoe paintings, custom portraits, T-shirt art, and live sketches. Creativity in every stroke.",
+    keywords:
+      "chalz art gallery, art collection, shoe paint gallery, custom portrait samples, art showcase",
+    canonical: "https://www.chalzart.in/myworks",
+  },
+  "/customize": {
+    title: "Customize | Chalz Art - Personalize Your Artwork",
+    description:
+      "Customize your dream artwork — portraits, shoes, or T-shirts — with Chalz Art. Choose your style and theme for a one-of-a-kind creation.",
+    keywords:
+      "custom artwork, personalize art, shoe design, t-shirt painting, portrait customization",
+    canonical: "https://www.chalzart.in/customize",
+  },
+  "/classes": {
+    title: "Art Classes | Chalz Art - Learn to Create",
+    description:
+      "Join Chalz Art’s art classes to master sketching, painting, and creative design. Learn with hands-on art sessions and mentorship.",
+    keywords:
+      "art classes, drawing lessons, painting workshops, art learning, sketching training",
+    canonical: "https://www.chalzart.in/classes",
+  },
+  "/contact": {
+    title: "Contact | Chalz Art - Get in Touch",
+    description:
+      "Get in touch with Chalz Art for custom artwork, commissions, or art classes. Let’s bring your creative ideas to life!",
+    keywords:
+      "contact chalz art, book custom portrait, commission art, art classes inquiry, artist contact",
+    canonical: "https://www.chalzart.in/contact",
+  },
+};
+
+// 🧠 Dynamic SEO component
+const SEO = ({ path }) => {
+  const data = seoData[path] || seoData["/"];
+  return (
+    <>
+      <Title>{data.title}</Title>
+      <Meta name="description" content={data.description} />
+      <Meta name="keywords" content={data.keywords} />
+      <Link rel="canonical" href={data.canonical} />
+      <Meta property="og:title" content={data.title} />
+      <Meta property="og:description" content={data.description} />
+      <Meta property="og:url" content={data.canonical} />
+      <Meta property="og:type" content="website" />
+      <Meta name="twitter:card" content="summary_large_image" />
+      <Meta name="twitter:title" content={data.title} />
+      <Meta name="twitter:description" content={data.description} />
+    </>
+  );
+};
+
 function App() {
   return (
     <HeadProvider>
       <Router>
-        {/* Global site-wide meta tags */}
-        <Title>Chalz Art | Custom Portraits, Shoe Paints & Live Sketches</Title>
-        <Meta
-          name="description"
-          content="Chalz Art offers custom portraits, hand-painted shoes, and live sketch artworks. Explore unique art designs and book your custom creation today!"
-        />
-        <Meta
-          name="keywords"
-          content="chalz art, custom portrait, shoe paint, live sketch, t-shirt art, artist in Tamil Nadu"
-        />
-        <Link rel="canonical" href="https://www.chalzart.in" />
-
+        <ScrollToTop />
         <Navbar />
 
         <Routes>
-          {/* 🏠 Home Page */}
-          <Route
-            path="/"
-            element={
-              <>
-                <Title>Home | Chalz Art - Custom Portraits & Hand-Painted Shoes</Title>
-                <Meta
-                  name="description"
-                  content="Discover Chalz Art's collection of custom portraits, hand-painted shoes, and T-shirt designs. Art made personal."
-                />
-                <Home />
-              </>
-            }
-          />
-
-          {/* 👩‍🎨 About Page */}
-          <Route
-            path="/about"
-            element={
-              <>
-                <Title>About | Chalz Art - Artist Profile & Vision</Title>
-                <Meta
-                  name="description"
-                  content="Learn about Chalz Art, the creative vision behind custom portraits, shoe paints, and live sketches in Tamil Nadu."
-                />
-                <About />
-              </>
-            }
-          />
-
-          {/* 🎨 My Works Page */}
-          <Route
-            path="/myworks"
-            element={
-              <>
-                <Title>Gallery | Chalz Art - Shoe Paints & Portrait Collection</Title>
-                <Meta
-                  name="description"
-                  content="Explore Chalz Art's portfolio of custom art — portraits, shoe paintings, T-shirt designs, and live sketches."
-                />
-                <Myworks />
-              </>
-            }
-          />
-
-          {/* ✍️ Customize Page */}
-          <Route
-            path="/customize"
-            element={
-              <>
-                <Title>Customize | Chalz Art - Personalize Your Artwork</Title>
-                <Meta
-                  name="description"
-                  content="Customize your artwork — portraits, shoes, or T-shirts — at Chalz Art. Choose your theme and design."
-                />
-                <Customize />
-              </>
-            }
-          />
-
-          {/* 🎓 Classes Page */}
-          <Route
-            path="/classes"
-            element={
-              <>
-                <Title>Art Classes | Chalz Art - Learn and Create</Title>
-                <Meta
-                  name="description"
-                  content="Join Chalz Art's art classes to learn portrait sketching, painting, and creative design techniques."
-                />
-                <Classes />
-              </>
-            }
-          />
-
-          {/* 📞 Contact Page */}
-          <Route
-            path="/contact"
-            element={
-              <>
-                <Title>Contact | Chalz Art - Get in Touch</Title>
-                <Meta
-                  name="description"
-                  content="Contact Chalz Art for booking custom art, inquiries, or collaborations. Reach out today!"
-                />
-                <Contact />
-              </>
-            }
-          />
+          <Route path="/" element={<><SEO path="/" /><Home /></>} />
+          <Route path="/about" element={<><SEO path="/about" /><About /></>} />
+          <Route path="/myworks" element={<><SEO path="/myworks" /><Myworks /></>} />
+          <Route path="/customize" element={<><SEO path="/customize" /><Customize /></>} />
+          <Route path="/classes" element={<><SEO path="/classes" /><Classes /></>} />
+          <Route path="/contact" element={<><SEO path="/contact" /><Contact /></>} />
         </Routes>
 
         <Footer />
