@@ -21,9 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+import { motion, AnimatePresence } from "framer-motion";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 const highlightColor = "#B88746";
@@ -66,7 +64,6 @@ const MyWorks = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedGallery, setSelectedGallery] = useState("All");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const location = useLocation();
   const theme = useTheme();
@@ -96,13 +93,12 @@ const MyWorks = () => {
 
   const navigateImages = (direction) => {
     const currentGallery = galleries[selectedImage.galleryName].images;
-    let newIndex;
-    if (direction === "prev") {
-      newIndex =
-        (currentImageIndex - 1 + currentGallery.length) % currentGallery.length;
-    } else {
-      newIndex = (currentImageIndex + 1) % currentGallery.length;
-    }
+    const newIndex =
+      direction === "prev"
+        ? (currentImageIndex - 1 + currentGallery.length) %
+          currentGallery.length
+        : (currentImageIndex + 1) % currentGallery.length;
+
     setSelectedImage({
       ...currentGallery[newIndex],
       galleryName: selectedImage.galleryName,
@@ -131,7 +127,7 @@ const MyWorks = () => {
   return (
     <Box
       sx={{
-        pt: { xs: 2, md: 3 }, // removed extra top space
+        pt: { xs: 2, md: 3 },
         pb: 6,
         px: { xs: 2, md: 6 },
         bgcolor: "#fff",
@@ -152,8 +148,7 @@ const MyWorks = () => {
             top: { xs: 56, md: 70 },
             zIndex: 10,
             py: 1.5,
-            bgcolor: "rgba(255,255,255,0.9)",
-            backdropFilter: "blur(10px)",
+            bgcolor: "rgba(255,255,255,0.95)",
             borderBottom: "1px solid rgba(0,0,0,0.05)",
           }}
         >
@@ -166,9 +161,7 @@ const MyWorks = () => {
                 sx={{
                   color: highlightColor,
                   borderColor: highlightColor,
-                  "&:hover": {
-                    backgroundColor: "rgba(212,175,55,0.1)",
-                  },
+                  "&:hover": { backgroundColor: "rgba(212,175,55,0.1)" },
                 }}
               >
                 {selectedGallery === "All" ? "All Categories" : selectedGallery}
@@ -212,7 +205,7 @@ const MyWorks = () => {
                 key={galleryName}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
               >
                 <Chip
                   label={galleryName}
@@ -261,7 +254,7 @@ const MyWorks = () => {
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                   >
                     <Card
                       sx={{
@@ -270,38 +263,27 @@ const MyWorks = () => {
                         borderRadius: "10px",
                         boxShadow: "0px 4px 10px rgba(0,0,0,0.08)",
                         overflow: "hidden",
+                        transition: "all 0.4s ease",
                         "&:hover": {
-                          boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
+                          boxShadow: "0px 10px 25px rgba(0,0,0,0.15)",
                         },
                       }}
                       onClick={() => handleOpen(image, galleryName, index)}
                     >
-                      <LazyLoadImage
+                      <motion.img
                         src={image.src}
                         alt=""
-                        effect="blur"
-                        width="100%"
-                        height="auto"
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
                         style={{
+                          width: "100%",
+                          height: "auto",
                           objectFit: "cover",
-                          transition: "opacity 0.3s ease-in-out",
                           minHeight: "200px",
-                          backgroundColor: "#f9f9f9",
+                          display: "block",
                         }}
-                        onLoad={() => setLoading(false)}
                       />
-                      {loading && (
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            height: "200px",
-                          }}
-                        >
-                          <CircularProgress sx={{ color: highlightColor }} />
-                        </Box>
-                      )}
                     </Card>
                   </motion.div>
                 ))}
@@ -316,7 +298,7 @@ const MyWorks = () => {
           onClose={handleClose}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
-          slotProps={{ backdrop: { timeout: 500 } }}
+          slotProps={{ backdrop: { timeout: 400 } }}
         >
           <Fade in={open}>
             <Box
@@ -330,7 +312,6 @@ const MyWorks = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backdropFilter: "blur(12px)",
                 zIndex: 1300,
                 overflow: "hidden",
               }}
@@ -346,7 +327,6 @@ const MyWorks = () => {
                   left: { xs: 10, md: 40 },
                   color: highlightColor,
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  backdropFilter: "blur(5px)",
                   border: "1px solid rgba(212,175,55,0.3)",
                   "&:hover": {
                     backgroundColor: "rgba(212,175,55,0.2)",
@@ -369,7 +349,6 @@ const MyWorks = () => {
                   right: { xs: 10, md: 40 },
                   color: highlightColor,
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  backdropFilter: "blur(5px)",
                   border: "1px solid rgba(212,175,55,0.3)",
                   "&:hover": {
                     backgroundColor: "rgba(212,175,55,0.2)",
@@ -404,24 +383,28 @@ const MyWorks = () => {
               </IconButton>
 
               {/* Image */}
-              {selectedImage && (
-                <motion.img
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4 }}
-                  src={selectedImage.src}
-                  alt=""
-                  style={{
-                    maxWidth: "95%",
-                    maxHeight: "90vh",
-                    objectFit: "contain",
-                    borderRadius: "12px",
-                    boxShadow:
-                      "0px 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212,175,55,0.4)",
-                    border: "2px solid rgba(212,175,55,0.4)",
-                  }}
-                />
-              )}
+              <AnimatePresence mode="wait">
+                {selectedImage && (
+                  <motion.img
+                    key={selectedImage.src}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    src={selectedImage.src}
+                    alt=""
+                    style={{
+                      maxWidth: "95%",
+                      maxHeight: "90vh",
+                      objectFit: "contain",
+                      borderRadius: "12px",
+                      boxShadow:
+                        "0px 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212,175,55,0.4)",
+                      border: "2px solid rgba(212,175,55,0.4)",
+                    }}
+                  />
+                )}
+              </AnimatePresence>
             </Box>
           </Fade>
         </Modal>
