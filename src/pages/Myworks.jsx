@@ -59,6 +59,32 @@ const galleries = {
   },
 };
 
+// Helper function to convert gallery names to IDs
+const getGalleryId = (galleryName) => {
+  const idMap = {
+    "Custom Portraits": "customportraits",
+    "Live Sketches": "livesketches", 
+    "T-Shirt Designs": "tshirtdesigns",
+    "Oil Paint": "oilpaintings",
+    "Mural Paint": "muralpaintings",
+    "Shoe Paint": "shoepaintings"
+  };
+  return idMap[galleryName] || galleryName.toLowerCase().replace(/\s+/g, '');
+};
+
+// Helper function to get gallery name from hash
+const getGalleryFromHash = (hash) => {
+  const hashMap = {
+    "customportraits": "Custom Portraits",
+    "livesketches": "Live Sketches",
+    "tshirtdesigns": "T-Shirt Designs", 
+    "oilpaintings": "Oil Paint",
+    "muralpaintings": "Mural Paint",
+    "shoepaintings": "Shoe Paint"
+  };
+  return hashMap[hash] || "All";
+};
+
 const MyWorks = () => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -71,11 +97,21 @@ const MyWorks = () => {
 
   useEffect(() => {
     if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
+      const elementId = location.hash.substring(1);
+      const element = document.getElementById(elementId);
+      
       if (element) {
+        // Set the selected gallery filter based on hash
+        const galleryToSelect = getGalleryFromHash(elementId);
+        setSelectedGallery(galleryToSelect);
+        
+        // Scroll to element with delay to ensure DOM is updated
         setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 300);
+          element.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "start" 
+          });
+        }, 800);
       }
     }
   }, [location]);
@@ -109,13 +145,28 @@ const MyWorks = () => {
   const handleFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleFilterClose = () => {
     setAnchorEl(null);
   };
+
   const handleFilterSelect = (galleryName) => {
     setSelectedGallery(galleryName);
     setAnchorEl(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    
+    // If selecting a specific gallery, scroll to top of gallery section
+    if (galleryName !== "All") {
+      const galleryId = getGalleryId(galleryName);
+      const element = document.getElementById(galleryId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+    } else {
+      // If selecting "All", scroll to top of page
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const galleryNames = Object.keys(galleries);
@@ -136,6 +187,40 @@ const MyWorks = () => {
       }}
     >
       <Container maxWidth="lg">
+        {/* Page Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Typography
+            variant="h3"
+            fontWeight="900"
+            sx={{
+              fontFamily: "'Cinzel', serif",
+              color: "#B88746",
+              letterSpacing: "1.5px",
+              textTransform: "uppercase",
+              textAlign: "center",
+              textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+              position: "relative",
+              mb: 4,
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                width: "80px",
+                height: "2px",
+                backgroundColor: "#A8743D",
+                bottom: -15,
+                left: "50%",
+                transform: "translateX(-50%)",
+              },
+            }}
+          >
+            My Works
+          </Typography>
+        </motion.div>
+
         {/* Sticky Category Bar */}
         <Box
           display="flex"
@@ -150,6 +235,7 @@ const MyWorks = () => {
             py: 1.5,
             bgcolor: "rgba(255,255,255,0.95)",
             borderBottom: "1px solid rgba(0,0,0,0.05)",
+            backdropFilter: "blur(8px)",
           }}
         >
           {isMobile ? (
@@ -161,7 +247,10 @@ const MyWorks = () => {
                 sx={{
                   color: highlightColor,
                   borderColor: highlightColor,
-                  "&:hover": { backgroundColor: "rgba(212,175,55,0.1)" },
+                  "&:hover": { 
+                    backgroundColor: "rgba(184, 135, 70, 0.1)",
+                    borderColor: highlightColor,
+                  },
                 }}
               >
                 {selectedGallery === "All" ? "All Categories" : selectedGallery}
@@ -175,7 +264,7 @@ const MyWorks = () => {
                     bgcolor: "white",
                     color: "black",
                     "& .MuiMenuItem-root:hover": {
-                      bgcolor: "rgba(212,175,55,0.1)",
+                      bgcolor: "rgba(184, 135, 70, 0.1)",
                     },
                   },
                 }}
@@ -188,10 +277,11 @@ const MyWorks = () => {
                     sx={{
                       bgcolor:
                         selectedGallery === galleryName
-                          ? "rgba(212,175,55,0.15)"
+                          ? "rgba(184, 135, 70, 0.15)"
                           : "transparent",
                       fontWeight:
                         selectedGallery === galleryName ? "bold" : "normal",
+                      color: selectedGallery === galleryName ? highlightColor : "inherit",
                     }}
                   >
                     {galleryName}
@@ -234,6 +324,7 @@ const MyWorks = () => {
                       selectedGallery === galleryName
                         ? "0 3px 10px rgba(0,0,0,0.1)"
                         : "none",
+                    transition: "all 0.3s ease",
                   }}
                 />
               </motion.div>
@@ -245,52 +336,100 @@ const MyWorks = () => {
         <Box sx={{ mt: 3 }}>
           {Object.entries(displayGalleries).map(
             ([galleryName, galleryData]) => (
-              <Masonry
-                key={galleryName}
-                columns={{ xs: 2, sm: 2, md: 3, lg: 4 }}
-                spacing={2}
+              <Box 
+                key={galleryName} 
+                id={getGalleryId(galleryName)}
+                sx={{ 
+                  mb: 6,
+                  scrollMarginTop: "100px" // Add scroll margin for sticky header
+                }}
               >
-                {galleryData.images.map((image, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
+                {/* Gallery Section Title */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Typography 
+                    variant="h4" 
+                    sx={{ 
+                      mb: 3, 
+                      fontFamily: "'Cinzel', serif",
+                      color: highlightColor,
+                      textAlign: "center",
+                      fontWeight: "600",
+                      textTransform: "uppercase",
+                      letterSpacing: "1px"
+                    }}
                   >
-                    <Card
-                      sx={{
-                        cursor: "pointer",
-                        background: "#fff",
-                        borderRadius: "10px",
-                        boxShadow: "0px 4px 10px rgba(0,0,0,0.08)",
-                        overflow: "hidden",
-                        transition: "all 0.4s ease",
-                        "&:hover": {
-                          boxShadow: "0px 10px 25px rgba(0,0,0,0.15)",
-                        },
-                      }}
-                      onClick={() => handleOpen(image, galleryName, index)}
+                    {galleryName}
+                  </Typography>
+                </motion.div>
+
+                <Masonry
+                  columns={{ xs: 2, sm: 2, md: 3, lg: 4 }}
+                  spacing={2}
+                >
+                  {galleryData.images.map((image, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      <motion.img
-                        src={image.src}
-                        alt=""
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          objectFit: "cover",
-                          minHeight: "200px",
-                          display: "block",
+                      <Card
+                        sx={{
+                          cursor: "pointer",
+                          background: "#fff",
+                          borderRadius: "10px",
+                          boxShadow: "0px 4px 10px rgba(0,0,0,0.08)",
+                          overflow: "hidden",
+                          transition: "all 0.4s ease",
+                          "&:hover": {
+                            boxShadow: "0px 10px 25px rgba(0,0,0,0.15)",
+                          },
                         }}
-                      />
-                    </Card>
-                  </motion.div>
-                ))}
-              </Masonry>
+                        onClick={() => handleOpen(image, galleryName, index)}
+                      >
+                        <motion.img
+                          src={image.src}
+                          alt={`${galleryName} ${index + 1}`}
+                          initial={{ opacity: 0, scale: 0.98 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            objectFit: "cover",
+                            minHeight: "200px",
+                            display: "block",
+                          }}
+                          onError={(e) => {
+                            e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik04MCA2MEgxMjBWMTAwSDEyMFYxNDBIODBWMTQwSDEyMFYxMDBIODBWNjBaIiBmaWxsPSIjQ0RDRENEIi8+Cjwvc3ZnPgo=";
+                          }}
+                        />
+                      </Card>
+                    </motion.div>
+                  ))}
+                </Masonry>
+              </Box>
             )
           )}
         </Box>
+
+        {/* Empty State */}
+        {Object.keys(displayGalleries).length === 0 && (
+          <Box
+            sx={{
+              textAlign: "center",
+              py: 10,
+              color: "#666",
+            }}
+          >
+            <Typography variant="h6">
+              No images found for the selected category.
+            </Typography>
+          </Box>
+        )}
 
         {/* Fullscreen Modal */}
         <Modal
@@ -298,7 +437,14 @@ const MyWorks = () => {
           onClose={handleClose}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
-          slotProps={{ backdrop: { timeout: 400 } }}
+          slotProps={{ 
+            backdrop: { 
+              timeout: 400,
+              sx: {
+                backgroundColor: "rgba(0,0,0,0.95)"
+              }
+            } 
+          }}
         >
           <Fade in={open}>
             <Box
@@ -308,7 +454,7 @@ const MyWorks = () => {
                 left: 0,
                 width: "100vw",
                 height: "100vh",
-                bgcolor: "rgba(0,0,0,0.9)",
+                bgcolor: "rgba(0,0,0,0.95)",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -316,7 +462,7 @@ const MyWorks = () => {
                 overflow: "hidden",
               }}
             >
-              {/* Arrows */}
+              {/* Navigation Arrows */}
               <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
@@ -327,13 +473,14 @@ const MyWorks = () => {
                   left: { xs: 10, md: 40 },
                   color: highlightColor,
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  border: "1px solid rgba(212,175,55,0.3)",
+                  border: "1px solid rgba(184, 135, 70, 0.3)",
                   "&:hover": {
-                    backgroundColor: "rgba(212,175,55,0.2)",
+                    backgroundColor: "rgba(184, 135, 70, 0.2)",
                     transform: "scale(1.1)",
                   },
                   zIndex: 10,
                   p: 2,
+                  transition: "all 0.3s ease",
                 }}
               >
                 <ArrowBackIosNewIcon fontSize="small" />
@@ -349,13 +496,14 @@ const MyWorks = () => {
                   right: { xs: 10, md: 40 },
                   color: highlightColor,
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  border: "1px solid rgba(212,175,55,0.3)",
+                  border: "1px solid rgba(184, 135, 70, 0.3)",
                   "&:hover": {
-                    backgroundColor: "rgba(212,175,55,0.2)",
+                    backgroundColor: "rgba(184, 135, 70, 0.2)",
                     transform: "scale(1.1)",
                   },
                   zIndex: 10,
                   p: 2,
+                  transition: "all 0.3s ease",
                 }}
               >
                 <ArrowForwardIosIcon fontSize="small" />
@@ -366,21 +514,42 @@ const MyWorks = () => {
                 onClick={handleClose}
                 sx={{
                   position: "absolute",
-                  top: 30,
-                  right: 30,
+                  top: { xs: 10, md: 30 },
+                  right: { xs: 10, md: 30 },
                   color: highlightColor,
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  border: "1px solid rgba(212,175,55,0.3)",
+                  border: "1px solid rgba(184, 135, 70, 0.3)",
                   "&:hover": {
-                    backgroundColor: "rgba(212,175,55,0.25)",
+                    backgroundColor: "rgba(184, 135, 70, 0.25)",
                     transform: "rotate(90deg) scale(1.1)",
                   },
                   zIndex: 10,
                   p: 2,
+                  transition: "all 0.3s ease",
                 }}
               >
                 <CloseIcon fontSize="small" />
               </IconButton>
+
+              {/* Gallery Info */}
+              {selectedImage && (
+                <Typography
+                  sx={{
+                    position: "absolute",
+                    top: { xs: 20, md: 30 },
+                    left: { xs: 20, md: 30 },
+                    color: highlightColor,
+                    fontSize: { xs: "0.9rem", md: "1.1rem" },
+                    fontWeight: "500",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    padding: "4px 12px",
+                    borderRadius: "20px",
+                    zIndex: 10,
+                  }}
+                >
+                  {selectedImage.galleryName} • {currentImageIndex + 1} / {galleries[selectedImage.galleryName].images.length}
+                </Typography>
+              )}
 
               {/* Image */}
               <AnimatePresence mode="wait">
@@ -399,8 +568,11 @@ const MyWorks = () => {
                       objectFit: "contain",
                       borderRadius: "12px",
                       boxShadow:
-                        "0px 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212,175,55,0.4)",
-                      border: "2px solid rgba(212,175,55,0.4)",
+                        "0px 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(184, 135, 70, 0.4)",
+                      border: "2px solid rgba(184, 135, 70, 0.4)",
+                    }}
+                    onError={(e) => {
+                      e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMzMzIi8+CjxwYXRoIGQ9Ik0xNjAgMTYwSDI0MFYyNDBIMjQwVjMyMEgxNjBWMzIwSDI0MFYyNDBIMTYwVjE2MFoiIGZpbGw9IiM2NjYiLz4KPC9zdmc+Cg==";
                     }}
                   />
                 )}

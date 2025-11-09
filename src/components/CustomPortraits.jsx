@@ -118,23 +118,6 @@ const CustomPortrait = () => {
       </motion.div>
     ));
 
-  const words = ["Custom", "Portraits"];
-
-  const textVariants = {
-    initial: { y: 20, opacity: 0 },
-    animate: (i) => ({
-      y: [0, -10, 0],
-      opacity: 1,
-      transition: {
-        delay: i * 0.2,
-        duration: 1.5,
-        repeat: Infinity,
-        repeatType: "loop",
-        ease: "easeInOut",
-      },
-    }),
-  };
-
   return (
     <Box
       sx={{
@@ -194,7 +177,6 @@ const CustomPortrait = () => {
           mb: 2,
         }}
       >
-        {/* Top Row */}
         <Box
           sx={{
             display: "flex",
@@ -207,7 +189,6 @@ const CustomPortrait = () => {
           {renderCards(top)}
         </Box>
 
-        {/* Bottom Row */}
         {bottom.length > 0 && (
           <Box
             sx={{
@@ -232,11 +213,8 @@ const CustomPortrait = () => {
         flexWrap="nowrap"
         gap={{ xs: 1.5, sm: 2 }}
         mt={{ xs: 3, sm: 4 }}
-        px={{ xs: 1.5, sm: 0 }} 
-        sx={{
-          width: "100%",
-          textAlign: "center",
-        }}
+        px={{ xs: 1.5, sm: 0 }}
+        sx={{ width: "100%", textAlign: "center" }}
       >
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
@@ -312,7 +290,7 @@ const CustomPortrait = () => {
             left: 0,
             width: "100vw",
             height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.95)",
+            backgroundColor: "rgba(0, 0, 0, 0.95)", // sharp, no blur
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -340,9 +318,7 @@ const CustomPortrait = () => {
               cursor: "pointer",
               zIndex: 1400,
               boxShadow: "0px 4px 10px rgba(0,0,0,0.5)",
-              "&:hover": {
-                backgroundColor: "#A8743D",
-              },
+              "&:hover": { backgroundColor: "#A8743D" },
             }}
           >
             ✕
