@@ -389,7 +389,7 @@ const Customize = () => {
       label: "📅 Live Sketch",
       content: (
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid  xs={12} sm={4}>
             <CustomTextField
               label="Place"
               value={liveSketch.place}
@@ -397,7 +397,7 @@ const Customize = () => {
               size={isMobile ? "small" : "medium"}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid  xs={12} sm={4}>
             <CustomTextField
               label="Date"
               value={liveSketch.date}
@@ -406,7 +406,7 @@ const Customize = () => {
               size={isMobile ? "small" : "medium"}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid xs={12} sm={4}>
             <TimeSelect
               label="Time"
               value={liveSketch.time}
@@ -423,7 +423,7 @@ const Customize = () => {
       content: (
         <Grid container spacing={2}>
           {["wallSize", "surface", "location"].map((field) => (
-            <Grid item xs={12} sm={4} key={field}>
+            <Grid xs={12} sm={4} key={field}>
               <CustomTextField
                 label={field.charAt(0).toUpperCase() + field.slice(1)}
                 value={mural[field]}
@@ -599,7 +599,7 @@ const Customize = () => {
           </Typography>
           <Grid container spacing={2}>
             {["name", "email", "phone", "address"].map((field) => (
-              <Grid item xs={12} sm={6} key={field} id={field}>
+              <Grid xs={12} sm={6} key={field} id={field}>
                 <CustomTextField
                   label={`${field.charAt(0).toUpperCase() + field.slice(1)}${field === "name" || field === "phone" ? "*" : ""}`}
                   value={personalInfo[field]}

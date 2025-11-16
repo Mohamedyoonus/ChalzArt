@@ -176,122 +176,77 @@ const Banner = () => {
           Art Meets Heart
         </Typography>
 
-       <Box
-  sx={{
-    mt: 5,
-    display: "flex",
-    flexDirection: "row",
-    gap: { xs: 1.5, sm: 3 },
-    justifyContent: "center",
-    flexWrap: { xs: "nowrap", sm: "wrap" },
-    overflowX: { xs: "auto", sm: "visible" },
-    px: { xs: 1, sm: 0 },
-  }}
->
-  {[
-    { label: "Discover More", to: "/myworks" },
-    { label: "Customize Your Art", to: "/customize" },
-  ].map(({ label, to }) => (
-    <Button
-      key={label}
-      component={Link}
-      to={to}
-      variant="contained"
-      sx={{
-        backgroundColor: "#A8743D",
-        color: "white",
-        padding: { xs: "10px 24px", sm: "12px 32px" },
-        fontWeight: "600",
-        fontSize: { xs: "0.9rem", sm: "1rem" },
-        borderRadius: "30px",
-        boxShadow: "0px 8px 30px rgba(167, 109, 54, 0.6)",
-        position: "relative",
-        overflow: "hidden",
-        transition: "all 0.3s ease-in-out",
-        minWidth: "200px",
-        whiteSpace: "nowrap",
-        flexShrink: 0,
+        {/* Buttons */}
+        <Box
+          sx={{
+            mt: 5,
+            display: "flex",
+            flexDirection: "row",
+            gap: { xs: 1.5, sm: 3 },
+            justifyContent: "center",
+            flexWrap: { xs: "nowrap", sm: "wrap" },
+            overflowX: { xs: "auto", sm: "visible" },
+            px: { xs: 1, sm: 0 },
+          }}
+        >
+          {[
+            { label: "Discover More", to: "/myworks" },
+            { label: "Customize Your Art", to: "/customize" },
+          ].map(({ label, to }) => (
+            <Button
+              key={label}
+              component={Link}
+              to={to}
+              variant="contained"
+              sx={{
+                backgroundColor: "#A8743D",
+                color: "white",
+                padding: { xs: "8px 16px", sm: "12px 32px" },
+                fontWeight: "600",
+                fontSize: { xs: "0.75rem", sm: "1rem" },
+                borderRadius: "30px",
+                boxShadow: "none",
+                position: "relative",
+                overflow: "hidden",
+                transition: "all 0.3s ease-in-out",
+                minWidth: { xs: "140px", sm: "200px" },
+                whiteSpace: "nowrap",
+                flexShrink: 0,
 
-        "&:hover": {
-          backgroundColor: "white",
-          color: "#A8743D",
-          transform: "scale(1.05)",
-          boxShadow: "0px 12px 40px rgba(167, 109, 54, 0.8)",
-        },
+                "&:hover": {
+                  backgroundColor: "white",
+                  color: "#A8743D",
+                  transform: "scale(1.05)",
+                  boxShadow: "0px 12px 40px rgba(167, 109, 54, 0.8)",
+                },
 
-        "&:active": {
-          animation: `bounceShrink 0.3s ease-in-out`,
-        },
+                "&:active": {
+                  animation: `bounceShrink 0.3s ease-in-out`,
+                },
 
-        // glossy swipe
-        "&::after": {
-          content: "''",
-          position: "absolute",
-          top: 0,
-          left: "50%",
-          width: "0%",
-          height: "100%",
-          backgroundColor: "white",
-          transition: "width 0.3s ease-in-out, left 0.3s ease-in-out",
-          zIndex: 0,
-          opacity: 0.4,
-        },
-        "&:hover::after": {
-          width: "100%",
-          left: 0,
-        },
-
-        // ⚡ ELECTRIC SPARK BORDER (NO ROTATION)
-        "&::before": {
-          content: "''",
-          position: "absolute",
-          top: "-3px",
-          left: "-3px",
-          right: "-3px",
-          bottom: "-3px",
-          borderRadius: "40px",
-          padding: "3px",
-          zIndex: 0,
-          opacity: 0,
-          transition: "opacity 0.3s ease-in-out",
-          background:
-            "linear-gradient(90deg, #ffc46b, #ffefcd, #fff9e6, #ffc46b)",
-          filter: "blur(2px)",
-          animation: "electricSpark 0.25s infinite alternate ease-in-out",
-        },
-
-        "&:hover::before": {
-          opacity: 1,
-        },
-
-        // keyframes
-        "@keyframes bounceShrink": {
-          "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(0.95)" },
-          "100%": { transform: "scale(1)" },
-        },
-
-        // ⚡ tiny shake / flicker for electric effect
-        "@keyframes electricSpark": {
-          "0%": {
-            boxShadow:
-              "0 0 6px #ffdf9b, 0 0 12px #ffd27a, inset 0 0 6px #ffdf9b",
-          },
-          "100%": {
-            boxShadow:
-              "0 0 12px #ffe9b3, 0 0 22px #ffcf70, inset 0 0 10px #ffe9b3",
-          },
-        },
-      }}
-    >
-      <Box component="span" sx={{ position: "relative", zIndex: 1 }}>
-        {label}
-      </Box>
-    </Button>
-  ))}
-</Box>
-
-
+                "&::after": {
+                  content: "''",
+                  position: "absolute",
+                  top: 0,
+                  left: "50%",
+                  width: "0%",
+                  height: "100%",
+                  backgroundColor: "white",
+                  transition: "width 0.3s ease-in-out, left 0.3s ease-in-out",
+                  zIndex: 0,
+                },
+                "&:hover::after": {
+                  width: "100%",
+                  left: 0,
+                },
+              }}
+            >
+              <Box component="span" sx={{ position: "relative", zIndex: 1 }}>
+                {label}
+              </Box>
+            </Button>
+          ))}
+        </Box>
       </Box>
     </Box>
   );

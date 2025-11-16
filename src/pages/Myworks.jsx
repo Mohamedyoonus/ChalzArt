@@ -194,7 +194,7 @@ const MyWorks = () => {
           transition={{ duration: 0.6 }}
         >
           <Typography
-            variant="h3"
+            variant={isMobile ? "h4" : "h3"}
             fontWeight="900"
             sx={{
               fontFamily: "'Cinzel', serif",
@@ -205,6 +205,7 @@ const MyWorks = () => {
               textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
               position: "relative",
               mb: 4,
+              fontSize: { xs: "1.75rem", sm: "2rem", md: "3rem" },
               "&::after": {
                 content: '""',
                 position: "absolute",
@@ -228,7 +229,7 @@ const MyWorks = () => {
           mb={4}
           sx={{
             flexWrap: "wrap",
-            gap: 1.5,
+            gap: 1,
             position: "sticky",
             top: { xs: 56, md: 70 },
             zIndex: 10,
@@ -247,13 +248,18 @@ const MyWorks = () => {
                 sx={{
                   color: highlightColor,
                   borderColor: highlightColor,
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                  minWidth: "auto",
+                  px: 2,
                   "&:hover": { 
                     backgroundColor: "rgba(184, 135, 70, 0.1)",
                     borderColor: highlightColor,
                   },
                 }}
               >
-                {selectedGallery === "All" ? "All Categories" : selectedGallery}
+                {selectedGallery === "All" ? "All Categories" : 
+                 selectedGallery.length > 12 ? 
+                 `${selectedGallery.substring(0, 10)}...` : selectedGallery}
               </Button>
               <Menu
                 anchorEl={anchorEl}
@@ -282,6 +288,7 @@ const MyWorks = () => {
                       fontWeight:
                         selectedGallery === galleryName ? "bold" : "normal",
                       color: selectedGallery === galleryName ? highlightColor : "inherit",
+                      fontSize: "0.875rem",
                     }}
                   >
                     {galleryName}
@@ -315,11 +322,11 @@ const MyWorks = () => {
                       backgroundColor: highlightColor,
                       color: "#000",
                     },
-                    fontSize: "0.9rem",
+                    fontSize: { xs: "0.7rem", sm: "0.8rem", md: "0.9rem" },
                     px: 1,
                     height: "auto",
                     borderRadius: "10px",
-                    padding: "6px 12px",
+                    padding: { xs: "4px 8px", sm: "6px 12px" },
                     boxShadow:
                       selectedGallery === galleryName
                         ? "0 3px 10px rgba(0,0,0,0.1)"
@@ -351,7 +358,7 @@ const MyWorks = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <Typography 
-                    variant="h4" 
+                    variant={isMobile ? "h5" : "h4"}
                     sx={{ 
                       mb: 3, 
                       fontFamily: "'Cinzel', serif",
@@ -359,7 +366,8 @@ const MyWorks = () => {
                       textAlign: "center",
                       fontWeight: "600",
                       textTransform: "uppercase",
-                      letterSpacing: "1px"
+                      letterSpacing: "1px",
+                      fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2.125rem" }
                     }}
                   >
                     {galleryName}
@@ -479,11 +487,11 @@ const MyWorks = () => {
                     transform: "scale(1.1)",
                   },
                   zIndex: 10,
-                  p: 2,
+                  p: { xs: 1, md: 2 },
                   transition: "all 0.3s ease",
                 }}
               >
-                <ArrowBackIosNewIcon fontSize="small" />
+                <ArrowBackIosNewIcon fontSize={isMobile ? "small" : "medium"} />
               </IconButton>
 
               <IconButton
@@ -502,11 +510,11 @@ const MyWorks = () => {
                     transform: "scale(1.1)",
                   },
                   zIndex: 10,
-                  p: 2,
+                  p: { xs: 1, md: 2 },
                   transition: "all 0.3s ease",
                 }}
               >
-                <ArrowForwardIosIcon fontSize="small" />
+                <ArrowForwardIosIcon fontSize={isMobile ? "small" : "medium"} />
               </IconButton>
 
               {/* Close Button */}
@@ -524,11 +532,11 @@ const MyWorks = () => {
                     transform: "rotate(90deg) scale(1.1)",
                   },
                   zIndex: 10,
-                  p: 2,
+                  p: { xs: 1, md: 2 },
                   transition: "all 0.3s ease",
                 }}
               >
-                <CloseIcon fontSize="small" />
+                <CloseIcon fontSize={isMobile ? "small" : "medium"} />
               </IconButton>
 
               {/* Gallery Info */}
@@ -536,15 +544,19 @@ const MyWorks = () => {
                 <Typography
                   sx={{
                     position: "absolute",
-                    top: { xs: 20, md: 30 },
-                    left: { xs: 20, md: 30 },
+                    top: { xs: 15, md: 30 },
+                    left: { xs: 15, md: 30 },
                     color: highlightColor,
-                    fontSize: { xs: "0.9rem", md: "1.1rem" },
+                    fontSize: { xs: "0.75rem", sm: "0.85rem", md: "1.1rem" },
                     fontWeight: "500",
                     backgroundColor: "rgba(0,0,0,0.5)",
-                    padding: "4px 12px",
+                    padding: { xs: "3px 8px", md: "4px 12px" },
                     borderRadius: "20px",
                     zIndex: 10,
+                    maxWidth: "80%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {selectedImage.galleryName} • {currentImageIndex + 1} / {galleries[selectedImage.galleryName].images.length}

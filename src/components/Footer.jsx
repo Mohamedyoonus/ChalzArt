@@ -307,9 +307,9 @@ const Footer = () => {
           <Typography variant="body2" sx={{ color: "#666", fontSize: 14 }}>
           </Typography>
           <Typography variant="body2" sx={{ color: "#666", fontSize: 14 }}>
-            Designed And Developed by Yoonus.
+            Designed And Developed by <span style={{ fontWeight: "bold", color: "#B88746" }}>Yoonus.</span>
           </Typography>
-          <IconButton
+          {/* <IconButton
             onClick={scrollToTop}
             sx={{
               backgroundColor: "#B88746",
@@ -320,7 +320,7 @@ const Footer = () => {
             }}
           >
             <KeyboardArrowUp />
-          </IconButton>
+          </IconButton> */}
         </Box>
       </Container>
     </Box>
