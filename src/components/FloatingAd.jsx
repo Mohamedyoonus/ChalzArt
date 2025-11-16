@@ -14,7 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { keyframes } from "@mui/system";
 import promoImage from "../assets/promo.jpg";
 
-/* Floating animation removed for mobile (later handled with condition) */
+// FLOATING animation (now used on both desktop + mobile)
 const floatAnimation = keyframes`
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -34,31 +34,31 @@ const FloatingAd = () => {
   const [showAd, setShowAd] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
-  // Drag Fix
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(null);
   const [hasMoved, setHasMoved] = useState(false);
 
   const [isVisible, setIsVisible] = useState(false);
 
-  /** Compact size for mobile + desktop */
+  /** Mobile size is slightly more compact */
   const adSize = {
     width: isMobile ? 130 : 160,
-    height: isMobile ? 90 : 110,
+    height: isMobile ? 95 : 120,
   };
 
+  /** Ad starts on the LEFT side */
   const [adPosition, setAdPosition] = useState({
-    x: isMobile ? window.innerWidth - adSize.width - 20 : 20,
+    x: 20,
     y: window.innerHeight - adSize.height - 20,
   });
 
-  /** Drag start (but don't activate drag yet) */
+  /** Start drag */
   const handleMouseDown = (e) => {
     setDragStart({ x: e.clientX, y: e.clientY });
     setHasMoved(false);
   };
 
-  /** Drag movement */
+  /** Move dragging */
   const handleMouseMove = useCallback(
     (e) => {
       if (!dragStart) return;
@@ -66,8 +66,7 @@ const FloatingAd = () => {
       const diffX = e.clientX - dragStart.x;
       const diffY = e.clientY - dragStart.y;
 
-      // If movement is small → treat as a click
-      if (Math.abs(diffX) < 4 && Math.abs(diffY) < 4) return;
+      if (Math.abs(diffX) < 3 && Math.abs(diffY) < 3) return;
 
       setHasMoved(true);
       setIsDragging(true);
@@ -88,13 +87,13 @@ const FloatingAd = () => {
     [dragStart, adPosition, adSize]
   );
 
-  /** Drag end */
+  /** Stop drag */
   const handleMouseUp = () => {
     setIsDragging(false);
     setDragStart(null);
   };
 
-  /** Listeners */
+  /** Add global listeners */
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
@@ -105,7 +104,7 @@ const FloatingAd = () => {
     };
   }, [handleMouseMove]);
 
-  /** Fade animation */
+  /** Fade-in animation */
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 500);
     return () => clearTimeout(timer);
@@ -115,7 +114,6 @@ const FloatingAd = () => {
 
   return (
     <>
-      {/* Floating Ad */}
       <Fade in={isVisible} timeout={700}>
         <Slide direction="up" in={isVisible} timeout={500}>
           <Box
@@ -132,22 +130,12 @@ const FloatingAd = () => {
               cursor: isDragging ? "grabbing" : "grab",
               userSelect: "none",
 
-              // Floating animation disabled for mobile
-              animation: !isMobile
-                ? `${floatAnimation} 4s ease-in-out infinite`
-                : "none",
+              // ⬇ Floating animation applied on ALL devices
+              animation: `${floatAnimation} 4s ease-in-out infinite`,
 
               "&:hover": {
                 transform: isDragging ? "none" : "scale(1.04)",
               },
-
-              // Mobile-specific improvements
-              ...(isMobile && {
-                borderRadius: 2,
-                p: 1,
-                right: 20,
-                bottom: 20,
-              }),
             }}
             onMouseDown={handleMouseDown}
             onClick={() => {
@@ -156,7 +144,7 @@ const FloatingAd = () => {
           >
             {/* Close Button */}
             <IconButton
-              size={isMobile ? "small" : "medium"}
+              size="small"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowAd(false);
@@ -166,8 +154,6 @@ const FloatingAd = () => {
                 top: 4,
                 right: 4,
                 backgroundColor: "rgba(255,255,255,0.8)",
-                width: isMobile ? 26 : 30,
-                height: isMobile ? 26 : 30,
               }}
             >
               <CloseIcon fontSize="small" />
@@ -179,7 +165,7 @@ const FloatingAd = () => {
               alt="Special Offer"
               style={{
                 width: "100%",
-                height: isMobile ? 70 : 85,
+                height: isMobile ? 75 : 90,
                 borderRadius: "8px",
                 objectFit: "cover",
               }}
@@ -211,14 +197,12 @@ const FloatingAd = () => {
           sx: {
             maxWidth: isMobile ? "95vw" : "90vw",
             maxHeight: isMobile ? "85vh" : "90vh",
-            borderRadius: isMobile ? 2 : 3,
+            borderRadius: 2,
             background: "transparent",
-            overflow: "hidden !important",
           },
         }}
       >
         <Box sx={{ position: "relative" }}>
-          {/* Modal Close Button */}
           <IconButton
             onClick={() => setOpenModal(false)}
             sx={{
@@ -227,20 +211,15 @@ const FloatingAd = () => {
               right: 12,
               backgroundColor: "rgba(0,0,0,0.6)",
               color: "white",
-              width: isMobile ? 32 : 40,
-              height: isMobile ? 32 : 40,
             }}
           >
             <CloseIcon />
           </IconButton>
 
-          {/* Full Image */}
           <img
             src={promoImage}
-            alt="Promo Full View"
             style={{
               width: "100%",
-              height: "100%",
               maxHeight: isMobile ? "65vh" : "70vh",
               objectFit: "contain",
             }}
@@ -250,8 +229,7 @@ const FloatingAd = () => {
             sx={{
               p: isMobile ? 2 : 3,
               textAlign: "center",
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+              background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
               position: "absolute",
               bottom: 0,
               width: "100%",
@@ -270,9 +248,6 @@ const FloatingAd = () => {
                 fontWeight: "bold",
                 fontSize: isMobile ? "0.85rem" : "1rem",
                 animation: `${pulse} 2.2s infinite`,
-                "&:hover": {
-                  backgroundColor: "#8B5D3D",
-                },
               }}
             >
               Register Now
