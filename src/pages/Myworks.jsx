@@ -178,7 +178,7 @@ const MyWorks = () => {
   return (
     <Box
       sx={{
-        pt: { xs: 2, md: 3 },
+        pt: { xs: 0, md: 3 },
         pb: 6,
         px: { xs: 2, md: 6 },
         bgcolor: "#fff",
@@ -188,39 +188,6 @@ const MyWorks = () => {
     >
       <Container maxWidth="lg">
         {/* Page Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Typography
-            variant={isMobile ? "h4" : "h3"}
-            fontWeight="900"
-            sx={{
-              fontFamily: "'Cinzel', serif",
-              color: "#B88746",
-              letterSpacing: "1.5px",
-              textTransform: "uppercase",
-              textAlign: "center",
-              textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
-              position: "relative",
-              mb: 4,
-              fontSize: { xs: "1.75rem", sm: "2rem", md: "3rem" },
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                width: "80px",
-                height: "2px",
-                backgroundColor: "#A8743D",
-                bottom: -15,
-                left: "50%",
-                transform: "translateX(-50%)",
-              },
-            }}
-          >
-            My Works
-          </Typography>
-        </motion.div>
 
         {/* Sticky Category Bar */}
         <Box

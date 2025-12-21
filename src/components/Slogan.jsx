@@ -4,20 +4,20 @@ import { motion } from "framer-motion";
 
 // Animation variants
 const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.9, ease: "easeOut" },
+    transition: { duration: 0.8, ease: "easeOut" },
   },
 };
 
 const imageFadeIn = {
-  hidden: { opacity: 0, y: 60 },
+  hidden: { opacity: 0, scale: 0.95 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 1, ease: "easeOut" },
+    scale: 1,
+    transition: { duration: 0.9, ease: "easeOut" },
   },
 };
 
@@ -25,29 +25,28 @@ const dividerGrow = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
-    transition: { duration: 1.1, ease: "easeInOut" },
+    transition: { duration: 1, ease: "easeInOut" },
   },
 };
 
 const imageContainerStyle = {
-  border: "2px solid #F2C57F",
-  borderRadius: "16px",
-  padding: "8px",
-  background: "linear-gradient(145deg, rgba(242, 197, 127, 0.05), rgba(255, 255, 255, 0.02))",
-  boxShadow: "0 4px 20px rgba(242, 197, 127, 0.15)",
+  border: "1.5px solid #E6C07B",
+  borderRadius: "18px",
+  padding: "10px",
+  background:
+    "linear-gradient(145deg, rgba(184,135,70,0.08), rgba(255,255,255,0.8))",
+  boxShadow: "0 10px 30px rgba(184,135,70,0.18)",
 };
 
 const Slogan = () => {
   return (
     <Box
       sx={{
-        background: "#ffffff", // ✅ White background
-        py: { xs: 6, sm: 8 },
-        pt: { xs: 0, sm: 0 , md: 0 },
-        color: "#333333", // ✅ Default text color
+        background:
+          "linear-gradient(180deg, #ffffff 0%, #faf7f2 50%, #ffffff 100%)",
+        py: { xs: 5, sm: 8 },
+        color: "#333",
         overflow: "hidden",
-        position: "relative",
-        zIndex: 1,
       }}
     >
       <Container maxWidth="lg">
@@ -56,28 +55,29 @@ const Slogan = () => {
           variants={dividerGrow}
           initial="hidden"
           whileInView="visible"
+          viewport={{ once: true }}
           style={{ originX: 0 }}
         >
           <Divider
             sx={{
               borderColor: "#B88746",
-              my: 6,
-              width: "70%",
+              my: { xs: 3, sm: 5 },
+              width: "60%",
               mx: "auto",
-              opacity: 0.8,
+              opacity: 0.7,
             }}
           />
         </motion.div>
 
-        {/* Section 1 */}
+        {/* ===== Section 1 ===== */}
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
             justifyContent: "center",
-            flexDirection: { xs: "column", md: "row" },
-            gap: 4,
-            mb: { xs: 2, md: 6 },
+            gap: { xs: 3, md: 6 },
+            mb: { xs: 4, md: 8 },
           }}
         >
           <motion.div
@@ -86,15 +86,15 @@ const Slogan = () => {
             whileInView="visible"
             viewport={{ once: true }}
             style={imageContainerStyle}
-            whileHover={{ y: -6, scale: 1.02 }}
+            whileHover={{ y: -8, scale: 1.03 }}
           >
             <motion.img
               src="/assets/slogan1.jpg"
-              alt="Slogan Image"
+              alt="Honey Drizzle Artwork"
               style={{
                 width: "100%",
-                maxWidth: "320px",
-                borderRadius: "12px",
+                maxWidth: "340px",
+                borderRadius: "14px",
                 display: "block",
               }}
             />
@@ -102,9 +102,9 @@ const Slogan = () => {
 
           <Box
             sx={{
-              maxWidth: "500px",
+              maxWidth: 520,
               textAlign: { xs: "center", md: "left" },
-              px: { xs: 2, md: 0 },
+              px: { xs: 1.5, md: 0 },
             }}
           >
             <motion.div
@@ -114,17 +114,16 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="h2"
-                fontWeight={{ xs: 700, md: 200 }}
-                color="#B88746"
-                gutterBottom
                 sx={{
-                  letterSpacing: "1px",
-                  fontSize: { xs: "1rem", md: "2.5rem" },
-                  textShadow: "2px 2px 8px rgba(0, 0, 0, 0.1)",
+                  fontFamily: "'Playfair Display', serif",
+                  fontWeight: 500,
+                  color: "#B88746",
+                  mb: 1.5,
+                  fontSize: { xs: "1.3rem", sm: "1.8rem", md: "2.4rem" },
+                  letterSpacing: "0.5px",
                 }}
               >
-                Honey Drizzle Serenity in Stillness
+                Honey Drizzle – Serenity in Stillness
               </Typography>
             </motion.div>
 
@@ -135,20 +134,16 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="body1"
-                color="#333333"
                 sx={{
-                  fontSize: { xs: "16px", md: "18px" },
-                  opacity: 0.9,
-                  lineHeight: 1.6,
+                  fontSize: { xs: "0.95rem", sm: "1.05rem", md: "1.1rem" },
+                  lineHeight: 1.7,
+                  color: "#444",
                 }}
               >
-                In this hyper-realistic artwork, golden honey gently cascades
-                down a girl's face, symbolizing tranquility, warmth, and
-                emotional healing. The soft texture and glistening flow evoke a
-                sense of peace and inner calm, capturing a moment of mindful
-                stillness. This piece invites viewers to slow down, breathe
-                deeply, and reconnect with a serene state of being.
+                In this hyper-realistic artwork, golden honey gently cascades down
+                a girl's face, symbolizing tranquility, warmth, and emotional
+                healing. The glistening flow invites viewers to pause, breathe,
+                and reconnect with a moment of mindful stillness.
               </Typography>
             </motion.div>
           </Box>
@@ -159,35 +154,36 @@ const Slogan = () => {
           variants={dividerGrow}
           initial="hidden"
           whileInView="visible"
+          viewport={{ once: true }}
           style={{ originX: 0 }}
         >
           <Divider
             sx={{
               borderColor: "#B88746",
-              my: 6,
-              width: "70%",
+              my: { xs: 3, sm: 5 },
+              width: "60%",
               mx: "auto",
-              opacity: 0.8,
+              opacity: 0.7,
             }}
           />
         </motion.div>
 
-        {/* Section 2 */}
+        {/* ===== Section 2 ===== */}
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column-reverse", md: "row" },
             alignItems: "center",
             justifyContent: "center",
-            flexDirection: { xs: "column-reverse", md: "row" },
-            gap: 4,
+            gap: { xs: 3, md: 6 },
             mb: { xs: 4, md: 6 },
           }}
         >
           <Box
             sx={{
-              maxWidth: "500px",
+              maxWidth: 520,
               textAlign: { xs: "center", md: "left" },
-              px: { xs: 2, md: 0 },
+              px: { xs: 1.5, md: 0 },
             }}
           >
             <motion.div
@@ -197,17 +193,16 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="h2"
-                fontWeight={{ xs: 700, md: 200 }}
-                color="#B88746"
-                gutterBottom
                 sx={{
-                  letterSpacing: "1px",
-                  fontSize: { xs: "1rem", md: "2.5rem" },
-                  textShadow: "2px 2px 8px rgba(0, 0, 0, 0.1)",
+                  fontFamily: "'Playfair Display', serif",
+                  fontWeight: 500,
+                  color: "#B88746",
+                  mb: 1.5,
+                  fontSize: { xs: "1.3rem", sm: "1.8rem", md: "2.4rem" },
+                  letterSpacing: "0.5px",
                 }}
               >
-                The Battle Within - Fight for Inner Peace
+                The Battle Within – Fight for Inner Peace
               </Typography>
             </motion.div>
 
@@ -218,20 +213,16 @@ const Slogan = () => {
               viewport={{ once: true }}
             >
               <Typography
-                variant="body1"
-                color="#333333"
                 sx={{
-                  fontSize: { xs: "16px", md: "18px" },
-                  opacity: 0.9,
-                  lineHeight: 1.6,
+                  fontSize: { xs: "0.95rem", sm: "1.05rem", md: "1.1rem" },
+                  lineHeight: 1.7,
+                  color: "#444",
                 }}
               >
-                This realistic pencil drawing shows a man struggling with
-                himself. The many hands pulling and pushing represent the
-                stress, pain, and confusion he feels inside. It shows how hard
-                it can be to find peace when your own mind feels like a
-                battlefield. This artwork speaks about the silent fight many men
-                go through every day.
+                This realistic pencil artwork portrays the silent struggle of a
+                man against his inner chaos. The grasping hands symbolize
+                pressure, conflict, and emotional weight — reflecting the unseen
+                battles many face while seeking peace within.
               </Typography>
             </motion.div>
           </Box>
@@ -242,15 +233,15 @@ const Slogan = () => {
             whileInView="visible"
             viewport={{ once: true }}
             style={imageContainerStyle}
-            whileHover={{ y: -6, scale: 1.02 }}
+            whileHover={{ y: -8, scale: 1.03 }}
           >
             <motion.img
               src="/assets/slogan2.jpg"
-              alt="Slogan Image 2"
+              alt="Inner Peace Artwork"
               style={{
                 width: "100%",
-                maxWidth: "280px",
-                borderRadius: "12px",
+                maxWidth: "300px",
+                borderRadius: "14px",
                 display: "block",
               }}
             />
@@ -262,15 +253,16 @@ const Slogan = () => {
           variants={dividerGrow}
           initial="hidden"
           whileInView="visible"
+          viewport={{ once: true }}
           style={{ originX: 0 }}
         >
           <Divider
             sx={{
               borderColor: "#B88746",
-              my: 2,
-              width: "70%",
+              my: { xs: 2, sm: 4 },
+              width: "60%",
               mx: "auto",
-              opacity: 0.8,
+              opacity: 0.7,
             }}
           />
         </motion.div>

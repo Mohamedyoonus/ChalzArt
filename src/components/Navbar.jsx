@@ -197,35 +197,37 @@ const Navbar = () => {
 
             {/* Right Side Icons */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              {isMobile && (
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <IconButton
-                    edge="end"
-                    onClick={handleDrawerToggle}
-                    sx={{
-                      width: 44,
-                      height: 44,
-                      color: "#2C3E50",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: 0,
-                      borderRadius: "12px",
-                      background: "transparent",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        background: "rgba(184, 135, 70, 0.1)",
-                        color: "#B88746",
-                      },
-                    }}
-                  >
-                    <MenuIcon fontSize="medium" />
-                  </IconButton>
-                </motion.div>
-              )}
+             {isMobile && (
+  <motion.div
+    animate={{
+      rotate: mobileOpen ? 90 : 0,
+      x: mobileOpen ? -4 : 0,
+    }}
+    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+  >
+    <IconButton
+      edge="end"
+      onClick={handleDrawerToggle}
+      sx={{
+        width: 44,
+        height: 44,
+        color: mobileOpen ? "#B88746" : "#2C3E50",
+        borderRadius: "12px",
+        background: mobileOpen
+          ? "rgba(184, 135, 70, 0.12)"
+          : "transparent",
+        transition: "all 0.25s ease",
+        "&:hover": {
+          background: "rgba(184, 135, 70, 0.15)",
+          color: "#B88746",
+        },
+      }}
+    >
+      {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+    </IconButton>
+  </motion.div>
+)}
+
             </Box>
           </Toolbar>
         </AppBar>
@@ -233,32 +235,36 @@ const Navbar = () => {
 
       {/* Mobile Drawer - Three Quarters Width */}
       <Drawer
-        anchor="right"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-          BackdropProps: {
-            sx: {
-              backdropFilter: "blur(10px)",
-              backgroundColor: "rgba(0, 0, 0, 0.4)",
-            },
-          },
-        }}
-        PaperProps={{
-          sx: {
-            background: "#fff",
-            boxShadow: "-16px 0 40px rgba(0, 0, 0, 0.12)",
-            width: "80%",
-            maxWidth: 300,
-            borderTopLeftRadius: "16px",
-            borderBottomLeftRadius: "16px",
-            display: "flex",
-            flexDirection: "column",
-            p: 0,
-          },
-        }}
-      >
+  anchor="right"
+  open={mobileOpen}
+  onClose={handleDrawerToggle}
+  transitionDuration={{ enter: 250, exit: 200 }} // ✅ faster & smooth
+  ModalProps={{
+    keepMounted: true,
+    BackdropProps: {
+      sx: {
+        backdropFilter: "blur(10px)",
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
+        transition: "all 0.25s ease",
+      },
+    },
+  }}
+  PaperProps={{
+    sx: {
+      background: "#fff",
+      boxShadow: "-16px 0 40px rgba(0, 0, 0, 0.12)",
+      width: "80%",
+      maxWidth: 300,
+      borderTopLeftRadius: "16px",
+      borderBottomLeftRadius: "16px",
+      display: "flex",
+      flexDirection: "column",
+      p: 0,
+      transition: "transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)", // ✅ smooth slide
+    },
+  }}
+>
+
         <Slide
           direction="left"
           in={mobileOpen}

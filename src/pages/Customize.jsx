@@ -24,6 +24,7 @@ import {
   RadioGroup,
   FormControlLabel,
   IconButton,
+   MenuItem,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WarningIcon from "@mui/icons-material/Warning";
@@ -66,6 +67,15 @@ const Customize = () => {
     phone: "",
     address: "",
   });
+
+  const nameRef = React.useRef(null);
+const phoneRef = React.useRef(null);
+
+const [errors, setErrors] = useState({
+  name: false,
+  phone: false,
+});
+
   
   const [artOptions, setArtOptions] = useState({
     type: "none",
@@ -80,11 +90,17 @@ const Customize = () => {
     customDuration: "",
   });
   
-  const [mural, setMural] = useState({
-    wallSize: "",
-    surfaceType: "",
-    paintingType: "design",
-  });
+const [mural, setMural] = useState({
+  width: "",
+  height: "",
+  unit: "ft",
+  surfaceType: "",
+  customLocation: "",
+  paintingType: "design",
+});
+
+const [wallPickerOpen, setWallPickerOpen] = useState(false);
+
   
   const [tshirt, setTshirt] = useState({
     size: "",
@@ -101,7 +117,7 @@ const Customize = () => {
   });
   
   const [submitted, setSubmitted] = useState(false);
-  const [expandedAccordion, setExpandedAccordion] = useState("art");
+const [expandedAccordion, setExpandedAccordion] = useState(false);
 
   // Smooth scroll effect
   useEffect(() => {
@@ -140,14 +156,25 @@ const Customize = () => {
     }));
   }, [liveSketch.duration]);
 
-  const handleMuralChange = useCallback((field, value) => {
-    const newValue = field === "surfaceType" && value === mural.surfaceType ? "none" : value;
-    setMural(prev => ({ 
-      ...prev, 
+ const handleMuralChange = useCallback(
+  (field, value) => {
+    const newValue =
+      field === "surfaceType" && value === mural.surfaceType
+        ? "none"
+        : value;
+
+    setMural((prev) => ({
+      ...prev,
       [field]: newValue,
-      ...(field === "surfaceType" && value !== "custom" ? { customLocation: "" } : {})
+      // ✅ Clear custom location if not "custom"
+      ...(field === "surfaceType" && newValue !== "custom"
+        ? { customLocation: "" }
+        : {}),
     }));
-  }, [mural.surfaceType]);
+  },
+  [mural.surfaceType]
+);
+
 
   const handleAccordionChange = useCallback((panel) => (event, isExpanded) => {
     setExpandedAccordion(isExpanded ? panel : false);
@@ -184,15 +211,35 @@ const Customize = () => {
     
     try {
       // Basic validation
-      if (!personalInfo.name.trim()) {
-        showError("Please enter your name");
-        return;
-      }
+     let hasError = false;
 
-      if (!personalInfo.phone.trim()) {
-        showError("Please enter your phone number");
-        return;
-      }
+if (!personalInfo.name.trim()) {
+  setErrors((prev) => ({ ...prev, name: true }));
+  hasError = true;
+  setExpandedAccordion("personal-info");
+  setTimeout(() => {
+    nameRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    nameRef.current?.focus();
+  }, 200);
+}
+
+if (!personalInfo.phone.trim()) {
+  setErrors((prev) => ({ ...prev, phone: true }));
+  if (!hasError) {
+    setExpandedAccordion("personal-info");
+    setTimeout(() => {
+      phoneRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      phoneRef.current?.focus();
+    }, 200);
+  }
+  hasError = true;
+}
+
+if (hasError) {
+  setIsSubmitting(false);
+  return;
+}
+
 
       // Validate art options
       if (!validateArtOptions()) return;
@@ -238,13 +285,33 @@ const Customize = () => {
       }
 
       // Mural
-      if (mural.wallSize.trim() || mural.surfaceType !== "none") {
-        message += createSection("Mural Painting:", {
-          "Wall Size": mural.wallSize,
-          ...(mural.surfaceType !== "none" && { "Surface Type": mural.surfaceType }),
-          "Painting Type": mural.paintingType === "design" ? "Design Painting" : "Mural Art",
-        });
-      }
+ const wallSizeValue =
+  mural.width && mural.height
+    ? `${mural.width} x ${mural.height} ${mural.unit}`
+    : "";
+
+const surfaceValue =
+  mural.surfaceType === "custom"
+    ? mural.customLocation
+    : mural.surfaceType;
+
+if (wallSizeValue || surfaceValue) {
+  message += createSection("Mural Painting:", {
+    ...(wallSizeValue && { "Wall Size": wallSizeValue }),
+    ...(surfaceValue && surfaceValue !== "none" && {
+      "Surface Type": surfaceValue,
+    }),
+    "Painting Type":
+      mural.paintingType === "design"
+        ? "Design Painting"
+        : "Mural Art",
+  });
+}
+
+
+
+     
+
 
       // Optional sections
       if (Object.values(tshirt).some(val => val.trim())) {
@@ -337,6 +404,7 @@ const Customize = () => {
     { value: "street_wall", label: "Street Wall", description: "Paint on street wall" },
     { value: "custom", label: "Other", description: "Other location" },
   ];
+  
 
   // Check if art type is selected
   const isArtTypeSelected = useMemo(() => artOptions.type !== "none", [artOptions.type]);
@@ -359,10 +427,11 @@ const Customize = () => {
     >
       {/* Header */}
       <Slide direction="down" in timeout={300}>
-        <Box sx={{ 
-          mb: { xs: 2, sm: 3, md: 4 },
-          textAlign: "center"
-        }}>
+      <Box sx={{ 
+  mb: { xs: -5, sm: 3, md: 4 }, // 🔽 reduced on mobile
+  textAlign: "center"
+}}>
+
           <Typography
             variant={isMobile ? "h6" : "h5"}
             sx={{
@@ -473,8 +542,9 @@ const Customize = () => {
           id="personal-info"
           elevation={0}
           sx={{ 
-            p: { xs: 2, sm: 3, md: 4 },
-            mb: { xs: 2, sm: 3, md: 4 },
+           p: { xs: 2, sm: 3, md: 4 },
+    mb: { xs: 1.5, sm: 3, md: 4 }, // 🔽 reduced gap below on mobile
+    mt: { xs: 0, sm: 0 }, 
             border: 1,
             borderColor: "divider",
             borderRadius: 3,
@@ -502,27 +572,35 @@ const Customize = () => {
               { field: "address", label: "Address (Optional)", placeholder: "Enter your address", xs: 12 },
             ].map((item) => (
               <Grid item xs={item.xs} sm={item.sm} md={item.md} key={item.field}>
-                <TextField
-                  label={item.label}
-                  value={personalInfo[item.field]}
-                  onChange={(e) => handlePersonalInfoChange(item.field, e.target.value)}
-                  size="medium"
-                  fullWidth
-                  placeholder={item.placeholder}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                      transition: "all 0.3s ease",
-                      '&:hover': {
-                        borderColor: "#B88746",
-                      },
-                      '&.Mui-focused': {
-                        borderColor: "#B88746",
-                        boxShadow: "0 0 0 2px rgba(184, 135, 70, 0.2)",
-                      }
-                    }
-                  }}
-                />
+              <TextField
+  inputRef={item.field === "name" ? nameRef : item.field === "phone" ? phoneRef : null}
+  label={item.label}
+  value={personalInfo[item.field]}
+  onChange={(e) => {
+    handlePersonalInfoChange(item.field, e.target.value);
+    setErrors((prev) => ({ ...prev, [item.field]: false }));
+  }}
+  error={errors[item.field]}
+  helperText={
+    errors[item.field]
+      ? item.field === "name"
+        ? "Name is required"
+        : "Phone number is required"
+      : ""
+  }
+  size="medium"
+  fullWidth
+  placeholder={item.placeholder}
+  sx={{
+    '& .MuiOutlinedInput-root': {
+      borderRadius: 2,
+      '&.Mui-error fieldset': {
+        borderColor: '#d32f2f',
+      },
+    }
+  }}
+/>
+
               </Grid>
             ))}
           </Grid>
@@ -530,646 +608,793 @@ const Customize = () => {
       </Zoom>
 
       {/* Art Options - Fast selection with no animations on click */}
-      <Fade in timeout={500}>
-        <Accordion 
-          id="art"
-          expanded={expandedAccordion === "art"}
-          onChange={handleAccordionChange("art")}
-          sx={{ 
-            mb: { xs: 2, sm: 3 },
-            borderRadius: 3,
-            border: 1,
-            borderColor: "divider",
-            backgroundColor: "white",
-            '&:before': { display: 'none' },
-            transition: "all 0.3s ease",
-            '&:hover': {
-              boxShadow: 2,
-            }
+     <Fade in timeout={500}>
+      <Accordion
+        expanded={expandedAccordion === "art"}
+        onChange={handleAccordionChange("art")}
+        sx={{
+          mb: 2,
+          borderRadius: 3,
+          border: 1,
+          borderColor: "divider",
+          backgroundColor: "white",
+          "&:before": { display: "none" },
+        }}
+      >
+        {/* Header */}
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon sx={{ color: "#B88746" }} />}
+          sx={{
+            minHeight: 56,
+            px: 2,
+            "& .MuiAccordionSummary-content": {
+              alignItems: "center",
+            },
           }}
         >
-          <AccordionSummary 
-            expandIcon={<ExpandMoreIcon sx={{ color: "#B88746" }} />}
+          <Typography
             sx={{
-              minHeight: { xs: '56px', sm: '64px' },
-              px: { xs: 2, sm: 3 },
-              '& .MuiAccordionSummary-content': {
-                my: 1,
-                alignItems: "center",
-                gap: 2
-              },
+              fontSize: { xs: "1rem", sm: "1.1rem" },
+              fontWeight: 600,
+              color: "#B88746",
             }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              <Typography sx={{ 
-                fontSize: { xs: '1rem', sm: '1.1rem' },
-                fontWeight: 600,
-                color: "#B88746",
-              }}>
-                🎨 Art Customization
-              </Typography>
-             
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails sx={{ 
-            py: { xs: 2, sm: 3 }, 
-            px: { xs: 2, sm: 3, md: 4 },
-          }}>
-            
-            {/* Desktop/Tablet View */}
-            {!isMobile ? (
-              <Box>
-                <Box sx={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: { sm: '1fr', md: 'repeat(3, 1fr)' },
-                  gap: { sm: 3, md: 4 },
-                }}>
-                  {artOptionsConfig.map((section) => (
-                    <Box key={section.id}>
-                      <Typography variant="subtitle1" sx={{ 
-                        color: section.disabled ? "text.disabled" : "#B88746",
-                        fontWeight: 600,
-                        mb: 2,
-                        fontSize: { sm: '0.9rem', md: '1rem' }
-                      }}>
-                        {section.label}
-                      </Typography>
-                      
-                      <Box>
-                        {section.options.map((option) => (
-                          <Box 
-                            key={option.value}
-                            onClick={() => {
-                              if (!section.disabled) {
-                                handleArtOptionChange(section.field, option.value);
-                              }
-                            }}
+            🎨 Art Customization
+          </Typography>
+        </AccordionSummary>
+
+        {/* Content */}
+        <AccordionDetails sx={{ px: { xs: 1.5, sm: 2 }, py: 2 }}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(3, minmax(0, 1fr))",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+              },
+              gap: { xs: 1.5, sm: 2 },
+            }}
+          >
+            {artOptionsConfig.map((section) => (
+              <Box key={section.id}>
+                {/* Column Header */}
+                <Typography
+                  sx={{
+                    color: section.disabled
+                      ? "text.disabled"
+                      : "#B88746",
+                    fontWeight: 600,
+                    mb: 1,
+                    fontSize: { xs: "0.8rem", sm: "0.95rem" },
+                    textAlign: "center",
+                  }}
+                >
+                  {section.label}
+                </Typography>
+
+                {/* Options */}
+                {section.options.map((option) => {
+                  const selected =
+                    artOptions[section.field] === option.value;
+
+                  return (
+                    <Box
+                      key={option.value}
+                      onClick={() =>
+                        !section.disabled &&
+                        handleArtOptionChange(
+                          section.field,
+                          option.value
+                        )
+                      }
+                      sx={{
+                        p: { xs: 1.2, sm: 1.5 },
+                        mb: 1.2,
+                        border: selected
+                          ? "2px solid #B88746"
+                          : "1px solid",
+                        borderColor: selected
+                          ? "#B88746"
+                          : "divider",
+                        borderRadius: 2,
+                        cursor: section.disabled
+                          ? "not-allowed"
+                          : "pointer",
+                        backgroundColor: selected
+                          ? "rgba(184,135,70,0.08)"
+                          : "transparent",
+                        opacity: section.disabled ? 0.6 : 1,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 0.5,
+                        }}
+                      >
+                        <Radio
+                          size="small"
+                          checked={selected}
+                          disabled={section.disabled}
+                          sx={{
+                            color: "divider",
+                            "&.Mui-checked": {
+                              color: "#B88746",
+                            },
+                            p: 0,
+                          }}
+                        />
+
+                        <Box sx={{ minWidth: 0 }}>
+                          <Typography
                             sx={{
-                              p: 2,
-                              mb: 1.5,
-                              border: artOptions[section.field] === option.value ? '2px solid #B88746' : '1px solid',
-                              borderColor: artOptions[section.field] === option.value ? '#B88746' : 'divider',
-                              borderRadius: 2,
-                              cursor: section.disabled ? 'not-allowed' : 'pointer',
-                              backgroundColor: artOptions[section.field] === option.value ? 'rgba(184, 135, 70, 0.08)' : 'transparent',
-                              transition: 'all 0.1s ease', // Faster transition
-                              opacity: section.disabled ? 0.6 : 1,
-                              '&:hover': !section.disabled ? {
-                                borderColor: '#B88746',
-                                backgroundColor: 'rgba(184, 135, 70, 0.04)',
-                              } : {},
+                              fontSize: {
+                                xs: "0.72rem",
+                                sm: "0.9rem",
+                              },
+                              fontWeight: selected ? 600 : 400,
+                              color: selected
+                                ? "#B88746"
+                                : "text.primary",
+                              lineHeight: 1.2,
+                              whiteSpace: "normal",
+                              wordBreak: "break-word",   // ✅ prevent overflow
                             }}
                           >
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                              <Radio
-                                size="small"
-                                checked={artOptions[section.field] === option.value}
-                                disabled={section.disabled}
-                                sx={{
-                                  color: 'divider',
-                                  '&.Mui-checked': {
-                                    color: '#B88746',
-                                  },
-                                  transition: 'none', // No transition for radio
-                                }}
-                              />
-                              <Box sx={{ flex: 1 }}>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                  <Typography sx={{ fontSize: '1.2rem' }}>{option.icon}</Typography>
-                                  <Typography sx={{ 
-                                    fontSize: '0.95rem',
-                                    fontWeight: artOptions[section.field] === option.value ? 600 : 400,
-                                    color: artOptions[section.field] === option.value ? '#B88746' : 'text.primary',
-                                  }}>
-                                    {option.label}
-                                  </Typography>
-                                </Box>
-                                <Typography sx={{ 
-                                  fontSize: '0.8rem',
-                                  color: artOptions[section.field] === option.value ? '#A8743D' : 'text.secondary',
-                                  mt: 0.5,
-                                  ml: 4
-                                }}>
-                                  {option.description}
-                                </Typography>
-                              </Box>
-                            </Box>
-                          </Box>
-                        ))}
-                      </Box>
-                      
-                      {section.field === "size" && artOptions.size === "custom" && (
-                        <Box sx={{ 
-                          mt: 3,
-                          p: 2.5,
-                          backgroundColor: 'rgba(184, 135, 70, 0.05)',
-                          borderRadius: 2,
-                          border: '2px solid #B88746'
-                        }}>
-                          <Typography variant="subtitle2" sx={{ 
-                            color: "#B88746", 
-                            fontWeight: 600,
-                            mb: 1.5,
-                          }}>
-                            📐 Custom Size Dimensions
+                            {isMobile
+                              ? option.label
+                              : `${option.icon} ${option.label}`}
                           </Typography>
-                          <TextField
-                            value={customSize}
-                            onChange={(e) => setCustomSize(e.target.value)}
-                            size="medium"
-                            fullWidth
-                            placeholder="Example: 24x36 inches or 50x70 cm"
+
+                          <Typography
                             sx={{
-                              '& .MuiOutlinedInput-root': {
-                                borderRadius: 1.5,
-                              }
+                              fontSize: "0.65rem",
+                              color: selected
+                                ? "#A8743D"
+                                : "text.secondary",
+                              display: { xs: "none", sm: "block" },
                             }}
-                          />
+                          >
+                            {option.description}
+                          </Typography>
                         </Box>
-                      )}
+                      </Box>
                     </Box>
-                  ))}
-                </Box>
-              </Box>
-            ) : (
-              /* Mobile View */
-              <Box>
-                {/* Column Headers */}
-                <Box sx={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: 1,
-                  mb: 2.5,
-                  textAlign: 'center'
-                }}>
-                  <Typography variant="subtitle2" sx={{ 
-                    color: "#B88746",
-                    fontWeight: 600,
-                  }}>
-                    Art Type
-                  </Typography>
-                  <Typography variant="subtitle2" sx={{ 
-                    color: artOptions.type === "none" ? "text.disabled" : "#B88746",
-                    fontWeight: 600,
-                  }}>
-                    Size
-                  </Typography>
-                  <Typography variant="subtitle2" sx={{ 
-                    color: artOptions.type === "none" ? "text.disabled" : "#B88746",
-                    fontWeight: 600,
-                  }}>
-                    Material
-                  </Typography>
-                </Box>
+                  );
+                })}
 
-                {/* Options Grid */}
-                <Box sx={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: 1.5,
-                }}>
-                  {artOptionsConfig.map((section, colIndex) => (
-                    <Box key={section.id} sx={{ opacity: section.disabled ? 0.6 : 1 }}>
-                      {section.options.map((option) => (
-                        <Box 
-                          key={option.value}
-                          onClick={() => {
-                            if (!section.disabled) {
-                              handleArtOptionChange(section.field, option.value);
-                            }
-                          }}
-                          sx={{
-                            p: 1.5,
-                            mb: 1.5,
-                            border: artOptions[section.field] === option.value ? '2px solid #B88746' : '1px solid',
-                            borderColor: artOptions[section.field] === option.value ? '#B88746' : 'divider',
-                            borderRadius: 2,
-                            cursor: section.disabled ? 'not-allowed' : 'pointer',
-                            backgroundColor: artOptions[section.field] === option.value ? 'rgba(184, 135, 70, 0.08)' : 'transparent',
-                            transition: 'all 0.1s ease', // Faster transition
-                            '&:hover': !section.disabled ? {
-                              borderColor: '#B88746',
-                              backgroundColor: 'rgba(184, 135, 70, 0.04)',
-                            } : {},
-                          }}
-                        >
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Radio
-                              size="small"
-                              checked={artOptions[section.field] === option.value}
-                              disabled={section.disabled}
-                              sx={{
-                                color: 'divider',
-                                '&.Mui-checked': {
-                                  color: '#B88746',
-                                },
-                                p: 0,
-                                transition: 'none', // No transition
-                              }}
-                            />
-                            <Box sx={{ flex: 1 }}>
-                              <Typography sx={{ 
-                                fontSize: '0.8rem',
-                                fontWeight: artOptions[section.field] === option.value ? 600 : 400,
-                                color: artOptions[section.field] === option.value ? '#B88746' : 'text.primary',
-                                lineHeight: 1.2
-                              }}>
-                                {option.label}
-                              </Typography>
-                              <Typography sx={{ 
-                                fontSize: '0.7rem',
-                                color: artOptions[section.field] === option.value ? '#A8743D' : 'text.secondary',
-                                mt: 0.5
-                              }}>
-                                {option.description}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-                      ))}
-                    </Box>
-                  ))}
-                </Box>
+                {/* ✅ Clean Custom Size Field (single box) */}
+               {section.field === "size" &&
+  artOptions.size === "custom" && (
+    <TextField
+      fullWidth
+      size="small"
+      value={customSize}
+      onChange={(e) => setCustomSize(e.target.value)}
+      placeholder="(e.g., 24x36 in)"
+      sx={{
+        mt: 1,
+        "& .MuiOutlinedInput-root": {
+          borderRadius: 2,
+          fontSize: { xs: "0.8rem", sm: "0.9rem" }, // input text size
+        },
+        "& input::placeholder": {
+          fontSize: { xs: "0.7rem", sm: "0.8rem" }, // ✅ hint text smaller
+          opacity: 0.8,
+        },
+      }}
+    />
+  )}
 
-                {/* Custom Size Input for Mobile */}
-                {artOptions.size === "custom" && (
-                  <Box sx={{ 
-                    mt: 3, 
-                    p: 2, 
-                    backgroundColor: 'rgba(184, 135, 70, 0.05)', 
-                    borderRadius: 2, 
-                    border: '2px solid #B88746' 
-                  }}>
-                    <Typography variant="subtitle2" sx={{ 
-                      color: "#B88746", 
-                      fontWeight: 600,
-                      mb: 1.5,
-                    }}>
-                      📐 Enter Custom Size
-                    </Typography>
-                    <TextField
-                      value={customSize}
-                      onChange={(e) => setCustomSize(e.target.value)}
-                      size="small"
-                      fullWidth
-                      placeholder="e.g., 24x36 inches or 50x70 cm"
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: 1.5,
-                        }
-                      }}
-                    />
-                  </Box>
-                )}
               </Box>
-            )}
-          </AccordionDetails>
-        </Accordion>
-      </Fade>
+            ))}
+          </Box>
+        </AccordionDetails>
+      </Accordion>
+    </Fade>
 
       {/* Live Sketch Section */}
-      <Fade in timeout={600}>
-        <Accordion 
-          id="live"
-          expanded={expandedAccordion === "live"}
-          onChange={handleAccordionChange("live")}
-          sx={{ 
-            mb: 2,
-            borderRadius: 2,
-            border: 1,
-            borderColor: "divider",
-            backgroundColor: "white",
-            '&:before': { display: 'none' },
-          }}
-        >
-          <AccordionSummary 
-            expandIcon={<ExpandMoreIcon sx={{ color: "#B88746" }} />}
+     <Fade in timeout={600}>
+  <Accordion
+    id="live"
+    expanded={expandedAccordion === "live"}
+    onChange={handleAccordionChange("live")}
+    sx={{
+      mb: 2,
+      borderRadius: 2,
+      border: 1,
+      borderColor: "divider",
+      backgroundColor: "white",
+      "&:before": { display: "none" },
+    }}
+  >
+    {/* Header */}
+    <AccordionSummary
+      expandIcon={<ExpandMoreIcon sx={{ color: "#B88746" }} />}
+      sx={{
+        minHeight: 56,
+        px: 2,
+        "& .MuiAccordionSummary-content": { my: 1 },
+      }}
+    >
+      <Typography
+        sx={{
+          fontWeight: 600,
+          color: "#B88746",
+          fontSize: { xs: "0.95rem", sm: "1rem" },
+        }}
+      >
+        📅 Live Sketch Event
+      </Typography>
+    </AccordionSummary>
+
+    {/* Content */}
+    <AccordionDetails sx={{ py: 2, px: { xs: 1.5, sm: 3 } }}>
+      <Grid container spacing={{ xs: 1.5, sm: 2 }}>
+        {/* Place / Venue */}
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Place / Venue"
+            value={liveSketch.place}
+            onChange={(e) =>
+              handleLiveSketchChange("place", e.target.value)
+            }
+            size="small"
+            fullWidth
+            placeholder="Event location"
             sx={{
-              minHeight: '56px',
-              px: 2,
-              '& .MuiAccordionSummary-content': { my: 1 },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 2,
+                fontSize: { xs: "0.85rem", sm: "0.9rem" },
+              },
+              "& .MuiInputLabel-root": {
+                fontSize: { xs: "0.75rem", sm: "0.8rem" },
+              },
+              "& .MuiInputLabel-shrink": {
+                fontSize: { xs: "0.7rem", sm: "0.75rem" },
+              },
+              "& input::placeholder": {
+                fontSize: { xs: "0.75rem", sm: "0.8rem" },
+              },
+            }}
+          />
+        </Grid>
+
+        {/* Date */}
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Date"
+            value={liveSketch.date}
+            type="date"
+            onChange={(e) =>
+              handleLiveSketchChange("date", e.target.value)
+            }
+            size="small"
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 2,
+                fontSize: { xs: "0.85rem", sm: "0.9rem" },
+              },
+              "& .MuiInputLabel-root": {
+                fontSize: { xs: "0.75rem", sm: "0.8rem" },
+              },
+              "& .MuiInputLabel-shrink": {
+                fontSize: { xs: "0.7rem", sm: "0.75rem" },
+              },
+            }}
+            InputLabelProps={{
+              shrink: true, // needed for date type
+            }}
+          />
+        </Grid>
+
+        {/* Duration */}
+        <Grid item xs={12}>
+          <Typography
+            sx={{
+              color: "#B88746",
+              fontWeight: 600,
+              mb: 1.5,
+              fontSize: { xs: "0.9rem", sm: "1rem" },
             }}
           >
-            <Typography sx={{ 
-              fontWeight: 600,
-              color: "#B88746",
-              fontSize: { xs: '0.95rem', sm: '1rem' }
-            }}>
-              📅 Live Sketch Event
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Place / Venue"
-                  value={liveSketch.place}
-                  onChange={(e) => handleLiveSketchChange("place", e.target.value)}
-                  size="medium"
-                  fullWidth
-                  placeholder="Event location"
+            ⏱️ Sketch Duration
+          </Typography>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(2, 1fr)",
+                sm: "repeat(4, 1fr)",
+              },
+              gap: { xs: 1.2, sm: 2 },
+              mb: 1.5,
+            }}
+          >
+            {durationOptions.map((option) => {
+              const selected =
+                liveSketch.duration === option.value;
+
+              return (
+                <Box
+                  key={option.value}
+                  onClick={() =>
+                    handleLiveSketchChange(
+                      "duration",
+                      option.value
+                    )
+                  }
                   sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Date"
-                  value={liveSketch.date}
-                  type="date"
-                  onChange={(e) => handleLiveSketchChange("date", e.target.value)}
-                  size="medium"
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    }
-                  }}
-                />
-              </Grid>
-              
-              <Grid item xs={12}>
-                <Typography variant="subtitle1" sx={{ 
-                  color: "#B88746",
-                  fontWeight: 600,
-                  mb: 2,
-                }}>
-                  ⏱️ Sketch Duration
-                </Typography>
-                <Box sx={{ 
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(4, 1fr)' },
-                  gap: 2,
-                  mb: 2
-                }}>
-                  {durationOptions.map((option) => (
-                    <Box 
-                      key={option.value}
-                      onClick={() => handleLiveSketchChange("duration", option.value)}
-                      sx={{
-                        p: 2,
-                        border: liveSketch.duration === option.value ? '2px solid #B88746' : '1px solid',
-                        borderColor: liveSketch.duration === option.value ? '#B88746' : 'divider',
-                        borderRadius: 2,
-                        cursor: 'pointer',
-                        backgroundColor: liveSketch.duration === option.value ? 'rgba(184, 135, 70, 0.08)' : 'transparent',
-                        transition: 'all 0.1s ease', // Faster transition
-                        '&:hover': {
-                          borderColor: '#B88746',
-                          backgroundColor: 'rgba(184, 135, 70, 0.04)',
-                        }
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Radio
-                          size="small"
-                          checked={liveSketch.duration === option.value}
-                          sx={{
-                            color: 'divider',
-                            '&.Mui-checked': {
-                              color: '#B88746',
-                            },
-                            transition: 'none', // No transition
-                          }}
-                        />
-                        <Box>
-                          <Typography sx={{ 
-                            fontWeight: liveSketch.duration === option.value ? 600 : 400,
-                            color: liveSketch.duration === option.value ? '#B88746' : 'text.primary',
-                          }}>
-                            {option.label}
-                          </Typography>
-                          <Typography sx={{ 
-                            fontSize: '0.8rem',
-                            color: liveSketch.duration === option.value ? '#A8743D' : 'text.secondary',
-                            mt: 0.5
-                          }}>
-                            {option.description}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  ))}
-                </Box>
-                
-                {/* Custom Duration Input */}
-                {liveSketch.duration === "custom" && (
-                  <Box sx={{ 
-                    mt: 2,
-                    p: 2.5,
-                    backgroundColor: 'rgba(184, 135, 70, 0.05)',
+                    p: { xs: 1.2, sm: 2 },
+                    border: selected
+                      ? "2px solid #B88746"
+                      : "1px solid",
+                    borderColor: selected
+                      ? "#B88746"
+                      : "divider",
                     borderRadius: 2,
-                    border: '2px solid #B88746'
-                  }}>
-                    <TextField
-                      label="Specify Custom Duration"
-                      value={liveSketch.customDuration}
-                      onChange={(e) => setLiveSketch(prev => ({ ...prev, customDuration: e.target.value }))}
-                      size="medium"
-                      fullWidth
-                      placeholder="e.g., 2 days, 8 hours, etc."
+                    cursor: "pointer",
+                    backgroundColor: selected
+                      ? "rgba(184,135,70,0.08)"
+                      : "transparent",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                    }}
+                  >
+                    <Radio
+                      size="small"
+                      checked={selected}
                       sx={{
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: 1.5,
-                        }
+                        color: "divider",
+                        "&.Mui-checked": {
+                          color: "#B88746",
+                        },
+                        p: 0,
                       }}
                     />
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontWeight: selected ? 600 : 400,
+                          color: selected
+                            ? "#B88746"
+                            : "text.primary",
+                          fontSize: {
+                            xs: "0.8rem",
+                            sm: "0.9rem",
+                          },
+                          lineHeight: 1.2,
+                        }}
+                      >
+                        {option.label}
+                      </Typography>
+
+                      <Typography
+                        sx={{
+                          fontSize: "0.65rem",
+                          color: selected
+                            ? "#A8743D"
+                            : "text.secondary",
+                          display: { xs: "none", sm: "block" },
+                        }}
+                      >
+                        {option.description}
+                      </Typography>
+                    </Box>
                   </Box>
-                )}
-              </Grid>
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-      </Fade>
+                </Box>
+              );
+            })}
+          </Box>
+
+          {/* Custom Duration */}
+          {liveSketch.duration === "custom" && (
+            <TextField
+              label="Custom Duration"
+              value={liveSketch.customDuration}
+              onChange={(e) =>
+                setLiveSketch((prev) => ({
+                  ...prev,
+                  customDuration: e.target.value,
+                }))
+              }
+              size="small"
+              fullWidth
+              placeholder="e.g., 2 days or 8 hours"
+              sx={{
+                mt: 1,
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  fontSize: { xs: "0.85rem", sm: "0.9rem" },
+                },
+                "& .MuiInputLabel-root": {
+                  fontSize: { xs: "0.75rem", sm: "0.8rem" },
+                },
+                "& .MuiInputLabel-shrink": {
+                  fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                },
+                "& input::placeholder": {
+                  fontSize: { xs: "0.75rem", sm: "0.8rem" },
+                },
+              }}
+            />
+          )}
+        </Grid>
+      </Grid>
+    </AccordionDetails>
+  </Accordion>
+</Fade>
+
 
       {/* Mural Section */}
-      <Fade in timeout={700}>
-        <Accordion 
-          id="mural"
-          expanded={expandedAccordion === "mural"}
-          onChange={handleAccordionChange("mural")}
-          sx={{ 
-            mb: 2,
-            borderRadius: 2,
-            border: 1,
-            borderColor: "divider",
-            backgroundColor: "white",
-            '&:before': { display: 'none' },
-          }}
-        >
-          <AccordionSummary 
-            expandIcon={<ExpandMoreIcon sx={{ color: "#B88746" }} />}
+     <Fade in timeout={700}>
+  <Accordion
+    id="mural"
+    expanded={expandedAccordion === "mural"}
+    onChange={handleAccordionChange("mural")}
+    sx={{
+      mb: 2,
+      borderRadius: 2,
+      border: 1,
+      borderColor: "divider",
+      backgroundColor: "white",
+      "&:before": { display: "none" },
+    }}
+  >
+    {/* Header */}
+    <AccordionSummary
+      expandIcon={<ExpandMoreIcon sx={{ color: "#B88746" }} />}
+      sx={{
+        minHeight: 56,
+        px: 2,
+        "& .MuiAccordionSummary-content": { my: 1 },
+      }}
+    >
+      <Typography
+        sx={{
+          fontWeight: 600,
+          color: "#B88746",
+          fontSize: { xs: "0.95rem", sm: "1rem" },
+        }}
+      >
+        🎨 Mural / Wall Painting
+      </Typography>
+    </AccordionSummary>
+
+    <AccordionDetails sx={{ py: 2, px: { xs: 1.5, sm: 3 } }}>
+      <Grid container spacing={{ xs: 1.5, sm: 3 }}>
+        {/* 🧱 Wall Size Picker */}
+        <Grid item xs={12}>
+          <Typography
             sx={{
-              minHeight: '56px',
-              px: 2,
-              '& .MuiAccordionSummary-content': { my: 1 },
+              color: "#B88746",
+              fontWeight: 600,
+              mb: 1,
+              fontSize: { xs: "0.9rem", sm: "1rem" },
             }}
           >
-            <Typography sx={{ 
-              fontWeight: 600,
+            📐 Wall Size
+          </Typography>
+
+      <TextField
+  label="Wall Size"
+  value={
+    mural.width && mural.height
+      ? `${mural.width} x ${mural.height} ${mural.unit}`
+      : ""
+  }
+  onClick={() => setWallPickerOpen(true)}
+  placeholder="Select wall size"
+  size="small"
+  fullWidth
+  InputProps={{
+    readOnly: true,
+    endAdornment:
+      mural.width && mural.height ? (
+        <IconButton
+          size="small"
+          onClick={(e) => {
+            e.stopPropagation(); // prevent opening picker
+            setMural((p) => ({
+              ...p,
+              width: "",
+              height: "",
+              unit: "ft",
+            }));
+          }}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      ) : null,
+  }}
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      borderRadius: 2,
+      fontSize: { xs: "0.85rem", sm: "0.9rem" },
+    },
+    "& .MuiInputLabel-root": {
+      fontSize: { xs: "0.75rem", sm: "0.8rem" },
+    },
+    "& .MuiInputLabel-shrink": {
+      fontSize: { xs: "0.7rem", sm: "0.75rem" },
+    },
+  }}
+/>
+
+
+        </Grid>
+
+        {/* 🎯 Painting Type as Cards */}
+        <Grid item xs={12}>
+          <Typography
+            sx={{
               color: "#B88746",
-              fontSize: { xs: '0.95rem', sm: '1rem' }
-            }}>
-              🎨 Mural / Wall Painting 
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Wall Size"
-                  value={mural.wallSize}
-                  onChange={(e) => setMural(prev => ({ ...prev, wallSize: e.target.value }))}
-                  size="medium"
-                  fullWidth
-                  placeholder="e.g., 10x15 ft, 20x30 ft"
+              fontWeight: 600,
+              mb: 1.2,
+              fontSize: { xs: "0.9rem", sm: "1rem" },
+            }}
+          >
+            🎯 Painting Type
+          </Typography>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 1.5,
+            }}
+          >
+            {[
+              { value: "design", label: "Design Paint" },
+              { value: "mural", label: "Mural Paint" },
+            ].map((opt) => {
+              const selected = mural.paintingType === opt.value;
+
+              return (
+                <Box
+                  key={opt.value}
+                  onClick={() =>
+                    setMural((p) => ({
+                      ...p,
+                      paintingType: opt.value,
+                    }))
+                  }
                   sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    }
+                    p: 2,
+                    textAlign: "center",
+                    border: selected
+                      ? "2px solid #B88746"
+                      : "1px solid",
+                    borderColor: selected
+                      ? "#B88746"
+                      : "divider",
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    backgroundColor: selected
+                      ? "rgba(184,135,70,0.08)"
+                      : "transparent",
+                    fontWeight: selected ? 600 : 400,
+                    color: selected
+                      ? "#B88746"
+                      : "text.primary",
                   }}
-                />
-              </Grid>
-              
-              <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" sx={{ 
-                  color: "#B88746",
-                  fontWeight: 600,
-                  mb: 1.5,
-                }}>
-                  🎯 Painting Type
-                </Typography>
-                <RadioGroup
-                  value={mural.paintingType}
-                  onChange={(e) => setMural(prev => ({ ...prev, paintingType: e.target.value }))}
-                  sx={{ gap: 1.5 }}
                 >
-                  <FormControlLabel 
-                    value="design" 
-                    control={
-                      <Radio 
-                        size="small" 
-                        sx={{ 
-                          color: '#B88746',
-                          '&.Mui-checked': {
-                            color: '#B88746',
-                          },
-                          transition: 'none', // No transition
-                        }} 
-                      />
-                    } 
-                    label={
-                      <Box>
-                        <Typography sx={{ fontWeight: mural.paintingType === "design" ? 600 : 400 }}>
-                          Design Painting
-                        </Typography>
-                        <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary' }}>
-                          Creative patterns & designs
-                        </Typography>
-                      </Box>
-                    }
-                  />
-                  <FormControlLabel 
-                    value="mural" 
-                    control={
-                      <Radio 
-                        size="small" 
-                        sx={{ 
-                          color: '#B88746',
-                          '&.Mui-checked': {
-                            color: '#B88746',
-                          },
-                          transition: 'none', // No transition
-                        }} 
-                      />
-                    } 
-                    label={
-                      <Box>
-                        <Typography sx={{ fontWeight: mural.paintingType === "mural" ? 600 : 400 }}>
-                          Mural Art
-                        </Typography>
-                        <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary' }}>
-                          Large scene/portrait paintings
-                        </Typography>
-                      </Box>
-                    }
-                  />
-                </RadioGroup>
-              </Grid>
-              
-              <Grid item xs={12}>
-                <Typography variant="subtitle1" sx={{ 
-                  color: "#B88746",
-                  fontWeight: 600,
-                  mb: 2,
-                }}>
-                  🏢 Surface / Location
-                </Typography>
-                
-                <Box sx={{ 
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)' },
-                  gap: 2,
-                  mb: 2
-                }}>
-                  {surfaceOptions.map((option) => (
-                    <Box 
-                      key={option.value}
-                      onClick={() => handleMuralChange("surfaceType", option.value)}
-                      sx={{
-                        p: 2,
-                        border: mural.surfaceType === option.value ? '2px solid #B88746' : '1px solid',
-                        borderColor: mural.surfaceType === option.value ? '#B88746' : 'divider',
-                        borderRadius: 2,
-                        cursor: 'pointer',
-                        backgroundColor: mural.surfaceType === option.value ? 'rgba(184, 135, 70, 0.08)' : 'transparent',
-                        transition: 'all 0.1s ease', // Faster transition
-                        '&:hover': {
-                          borderColor: '#B88746',
-                          backgroundColor: 'rgba(184, 135, 70, 0.04)',
-                        }
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Radio
-                          size="small"
-                          checked={mural.surfaceType === option.value}
-                          sx={{
-                            color: 'divider',
-                            '&.Mui-checked': {
-                              color: '#B88746',
-                            },
-                            transition: 'none', // No transition
-                          }}
-                        />
-                        <Box>
-                          <Typography sx={{ 
-                            fontWeight: mural.surfaceType === option.value ? 600 : 400,
-                            color: mural.surfaceType === option.value ? '#B88746' : 'text.primary',
-                          }}>
-                            {option.label}
-                          </Typography>
-                          <Typography sx={{ 
-                            fontSize: '0.8rem',
-                            color: mural.surfaceType === option.value ? '#A8743D' : 'text.secondary',
-                            mt: 0.5
-                          }}>
-                            {option.description}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  ))}
+                  {opt.label}
                 </Box>
-              </Grid>
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-      </Fade>
+              );
+            })}
+          </Box>
+
+          {/* ➕ Other type */}
+          {mural.paintingType === "other" && (
+            <TextField
+              label="Specify Painting Type"
+              value={mural.otherPaintingType}
+              onChange={(e) =>
+                setMural((p) => ({
+                  ...p,
+                  otherPaintingType: e.target.value,
+                }))
+              }
+              size="small"
+              fullWidth
+              sx={{ ...textFieldSx, mt: 1.5 }}
+              placeholder="Enter custom type"
+            />
+          )}
+        </Grid>
+
+        {/* 🏢 Surface / Location */}
+        <Grid item xs={12}>
+          <Typography
+            sx={{
+              color: "#B88746",
+              fontWeight: 600,
+              mb: 1.5,
+              fontSize: { xs: "0.9rem", sm: "1rem" },
+            }}
+          >
+            🏢 Surface / Location
+          </Typography>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
+                md: "repeat(5, 1fr)",
+              },
+              gap: { xs: 1.2, sm: 2 },
+            }}
+          >
+            {surfaceOptions.map((option) => {
+              const selected =
+                mural.surfaceType === option.value;
+
+              return (
+                <Box
+                  key={option.value}
+                  onClick={() =>
+                    handleMuralChange(
+                      "surfaceType",
+                      option.value
+                    )
+                  }
+                  sx={{
+                    p: { xs: 1.2, sm: 2 },
+                    border: selected
+                      ? "2px solid #B88746"
+                      : "1px solid",
+                    borderColor: selected
+                      ? "#B88746"
+                      : "divider",
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    backgroundColor: selected
+                      ? "rgba(184,135,70,0.08)"
+                      : "transparent",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: selected ? 600 : 400,
+                      color: selected
+                        ? "#B88746"
+                        : "text.primary",
+                      fontSize: {
+                        xs: "0.8rem",
+                        sm: "0.9rem",
+                      },
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {option.label}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "0.65rem",
+                      color: selected
+                        ? "#A8743D"
+                        : "text.secondary",
+                      display: { xs: "none", sm: "block" },
+                    }}
+                  >
+                    {option.description}
+                  </Typography>
+                </Box>
+              );
+            })}
+          </Box>
+          <Dialog
+  open={wallPickerOpen}
+  onClose={() => setWallPickerOpen(false)}
+  fullWidth
+  maxWidth="xs"
+>
+  <DialogTitle>📐 Select Wall Size</DialogTitle>
+  <DialogContent>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 80px",
+        gap: 1.5,
+        mt: 1,
+      }}
+    >
+      <TextField
+        label="Width"
+        type="number"
+        size="small"
+        value={mural.width}
+        onChange={(e) =>
+          setMural((p) => ({ ...p, width: e.target.value }))
+        }
+      />
+      <TextField
+        label="Height"
+        type="number"
+        size="small"
+        value={mural.height}
+        onChange={(e) =>
+          setMural((p) => ({ ...p, height: e.target.value }))
+        }
+      />
+      <TextField
+        select
+        label="Unit"
+        size="small"
+        value={mural.unit}
+        onChange={(e) =>
+          setMural((p) => ({ ...p, unit: e.target.value }))
+        }
+      >
+        <MenuItem value="ft">ft</MenuItem>
+        <MenuItem value="m">m</MenuItem>
+      </TextField>
+    </Box>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setWallPickerOpen(false)}>
+      Cancel
+    </Button>
+    <Button
+      variant="contained"
+      sx={{ backgroundColor: "#B88746" }}
+      onClick={() => setWallPickerOpen(false)}
+    >
+      OK
+    </Button>
+  </DialogActions>
+</Dialog>
+{mural.surfaceType === "custom" && (
+  <TextField
+    label="Enter Location"
+    value={mural.customLocation}
+    onChange={(e) =>
+      setMural((p) => ({
+        ...p,
+        customLocation: e.target.value,
+      }))
+    }
+    size="small"
+    fullWidth
+    placeholder="e.g., Office wall, outdoor gate..."
+    sx={{
+      mt: 1.5,
+      "& .MuiOutlinedInput-root": {
+        borderRadius: 2,
+        fontSize: { xs: "0.85rem", sm: "0.9rem" },
+      },
+      "& .MuiInputLabel-root": {
+        fontSize: { xs: "0.75rem", sm: "0.8rem" },
+      },
+      "& .MuiInputLabel-shrink": {
+        fontSize: { xs: "0.7rem", sm: "0.75rem" },
+      },
+      "& input::placeholder": {
+        fontSize: { xs: "0.75rem", sm: "0.8rem" },
+      },
+    }}
+  />
+)}
+
+
+        </Grid>
+      </Grid>
+    </AccordionDetails>
+  </Accordion>
+</Fade>
+
 
       {/* Other Optional Sections */}
       {[

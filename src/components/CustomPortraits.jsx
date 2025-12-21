@@ -139,32 +139,40 @@ const CustomPortrait = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Typography
-          variant={isDesktop ? "h4" : "h4"}
-          fontWeight="900"
-          mb={{ xs: 4, sm: 6 }}
-          sx={{
-            fontFamily: "'Cinzel', serif",
-            color: "#B88746",
-            letterSpacing: "1.5px",
-            textTransform: "uppercase",
-            textAlign: "center",
-            textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
-            position: "relative",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              width: "60px",
-              height: "2px",
-              backgroundColor: "#A8743D",
-              bottom: -10,
-              left: "50%",
-              transform: "translateX(-50%)",
-            },
-          }}
-        >
-          Custom Portraits
-        </Typography>
+       <Typography
+  variant="h4"
+  fontWeight="900"
+  mb={{ xs: 3, sm: 6 }}
+  sx={{
+    fontFamily: "'Cinzel', serif",
+    color: "#B88746",
+    letterSpacing: "1.5px",
+    textTransform: "uppercase",
+    textAlign: "center",
+    textShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+    position: "relative",
+
+    // ✅ keep in one line on mobile
+    whiteSpace: "nowrap",
+
+    // ✅ slightly smaller font on mobile to avoid wrap
+    fontSize: { xs: "1.3rem", sm: "2rem", md: "2.2rem" },
+
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      width: "60px",
+      height: "2px",
+      backgroundColor: "#A8743D",
+      bottom: -10,
+      left: "50%",
+      transform: "translateX(-50%)",
+    },
+  }}
+>
+  Custom Portraits
+</Typography>
+
       </motion.div>
 
       {/* Gallery - Same layout as Mural */}
