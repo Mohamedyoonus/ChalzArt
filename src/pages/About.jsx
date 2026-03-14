@@ -44,7 +44,7 @@ const About = () => {
   const paragraphs = [
     `Charles Simon is a professional artist working mainly in realistic pencil drawing and oil painting. The focus is on creating strong, real-looking artworks that hold value over time.`,
     `Along with original paintings and custom commissions, Chalz Art also offers drawing and painting classes to help others build real skills and confidence.`,
-    `Chalz Art stands for honest work, realism, and lasting quality.`,
+   ,
   ];
 
   return (

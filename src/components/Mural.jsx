@@ -121,18 +121,15 @@ const Mural = () => {
 
   return (
     <Box
-      sx={{
-        px: { xs: 2, sm: 3, md: 5 },
-        pb: { xs: -2, sm: 3, md: 3 },
-        mb: { xs: -18, sm: 2, md: 5 },
-        pt: 2,
-        minHeight: "75vh",
-        background:
-          "white",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+   sx={{
+  px: { xs: 2, sm: 3, md: 5 },
+  py: { xs: 3, sm: 4, md: 5 },
+  minHeight: { xs: "auto", md: "55vh" },
+  background: "white",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}}
     >
       {/* Title */}
       <motion.div

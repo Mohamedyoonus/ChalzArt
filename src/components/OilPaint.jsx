@@ -54,20 +54,15 @@ const OilPaint = () => {
 
   return (
     <Box
-      sx={{
-        px: { xs: 2, sm: 3, md: 5 },
-        py: 5,
-        pb: -2,
-        pt:  { xs: 8, sm: 3, md: 6 },
-        mb: -2,
-        mt: -8,
-        minHeight: "55vh",
-        background:
-          "white",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+     sx={{
+  px: { xs: 2, sm: 3, md: 5 },
+  py: { xs: 5, sm: 6, md: 8 },   // consistent vertical spacing
+  minHeight: { xs: "auto", md: "55vh" }, 
+  background: "white",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}}
     >
       {/* Title */}
       <motion.div

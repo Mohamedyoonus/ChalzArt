@@ -60,17 +60,15 @@ const LiveSketch = () => {
 
   return (
     <Box
-      sx={{
-        px: { xs: 2, sm: 3, md: 5 },
-        pb: 5,
-        pt: { xs: 16, sm: 3, md: 3 },
-        mt: { xs: -8, sm: 0, md: -5 },
-        minHeight: "60vh",
-        background: "white",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+    sx={{
+  px: { xs: 2, sm: 3, md: 5 },
+  py: { xs: 3, sm: 4, md: 5 },
+  minHeight: { xs: "auto", md: "55vh" },
+  background: "white",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}}
     >
       {/* Heading */}
       <motion.div
